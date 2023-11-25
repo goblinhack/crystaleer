@@ -533,7 +533,7 @@ static void sdl_key_repeat_events_(void)
       //
       if (time_have_x_hundredths_passed_since(SDL_KEY_REPEAT_HUNDREDTHS_NEXT, last_movement_keypress)) {
         last_movement_keypress = time_ms();
-        CON("TODO FAST REPEAT");
+        LOG("TODO FAST REPEAT");
       }
     } else {
       //
@@ -542,7 +542,7 @@ static void sdl_key_repeat_events_(void)
       if (time_have_x_hundredths_passed_since(SDL_KEY_REPEAT_HUNDREDTHS_FIRST, last_movement_keypress)) {
         repeat_count++;
         last_movement_keypress = time_ms();
-        CON("TODO FAST REPEAT FIRST PRESS");
+        LOG("TODO FAST REPEAT FIRST PRESS");
       }
     }
   }

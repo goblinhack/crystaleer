@@ -45,7 +45,7 @@ static uint8_t game_menu_new_game(Widp w, int x, int y, uint32_t button)
   TRACE_AND_INDENT();
   wid_main_menu_hide();
   wid_main_menu_destroy();
-  CON("TODO %s", __FUNCTION__);
+  LOG("main menu TODO %s", __FUNCTION__);
   return false;
 }
 
@@ -441,5 +441,5 @@ void Game::wid_main_menu_select(void)
 void Game::new_game(void)
 {
   TRACE_NO_INDENT();
-  CON("TODO new_game");
+  LOG("TODO new_game");
 }

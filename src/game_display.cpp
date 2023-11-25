@@ -5,4 +5,4 @@
 #include "my_game.hpp"
 #include "my_main.hpp"
 
-void Game::display(void) { CON("TODO"); }
+void Game::display(void) { LOG("game display TODO"); }
