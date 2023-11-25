@@ -287,9 +287,9 @@ mv Makefile.tmp Makefile
 #
 # Common config file
 #
-CONFIG_H=src/config.hpp
-echo "#include \"my_config.hpp\"" > $CONFIG_H
-C_FLAGS+=" -include config.hpp"
+CONFIG_H=src/cfg.hpp
+echo "#include \"my_cfg.hpp\"" > $CONFIG_H
+C_FLAGS+=" -include cfg.hpp"
 
 #
 # for backtraces, but it doesn't help much

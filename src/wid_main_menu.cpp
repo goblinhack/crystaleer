@@ -35,7 +35,7 @@ static uint8_t wid_main_menu_load_game(Widp w, int x, int y, uint32_t button)
 static uint8_t wid_main_menu_config(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
-  game->wid_config_top_menu();
+  game->wid_cfg_top_menu();
   wid_main_menu_hide();
   return false;
 }

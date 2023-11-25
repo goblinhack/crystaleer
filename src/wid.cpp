@@ -4210,7 +4210,7 @@ static uint8_t wid_receive_unhandled_input(const SDL_Keysym *key)
   }
 
   switch ((int) key->sym) {
-    case '?' : game->wid_config_keyboard_select(); break;
+    case '?' : game->wid_cfg_keyboard_select(); break;
 
     case SDLK_ESCAPE :
       if (w->visible) {

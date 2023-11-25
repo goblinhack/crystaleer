@@ -6,7 +6,7 @@
 #ifndef _MY_CONFIG_HPP_
 #define _MY_CONFIG_HPP_
 
-#include "config.hpp"
+#include "cfg.hpp"
 
 #define ENABLE_ASSERT                 // Abort on errors
 #define ENABLE_CRASH_HANDLER          // Intercept SEGV and other faults

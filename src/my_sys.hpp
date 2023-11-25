@@ -6,7 +6,7 @@
 #ifndef _MY_SYS_HPP_
 #define _MY_SYS_HPP_
 
-#include "my_config.hpp"
+#include "my_cfg.hpp"
 #include "my_source_loc.hpp"
 
 #include <stdint.h>

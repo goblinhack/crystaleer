@@ -1,6 +1,6 @@
 
 NAME=crystaleer
-BUILD_DIR=.build
+BUILD_DIR=.o
 
 TARGET_GAME=$(NAME)$(EXE)
 SRC_DIR=.

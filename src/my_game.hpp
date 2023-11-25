@@ -264,12 +264,12 @@ public:
   void unset_request_reset_state_change(void);
   void unset_request_to_save_snapshot(void);
   void unset_request_to_update_same_level(void);
-  void wid_config_gfx_select(void);
-  void wid_config_keyboard_select(void);
-  void wid_config_mouse_select(void);
-  void wid_config_other_select(void);
-  void wid_config_sound_select(void);
-  void wid_config_top_menu(void);
+  void wid_cfg_gfx_select(void);
+  void wid_cfg_keyboard_select(void);
+  void wid_cfg_mouse_select(void);
+  void wid_cfg_other_select(void);
+  void wid_cfg_sound_select(void);
+  void wid_cfg_top_menu(void);
   void wid_credits_select(void);
   void wid_help_select(void);
   void wid_hiscores_show(void);
