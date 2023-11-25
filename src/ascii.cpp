@@ -346,7 +346,7 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
     if (unlikely(! tile)) {
       tile = font_ui->font_get_tile(ch);
       if (tile == nullptr) {
-        tile = tile_find_mand(FONT_FOR_UNKNOWN_STR);
+        tile = tile_find_mand(FONT_TILENAME_UNKNOWN_STR);
       }
     }
 
@@ -355,7 +355,7 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
     //
     // Use a special char to represent the cursor. A bit of a hack.
     //
-    auto is_cursor = (ch == FONT_FOR_CURSOR);
+    auto is_cursor = (ch == FONT_CHAR_CURSOR);
     if (unlikely(is_cursor)) {
       static uint32_t last;
       static uint8_t  first = true;
@@ -398,7 +398,7 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
       if (bg.r || bg.g || bg.b || bg.a) {
         static Tilep tile;
         if (unlikely(! tile)) {
-          tile = tile_find_mand(FONT_FOR_BLOCK_STR);
+          tile = tile_find_mand(FONT_TILENAME_BLOCK_STR);
         }
         cell->tile[ depth ] = tile;
       } else {

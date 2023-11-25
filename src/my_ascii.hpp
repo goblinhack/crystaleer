@@ -10,8 +10,8 @@
 #include "my_tex.hpp"
 #include "my_tile.hpp"
 
-#define TERM_GFX_WIDTH_DEF  64
-#define TERM_GFX_HEIGHT_DEF 32
+#define TERM_GFX_WIDTH_DEF  48
+#define TERM_GFX_HEIGHT_DEF 30
 
 #define TERM_WIDTH_MAX  (TERM_GFX_WIDTH_DEF + 10)
 #define TERM_HEIGHT_MAX (TERM_GFX_HEIGHT_DEF + 10)
@@ -19,8 +19,8 @@
 class AsciiCell
 {
 public:
-  char ch[ TILE_LAYER_MAX ] {};
-  Tilep   tile[ TILE_LAYER_MAX ] {};
+  char  ch[ TILE_LAYER_MAX ] {};
+  Tilep tile[ TILE_LAYER_MAX ] {};
 
   Texp tex[ TILE_LAYER_MAX ] {};
 

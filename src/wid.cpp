@@ -1218,7 +1218,7 @@ static std::string wid_get_text_with_cursor(Widp w)
   }
 
   std::string t = w->text;
-  std::string o = t.substr(0, w->cursor) + FONT_FOR_CURSOR + t.substr(w->cursor);
+  std::string o = t.substr(0, w->cursor) + FONT_CHAR_CURSOR + t.substr(w->cursor);
 
   return o;
 }

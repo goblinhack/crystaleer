@@ -401,7 +401,7 @@ void gl_init_fbo(void)
 {
   int i;
 
-  LOG("GFX: OpenGL creat FBOs");
+  LOG("GFX: OpenGL create FBOs");
   GL_ERROR_CHECK();
 
   for (i = 0; i < MAX_FBO; i++) {
@@ -1100,7 +1100,7 @@ static void setupPixelFormat(HDC hDC)
       1,                                                          // version
       PFD_SUPPORT_OPENGL | PFD_DRAW_TO_WINDOW | PFD_DOUBLEBUFFER, // support double-buffering
       PFD_TYPE_RGBA,                                              // color type
-      16,                                                         // prefered color depth
+      16,                                                         // preferred color depth
       0,
       0,
       0,

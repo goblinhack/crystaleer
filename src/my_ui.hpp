@@ -6,38 +6,33 @@
 #ifndef _MY_UI_HPP_
 #define _MY_UI_HPP_
 
-#define UI_CONSOLE_HEIGHT            (TERM_HEIGHT * 2)
-#define UI_CONSOLE_INPUT_COLOR       ORANGE
-#define UI_CONSOLE_TEXT_COLOR        GRAY
-#define UI_CONSOLE_WIDTH             (TERM_WIDTH - 3)
-#define UI_CURSOR_COLOR              GRAY
-#define UI_CURSOR_OTHER_COLOR        WHITE
-#define UI_FONT_PIXEL_SIZE           6
-#define UI_FONT_SMALL_HEIGHT         8
-#define UI_FONT_SMALL_WIDTH          6
-#define UI_HEALTH_BAR_STEPS          18 // How many graduations on health bar
-#define UI_HEALTH_ICON_STEPS         5
-#define UI_INVENTORY_QUICK_ITEMS_MAX 10
-#define UI_LEFTBAR_WIDTH             UI_HEALTH_BAR_STEPS
-#define UI_LOGGING_EMPTY_LINE        "`" // Complete hack, char I use to force space
-#define UI_MOUSE_DOUBLE_CLICK        500 // Double click time
-#define UI_MOUSE_WHEEL_SCALE         1.0 // How much the wheel mouse moves.
-#define UI_MOUSE_WHEEL_SCALE_MAX     10
-#define UI_POPUP_TEXT_COLOR          UI_TEXT_COLOR
-#define UI_RIGHTBAR_PIXELART_HEIGHT  57
-#define UI_RIGHTBAR_WIDTH            18
-#define UI_SCROLL_JOY_SCALE          1.0
-#define UI_SCROLL_JOY_SCALE_MAX      1.5
-#define UI_TEXT_COLOR                GRAY // Default text color
-#define UI_TEXT_COLOR_STR            "gray"
-#define UI_TEXT_HIGHLIGHT_COLOR_STR  "white"
-#define UI_TILE_PIXELART_HEIGHT      8
-#define UI_TILE_PIXELART_WIDTH       8
-#define UI_TYPE_PIXELART             0
-#define UI_TYPES_MAX                 1
-#define UI_WID_POPUP_WIDTH_NORMAL    24
-#define UI_WID_POPUP_WIDTH_WIDE      38
-#define UI_WID_SAVE_SLOTS            10 // How many save game slots
+#define UI_CONSOLE_HEIGHT           (TERM_HEIGHT * 2)
+#define UI_CONSOLE_INPUT_COLOR      ORANGE
+#define UI_CONSOLE_TEXT_COLOR       GRAY
+#define UI_CONSOLE_WIDTH            (TERM_WIDTH - 3)
+#define UI_CURSOR_COLOR             GRAY
+#define UI_CURSOR_OTHER_COLOR       WHITE
+#define UI_FONT_HEIGHT              8
+#define UI_FONT_WIDTH               8
+#define UI_HEALTH_BAR_STEPS         18 // How many graduations on health bar
+#define UI_HEALTH_ICON_STEPS        5
+#define UI_LOGGING_EMPTY_LINE       "`" // Complete hack, char I use to force space
+#define UI_MOUSE_DOUBLE_CLICK       500 // Double click time
+#define UI_MOUSE_WHEEL_SCALE        1.0 // How much the wheel mouse moves.
+#define UI_MOUSE_WHEEL_SCALE_MAX    10
+#define UI_POPUP_TEXT_COLOR         UI_TEXT_COLOR
+#define UI_SCROLL_JOY_SCALE         1.0
+#define UI_SCROLL_JOY_SCALE_MAX     1.5
+#define UI_TEXT_COLOR               GRAY // Default text color
+#define UI_TEXT_COLOR_STR           "gray"
+#define UI_TEXT_HIGHLIGHT_COLOR_STR "white"
+#define UI_TILE_PIXELART_HEIGHT     8
+#define UI_TILE_PIXELART_WIDTH      8
+#define UI_TYPE_PIXELART            0
+#define UI_TYPES_MAX                1
+#define UI_WID_POPUP_WIDTH_NORMAL   24
+#define UI_WID_POPUP_WIDTH_WIDE     38
+#define UI_WID_SAVE_SLOTS           10 // How many save game slots
 
 //
 // Various colors for the level selection

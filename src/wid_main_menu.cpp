@@ -296,7 +296,7 @@ static void wid_main_menu_tick(Widp w)
   }
 
   if (wid_main_menu_window) {
-    ascii_putf(1, 1, GREEN, BLACK, "Version: " MYVER);
+    ascii_putf(1, 1, GREEN, BLACK, "V: " MYVER);
 
     if (! g_opt_seed_name.empty()) {
       auto seed_name = "Seed: '" + g_opt_seed_name + "'";

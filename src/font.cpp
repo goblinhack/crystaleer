@@ -7,7 +7,6 @@
 #include "my_game.hpp"
 #include "my_tile.hpp"
 
-Fontp font_pixelart_small;
 Fontp font_ui;
 
 static std::map< std::string, Fontp > fonts;
@@ -77,7 +76,7 @@ Tilep Font::font_get_tile(int u)
   }
 
   if ((u < 0) || (u >= FONT_MAX_CHAR)) {
-    if (u == L'?') {
+    if (u == '?') {
       ERR("char 0x%X/%d -> bad index", u, u);
       return (font_get_tile('?'));
     } else {
@@ -90,7 +89,7 @@ Tilep Font::font_get_tile(int u)
   auto index = get(this->u_to_c, u);
 
   if ((index < 0) || (index >= FONT_MAX_CHAR)) {
-    if (u == L'?') {
+    if (u == '?') {
       ERR("char 0x%X/%d -> bad index %d", u, u, index);
       return (font_get_tile('?'));
     } else {
@@ -110,7 +109,7 @@ Tilep Font::font_get_tile(int u)
 
   tile = tile_find(tile_name);
   if (unlikely(! tile)) {
-    if (u == L'?') {
+    if (u == '?') {
       exit(1);
       DIE("unicode char 0x%X/%d -> not found as tile %s", u, u, tile_name);
       return (font_get_tile('?'));
@@ -129,10 +128,8 @@ uint8_t font_init(void)
 {
   TRACE_AND_INDENT();
 
-  font_pixelart_small             = font_load("font-pixelart-small");
-  font_pixelart_small->tile_index = 1;
-
-  font_ui = font_pixelart_small;
+  font_ui             = font_load("PressStart");
+  font_ui->tile_index = 1;
 
   return true;
 }

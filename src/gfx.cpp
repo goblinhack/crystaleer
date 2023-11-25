@@ -6,7 +6,7 @@
 #include "my_tile.hpp"
 #include "my_ui.hpp"
 
-static void gfx_init_font_pixelart_small(void)
+static void gfx_init_font_ui(void)
 {
   std::initializer_list< std::string > tiles = {
       //////////////////////////////////////////////////////////////////
@@ -142,7 +142,7 @@ static void gfx_init_font_pixelart_small(void)
       "1.94",
       "1.95",
       //////////////////////////////////////////////////////////////////
-      //  blk  [$]     lbs    arrow
+      // square block newline unknown pointer
       //////////////////////////////////////////////////////////////////
       "1.96",
       "1.97",
@@ -155,15 +155,14 @@ static void gfx_init_font_pixelart_small(void)
   };
 
   const std::vector< std::string > arr(tiles);
-  tile_load_arr_sprites("data/fonts/font-pixelart-small.tga", "font_pixelart_small", UI_FONT_SMALL_WIDTH,
-                        UI_FONT_SMALL_HEIGHT, arr, GL_NEAREST);
+  tile_load_arr_sprites("data/fonts/PressStart.tga", "font_ui", UI_FONT_WIDTH, UI_FONT_HEIGHT, arr, GL_NEAREST);
 }
 
 static void gfx_init_ui(void) {}
 
 void gfx_init(void)
 {
-  gfx_init_font_pixelart_small();
+  gfx_init_font_ui();
   gfx_init_ui();
   gfx_init0();
   gfx_init1();
