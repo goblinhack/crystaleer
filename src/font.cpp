@@ -37,10 +37,10 @@ static Fontp font_load(std::string name)
   }
 
   uint32_t d = 0;
-  uint32_t c = FONT_MIN_CHAR;
+  uint32_t c = FONT_CHAR_MIN;
 
-  while (d < FONT_MAX_CHAR) {
-    if (c >= FONT_MAX_CHAR) {
+  while (d < FONT_CHAR_MAX) {
+    if (c >= FONT_CHAR_MAX) {
       break;
     }
 
@@ -75,12 +75,12 @@ Tilep Font::font_get_tile(int u)
     DIE("No font");
   }
 
-  if ((u < 0) || (u >= FONT_MAX_CHAR)) {
+  if ((u < 0) || (u >= FONT_CHAR_MAX)) {
     if (u == '?') {
-      ERR("char 0x%X/%d -> bad index", u, u);
+      DIE("char 0x%X/%d -> bad index", u, u);
       return (font_get_tile('?'));
     } else {
-      ERR("char 0x%X/%d -> bad index", u, u);
+      DIE("char 0x%X/%d -> bad index", u, u);
       return (font_get_tile('?'));
     }
     return (font_get_tile('?'));
@@ -88,12 +88,12 @@ Tilep Font::font_get_tile(int u)
 
   auto index = get(this->u_to_c, u);
 
-  if ((index < 0) || (index >= FONT_MAX_CHAR)) {
+  if ((index < 0) || (index >= FONT_CHAR_MAX)) {
     if (u == '?') {
-      ERR("char 0x%X/%d -> bad index %d", u, u, index);
+      DIE("char 0x%X/%d -> bad index %d", u, u, index);
       return (font_get_tile('?'));
     } else {
-      ERR("char 0x%X/%d -> bad index %d", u, u, index);
+      DIE("char 0x%X/%d -> bad index %d", u, u, index);
       return (font_get_tile('?'));
     }
     return (font_get_tile('?'));
@@ -110,12 +110,10 @@ Tilep Font::font_get_tile(int u)
   tile = tile_find(tile_name);
   if (unlikely(! tile)) {
     if (u == '?') {
-      exit(1);
-      DIE("unicode char 0x%X/%d -> not found as tile %s", u, u, tile_name);
+      DIE("char 0x%X/%d -> not found as tile %s", u, u, tile_name);
       return (font_get_tile('?'));
     }
-    exit(1);
-    DIE("unicode char 0x%X/%d -> not found as tile %s", u, u, tile_name);
+    DIE("char 0x%X/%d -> not found as tile %s", u, u, tile_name);
     return (font_get_tile('?'));
   }
 

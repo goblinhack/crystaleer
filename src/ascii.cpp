@@ -638,7 +638,7 @@ static void ascii_display_mouse(point mouse_tile_tl, point mouse_tile_br, point 
   glcolor(WHITE);
 
   blit_init();
-  tile_blit(tile_find_mand(UNICODE_POINTER_STR), point(mouse_tile_tl.x, mouse_tile_tl.y),
+  tile_blit(tile_find_mand(FONT_TILENAME_POINTER_STR), point(mouse_tile_tl.x, mouse_tile_tl.y),
             point(mouse_tile_br.x, mouse_tile_br.y));
   blit_flush();
   //

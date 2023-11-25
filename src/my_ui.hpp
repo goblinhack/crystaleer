@@ -14,8 +14,6 @@
 #define UI_CURSOR_OTHER_COLOR       WHITE
 #define UI_FONT_HEIGHT              8
 #define UI_FONT_WIDTH               8
-#define UI_HEALTH_BAR_STEPS         18 // How many graduations on health bar
-#define UI_HEALTH_ICON_STEPS        5
 #define UI_LOGGING_EMPTY_LINE       "`" // Complete hack, char I use to force space
 #define UI_MOUSE_DOUBLE_CLICK       500 // Double click time
 #define UI_MOUSE_WHEEL_SCALE        1.0 // How much the wheel mouse moves.
@@ -30,20 +28,9 @@
 #define UI_TILE_PIXELART_WIDTH      8
 #define UI_TYPE_PIXELART            0
 #define UI_TYPES_MAX                1
-#define UI_WID_POPUP_WIDTH_NORMAL   24
-#define UI_WID_POPUP_WIDTH_WIDE     38
+#define UI_WID_POPUP_WIDTH_NORMAL   18
+#define UI_WID_POPUP_WIDTH_WIDE     24
 #define UI_WID_SAVE_SLOTS           10 // How many save game slots
-
-//
-// Various colors for the level selection
-//
-#define UI_DUNGEONS_CRYSTAL_COLOR       YELLOW3
-#define UI_DUNGEONS_BOSS_COLOR          ORANGE
-#define UI_DUNGEONS_FINAL_BOSS_COLOR    RED
-#define UI_DUNGEONS_CURRENT_LEVEL_COLOR GREEN
-#define UI_DUNGEONS_SEED_COLOR          GREEN2
-#define UI_DUNGEONS_PLAYER_COLOR        PINK2
-#define UI_DUNGEONS_UNKNOWN_COLOR       GRAY30
 
 //
 // Do faster processing of events, like reading the keyboard and updating widgets.

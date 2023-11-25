@@ -296,11 +296,11 @@ static void wid_main_menu_tick(Widp w)
   }
 
   if (wid_main_menu_window) {
-    ascii_putf(1, 1, GREEN, BLACK, "V: " MYVER);
+    ascii_putf(1, 1, GREEN, BLACK, "V" MYVER);
 
     if (! g_opt_seed_name.empty()) {
       auto seed_name = "Seed: '" + g_opt_seed_name + "'";
-      ascii_putf(1, 3, UI_DUNGEONS_SEED_COLOR, BLACK, seed_name);
+      ascii_putf(1, 3, YELLOW, BLACK, seed_name);
     }
   }
 }
@@ -319,13 +319,13 @@ void Game::wid_main_menu_select(void)
   auto box_style           = UI_WID_STYLE_NORMAL;
   auto box_highlight_style = UI_WID_STYLE_NORMAL;
 
-  int menu_height;
-  menu_height = 25;
+  int menu_height = 20;
+  int menu_width  = UI_WID_POPUP_WIDTH_NORMAL;
 
   point tl;
   point br;
-  tl                   = make_point(TERM_WIDTH - UI_WID_POPUP_WIDTH_NORMAL - 1 - 4, TERM_HEIGHT - menu_height - 1);
-  br                   = make_point(TERM_WIDTH - 1, TERM_HEIGHT - 1);
+  tl                   = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
+  br                   = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
   wid_main_menu_window = new WidPopup("Main menu", tl, br, nullptr, "nothing", false, false);
 
   auto width = br.x - tl.x - 2;
