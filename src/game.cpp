@@ -21,4 +21,3 @@ Game::Game(std::string appdata)
 
   save_file = saved_dir + "saved-slot-" + std::to_string(save_slot);
 }
-

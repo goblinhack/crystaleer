@@ -24,8 +24,8 @@ public:
   Tile(const class Tile *tile);
 
   std::string name;
-  char     ascii_fg_char {};
-  char     ascii_bg_char {};
+  char        ascii_fg_char {};
+  char        ascii_bg_char {};
   uint8_t     ascii_bg_alpha {255};
   uint8_t     ascii_fg_alpha {255};
   std::string ascii_fg_col_name;

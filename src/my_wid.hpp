@@ -558,7 +558,7 @@ public:
   // Text that appears on the wid.
   //
   std::string text {};
-  size_t       max_len {};
+  size_t      max_len {};
 
   //
   // Action handlers
