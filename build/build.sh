@@ -376,8 +376,6 @@ case "$MY_OS_NAME" in
         ;;
 esac
 
-GCC_WARN=""
-
 #
 # Better to leave off for production
 #
@@ -403,9 +401,9 @@ if [[ $OPT_PROF != "" ]]; then
 fi
 
 if [[ $OPT_DEV1 != "" ]]; then
-    echo "COMPILER_FLAGS=$WERROR $C_FLAGS -g # AUTOGEN" > .Makefile
+    echo "COMPILER_FLAGS=$WERROR $C_FLAGS -g" > .Makefile
 else
-    echo "COMPILER_FLAGS=$WERROR $C_FLAGS -O3 # AUTOGEN" > .Makefile
+    echo "COMPILER_FLAGS=$WERROR $C_FLAGS -O3" > .Makefile
 fi
 
 if [[ $OPT_DEV2 != "" ]]; then
@@ -416,8 +414,8 @@ else
 fi
 
 cat >>.Makefile <<%%
-CLANG_COMPILER_WARNINGS=-Wall $GCC_WARN -std=c++2a # AUTOGEN
-GCC_COMPILER_WARNINGS=-x c++ -Wall $GCC_WARN -std=c++2a $GCC_STACK_CHECK # AUTOGEN
+CLANG_COMPILER_WARNINGS=-Wall -std=c++2a
+GCC_COMPILER_WARNINGS=-x c++ -Wall -std=c++2a $GCC_STACK_CHECK
 LDFLAGS=$LDFLAGS
 %%
 
@@ -426,8 +424,8 @@ GOT_CC=
 g++ --version > /dev/null
 if [ $? -eq 0 ]
 then
-    echo "COMPILER_WARNINGS=\$(GCC_COMPILER_WARNINGS) # AUTOGEN" >> .Makefile
-    echo "CC=g++ # AUTOGEN" >> .Makefile
+    echo "COMPILER_WARNINGS=\$(GCC_COMPILER_WARNINGS)" >> .Makefile
+    echo "CC=g++" >> .Makefile
     GOT_CC=1
 fi
 
@@ -437,8 +435,8 @@ fi
 if [[ $OPT_GCC = "" ]]; then
   clang++ --version > /dev/null
   if [ $? -eq 0 ]; then
-      echo "COMPILER_WARNINGS=\$(CLANG_COMPILER_WARNINGS) # AUTOGEN" >> .Makefile
-      echo "CC=clang++ # AUTOGEN" >> .Makefile
+      echo "COMPILER_WARNINGS=\$(CLANG_COMPILER_WARNINGS)" >> .Makefile
+      echo "CC=clang++" >> .Makefile
       GOT_CC=1
   fi
 fi
@@ -450,7 +448,7 @@ fi
 
 case "$MY_OS_NAME" in
     *MING*|*MSYS*)
-        echo "CC=/${MINGW_TYPE}/bin/clang++.exe # AUTOGEN" >> .Makefile
+        echo "CC=/${MINGW_TYPE}/bin/clang++.exe" >> .Makefile
         #
         # To resolve WinMain, add these at the end again
         #
@@ -462,10 +460,10 @@ esac
 # Create the makefile
 #
 cat >>.Makefile <<%%
-EXE=$EXE # AUTOGEN
-DSYM=$DSYM # AUTOGEN
-LDLIBS=$LDLIBS # AUTOGEN
-CFLAGS=\$(COMPILER_FLAGS) \$(COMPILER_WARNINGS) # AUTOGEN
+EXE=$EXE
+DSYM=$DSYM
+LDLIBS=$LDLIBS
+CFLAGS=\$(COMPILER_FLAGS) \$(COMPILER_WARNINGS)
 %%
 
 grep -v AUTOGEN Makefile | grep -v "^    $" >> .Makefile

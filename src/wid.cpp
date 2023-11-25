@@ -6144,7 +6144,6 @@ static void wid_display(Widp w, uint8_t disable_scissor, uint8_t *updated_scisso
   Widp p {};
 #endif
 
-  CON("display  %s %p", w->name.c_str(), w);
   IF_DEBUG3 { verify(MTYPE_WID, w); }
 
 #if 0
@@ -6437,17 +6436,12 @@ static void wid_display(Widp w, uint8_t disable_scissor, uint8_t *updated_scisso
     }
 
     if (w->cfg[ mode ].color_set[ WID_COLOR_TEXT_FG ] && w->cfg[ mode ].color_set[ WID_COLOR_TEXT_BG ]) {
-      TRACE_NO_INDENT();
       ascii_putf__(x, y, w_box_args.col_text, w_box_args.col_bg, text);
     } else if (w->cfg[ mode ].color_set[ WID_COLOR_TEXT_FG ]) {
-      TRACE_NO_INDENT();
-      fprintf(stderr, "ZZZ NEIL %s %s %d test [%s]\n", __FILE__, __FUNCTION__, __LINE__, text.c_str());
       ascii_putf__(x, y, w_box_args.col_text, COLOR_NONE, text);
     } else if (w->cfg[ mode ].color_set[ WID_COLOR_TEXT_BG ]) {
-      TRACE_NO_INDENT();
       ascii_putf__(x, y, WHITE, w_box_args.col_bg, text);
     } else {
-      TRACE_NO_INDENT();
       ascii_putf__(x, y, w_box_args.col_text, COLOR_NONE, text);
     }
   }

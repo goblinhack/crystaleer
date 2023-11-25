@@ -267,8 +267,8 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
   int   bg_set    = false;
   auto  text_iter = text.begin();
 
-  printf("ascii_putf__ [%s]/%ld scissors x %d y %d scissors %d %d %d %d %d\n", text.c_str(), text.size(), x, y,
-         scissors_tl.x, scissors_tl.y, scissors_br.x, scissors_br.y, scissors_enabled);
+  // printf("ascii_putf__ [%s]/%ld scissors x %d y %d scissors %d %d %d %d %d\n", text.c_str(), text.size(), x, y,
+  //        scissors_tl.x, scissors_tl.y, scissors_br.x, scissors_br.y, scissors_enabled);
 
   //
   // Check for out of bounds. Cannot check for x here as a message could start off screen and end on screen.
@@ -289,7 +289,6 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
   bool got_pct = false;
   char ch      = 0;
 
-  int index = 0;
   for (;;) {
     if (text.end() - text_iter <= 0) {
       break;
@@ -303,8 +302,6 @@ void ascii_putf__(int x, int y, color fg, color bg, const std::string text)
     } else {
       ch = *text_iter;
       text_iter++;
-      CON("char [%d] [%c/%u]", index, ch, ch);
-      index++;
 
       auto len = text.end() - text_iter;
       if (len > 0) {

@@ -175,7 +175,6 @@ static void wid_console_wid_create(void)
   int   h  = br.y - tl.y;
 
   {
-    fprintf(stderr, "ZZZ NEIL %s %s %d\n", __FILE__, __FUNCTION__, __LINE__);
     wid_console_window = wid_new_square_window("wid console");
     wid_set_pos(wid_console_window, tl, br);
     wid_set_color(wid_console_window, WID_COLOR_BG, WHITE);
@@ -186,7 +185,6 @@ static void wid_console_wid_create(void)
     point tl = make_point(0, 0);
     point br = make_point(w - 1, h);
 
-    fprintf(stderr, "ZZZ NEIL %s %s %d\n", __FILE__, __FUNCTION__, __LINE__);
     wid_console_container = wid_new_container(wid_console_window, "wid console inner area");
     wid_set_pos(wid_console_container, tl, br);
     wid_set_style(wid_console_container, UI_WID_STYLE_DARK);
@@ -202,30 +200,22 @@ static void wid_console_wid_create(void)
     for (row = 0; row < UI_CONSOLE_HEIGHT; row++) {
       row_bottom--;
 
-      fprintf(stderr, "ZZZ NEIL %s %s %d\n", __FILE__, __FUNCTION__, __LINE__);
       point tl = make_point(0, row_bottom);
       point br = make_point(UI_CONSOLE_WIDTH, row_bottom);
 
-      fprintf(stderr, "ZZZ NEIL %s %s %d\n", __FILE__, __FUNCTION__, __LINE__);
       child = wid_new_container(wid_console_container, "console line");
 
-      fprintf(stderr, "ZZZ NEIL %s %s %d\n", __FILE__, __FUNCTION__, __LINE__);
       wid_set_shape_none(child);
-      fprintf(stderr, "ZZZ NEIL %s %s %d\n", __FILE__, __FUNCTION__, __LINE__);
       wid_set_pos(child, tl, br);
-      fprintf(stderr, "ZZZ NEIL %s %s %d\n", __FILE__, __FUNCTION__, __LINE__);
       wid_set_text_lhs(child, true);
 
       wid_set_prev(child, prev);
       prev = child;
 
       if (row == 0) {
-        fprintf(stderr, "ZZZ NEIL %s %s %d\n", __FILE__, __FUNCTION__, __LINE__);
         wid_set_on_key_down(child, wid_console_receive_input);
 
-        fprintf(stderr, "ZZZ NEIL %s %s %d\n", __FILE__, __FUNCTION__, __LINE__);
         wid_set_show_cursor(child, true);
-        fprintf(stderr, "ZZZ NEIL %s %s %d\n", __FILE__, __FUNCTION__, __LINE__);
         wid_set_name(child, "console input");
         wid_set_focusable(child, 1);
         wid_move_delta(child, 1, 0);
@@ -233,18 +223,14 @@ static void wid_console_wid_create(void)
 
         Widp prefix = wid_new_container(wid_console_container, "console final line");
         wid_set_pos(prefix, tl, br);
-        fprintf(stderr, "ZZZ NEIL %s %s %d\n", __FILE__, __FUNCTION__, __LINE__);
         wid_set_text_lhs(prefix, true);
         wid_set_shape_none(prefix);
-        fprintf(stderr, "ZZZ NEIL %s %s %d\n", __FILE__, __FUNCTION__, __LINE__);
         wid_set_text(prefix, ">");
         wid_set_color(child, WID_COLOR_BG, COLOR_NONE);
         wid_set_color(child, WID_COLOR_TEXT_FG, UI_CONSOLE_INPUT_COLOR);
-        fprintf(stderr, "ZZZ NEIL %s %s %d\n", __FILE__, __FUNCTION__, __LINE__);
       } else {
         wid_set_color(child, WID_COLOR_BG, COLOR_NONE);
         wid_set_color(child, WID_COLOR_TEXT_FG, UI_CONSOLE_TEXT_COLOR);
-        fprintf(stderr, "ZZZ NEIL %s %s %d\n", __FILE__, __FUNCTION__, __LINE__);
         wid_set_name(child, "console output");
       }
     }
