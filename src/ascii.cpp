@@ -21,8 +21,7 @@ int16_t TERM_HEIGHT;
 int16_t ascii_mouse_x;
 int16_t ascii_mouse_y;
 
-std::array< std::array< AsciiCell, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX >        cells;
-static std::array< std::array< AsciiCell, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX > prev_cells;
+std::array< std::array< AsciiCell, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX > cells;
 
 void ascii_init(void) {}
 
@@ -98,12 +97,8 @@ void pixel_to_ascii(int *x, int *y)
   float mx = *x;
   float my = *y;
 
-  if (unlikely(! game)) {
-    DIE("No game");
-  }
-
-  mx /= game->config.ascii_gl_width;
-  my /= game->config.ascii_gl_height;
+  mx /= (((float) game->config.window_pix_width) / ((float) TERM_WIDTH));
+  my /= (((float) game->config.window_pix_height) / ((float) TERM_HEIGHT));
 
   if (mx >= TERM_WIDTH - 1) {
     mx = TERM_WIDTH - 1;
@@ -733,8 +728,10 @@ static void ascii_blit(void)
   glcolor(WHITE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  float      mx = sdl.mouse_x;
-  float      my = sdl.mouse_y;
+#ifdef ENABLE_UI_ASCII_MOUSE
+  float mx = sdl.mouse_x;
+  float my = sdl.mouse_y;
+#endif
   const auto dw = game->config.ascii_gl_width;
   const auto dh = game->config.ascii_gl_height;
 
@@ -754,6 +751,7 @@ static void ascii_blit(void)
       tile_br.x = tile_x + dw;
       tile_br.y = tile_y + dh;
 
+#ifdef ENABLE_UI_ASCII_MOUSE
       //
       // Get the mouse position to use. We use this to find the mouse tile that we are over.
       //
@@ -767,6 +765,7 @@ static void ascii_blit(void)
           ascii.mouse_at = point(x, y);
         }
       }
+#endif
 
       //
       // Background
@@ -884,30 +883,6 @@ static void ascii_blit(void)
 
     tile_y += dh;
   }
-}
-
-//
-// Did anything of note change in this render?
-//
-// Cannot use memcmp due to the context
-//
-bool ascii_changed(void)
-{
-  for (auto y = 0; y < TERM_HEIGHT; y++) {
-
-    for (auto x = 0; x < TERM_WIDTH; x++) {
-
-      const AsciiCell *cell      = &getref_no_check(cells, x, y);
-      const AsciiCell *prev_cell = &getref_no_check(prev_cells, x, y);
-
-      for (auto depth = 0; depth < TILE_LAYER_MAX; depth++) {
-        if (cell->ch[ depth ] != prev_cell->ch[ depth ]) {
-          return true;
-        }
-      }
-    }
-  }
-  return false;
 }
 
 //

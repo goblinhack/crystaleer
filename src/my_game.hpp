@@ -267,7 +267,6 @@ public:
   void wid_cfg_gfx_select(void);
   void wid_cfg_keyboard_select(void);
   void wid_cfg_mouse_select(void);
-  void wid_cfg_other_select(void);
   void wid_cfg_sound_select(void);
   void wid_cfg_top_menu(void);
   void wid_credits_select(void);

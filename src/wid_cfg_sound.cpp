@@ -17,7 +17,7 @@ static void wid_cfg_sound_destroy(void)
   TRACE_AND_INDENT();
   delete wid_cfg_sound_window;
   wid_cfg_sound_window = nullptr;
-  config_changed          = false;
+  config_changed       = false;
 }
 
 static uint8_t wid_cfg_sound_cancel(Widp w, int x, int y, uint32_t button)
@@ -194,7 +194,7 @@ void Game::wid_cfg_sound_select(void)
 
     point tl = make_point(1, y_at);
     point br = make_point(6, y_at + 2);
-    wid_set_style(w, UI_WID_STYLE_DARK);
+    wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(w, wid_cfg_sound_back);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "%%fg=white$B%%fg=reset$ack");
@@ -235,7 +235,7 @@ void Game::wid_cfg_sound_select(void)
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
-    wid_set_text(w, "Effects volume");
+    wid_set_text(w, "Effects");
   }
   {
     TRACE_AND_INDENT();
@@ -295,7 +295,7 @@ void Game::wid_cfg_sound_select(void)
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
-    wid_set_text(w, "Music volume");
+    wid_set_text(w, "Music");
   }
   {
     TRACE_AND_INDENT();

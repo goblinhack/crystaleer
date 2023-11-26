@@ -78,32 +78,18 @@ void Game::wid_hiscores_show(void)
     wid_hiscore_destroy();
   }
 
-  auto  m  = TERM_WIDTH / 2;
-  auto  mh = TERM_HEIGHT / 2;
-  point tl;
-  point br;
+  int   menu_height  = 26;
+  int   menu_width   = UI_WID_POPUP_WIDTH_NORMAL * 2;
+  point tl           = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
+  point br           = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  wid_hiscore_window = new WidPopup("hiscores", tl, br, nullptr, "", false, false);
 
-  tl = make_point(m - 49, mh - 25);
-  br = make_point(m + 49, mh + 25);
-
-  auto width = br.x - tl.x;
-
-  wid_hiscore_window = new WidPopup("Gone, but not forgotten...", tl, br, nullptr, "", false, false);
-  wid_set_on_key_up(wid_hiscore_window->wid_popup_container, wid_hiscore_key_up);
-  wid_set_on_key_down(wid_hiscore_window->wid_popup_container, wid_hiscore_key_down);
-
-  wid_set_style(wid_hiscore_window->wid_popup_container, UI_WID_STYLE_DARK);
-
-  wid_raise(wid_hiscore_window->wid_popup_container);
-
-  // Want console to be able to be on top
-  // wid_set_do_not_lower(wid_hiscore_window->wid_popup_container, true);
-
-  wid_hiscore_window->log(UI_LOGGING_EMPTY_LINE);
-  wid_hiscore_window->log("Gone, but not forgotten...");
-  wid_hiscore_window->log(UI_LOGGING_EMPTY_LINE);
-  wid_hiscore_window->log(UI_LOGGING_EMPTY_LINE);
-  wid_hiscore_window->log(UI_LOGGING_EMPTY_LINE);
+  {
+    TRACE_AND_INDENT();
+    Widp w = wid_hiscore_window->wid_popup_container;
+    wid_set_on_key_up(w, wid_hiscore_key_up);
+    wid_set_on_key_down(w, wid_hiscore_key_down);
+  }
 
   auto h     = game->config.hiscores.hiscores.begin();
   bool first = true;
@@ -111,7 +97,6 @@ void Game::wid_hiscores_show(void)
 
   const char *colors[ HiScore::max_displayed ] = {
       "green", "yellow", "yellow", "yellow", "gold", "gold", "gold", "white", "white", "white",
-      "gray",  "gray",   "gray",   "gray",   "gray", "gray", "gray", "gray",  "gray",  "gray",
   };
 
   while (h != game->config.hiscores.hiscores.end()) {
@@ -122,20 +107,18 @@ void Game::wid_hiscores_show(void)
 
     char tmp[ 200 ];
 
-    int name_field_len        = 17;
-    int when_field_len        = 20;
-    int defeated_by_field_len = 40;
+    int name_field_len = 8;
+    int when_field_len = 10;
 
     if (first) {
       first = false;
 
-      auto defeated_by = "Reason Of Unfair Demise";
-      auto color       = "red";
-      auto name        = "Noble Dungeoneer";
-      auto when        = "When";
+      auto color = "red";
+      auto name  = "Name";
+      auto when  = "When";
 
-      snprintf(tmp, sizeof(tmp) - 1, "%%%%fg=%s$%7s  %-*s %-*s %-5s %*s", color, "Score", name_field_len,
-               capitalise(name).c_str(), when_field_len, when, "Level", defeated_by_field_len, defeated_by);
+      snprintf(tmp, sizeof(tmp) - 1, "%%%%fg=%s$%7s  %-*s %-*s %-5s", color, "Score", name_field_len,
+               capitalise(name).c_str(), when_field_len, when, "Lvl");
 
       wid_hiscore_window->log(tmp);
     }
@@ -150,35 +133,28 @@ void Game::wid_hiscores_show(void)
       when[ when_field_len ] = '\0';
     }
 
-    std::string defeated_by = h->defeated_by.c_str();
-    if ((int) defeated_by.length() > defeated_by_field_len) {
-      defeated_by[ defeated_by_field_len ] = '\0';
-    }
-
-    if (defeated_by.empty()) {
-      defeated_by = "-";
-    }
-
     auto color = colors[ index++ ];
-    snprintf(tmp, sizeof(tmp) - 1, "%%%%fg=%s$%07u  %-*s %-*s %-5u %*s", color, h->score, name_field_len,
-             name.c_str(), when_field_len, when.c_str(), h->level_reached, defeated_by_field_len,
-             defeated_by.c_str());
+    snprintf(tmp, sizeof(tmp) - 1, "%%%%fg=%s$%07u  %-*s %-*s %-5u", color, h->score, name_field_len, name.c_str(),
+             when_field_len, when.c_str(), h->level_reached);
 
     wid_hiscore_window->log(UI_LOGGING_EMPTY_LINE);
     wid_hiscore_window->log(tmp);
     h++;
   }
 
-  //
-  // Close icon
-  //
   {
-    auto  w = wid_new_square_button(wid_hiscore_window->wid_popup_container, "wid inventory window close");
-    point tl(width - 3, 0);
-    point br(width - 0, 3);
-    wid_set_pos(w, tl, br);
-    wid_set_tilename(TILE_LAYER_BG_0, w, "ui_icon_close");
+    TRACE_AND_INDENT();
+    auto p = wid_hiscore_window->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(p, "hiscore");
+
+    point tl = make_point(menu_width / 2 - 4, menu_height - 4);
+    point br = make_point(menu_width / 2 + 3, menu_height - 2);
+
+    wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(w, wid_hiscore_mouse_up);
+
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, "BACK");
   }
 
   wid_update(wid_hiscore_window->wid_text_area->wid_text_area);

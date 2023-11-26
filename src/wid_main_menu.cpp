@@ -319,16 +319,13 @@ void Game::wid_main_menu_select(void)
   auto box_style           = UI_WID_STYLE_NORMAL;
   auto box_highlight_style = UI_WID_STYLE_NORMAL;
 
-  int menu_height = 20;
-  int menu_width  = UI_WID_POPUP_WIDTH_NORMAL;
-
-  point tl;
-  point br;
-  tl                   = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
-  br                   = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  int   menu_height    = 20;
+  int   menu_width     = UI_WID_POPUP_WIDTH_NORMAL;
+  point tl             = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
+  point br             = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
   wid_main_menu_window = new WidPopup("Main menu", tl, br, nullptr, "nothing", false, false);
 
-  auto width = br.x - tl.x - 2;
+  auto button_width = br.x - tl.x - 2;
 
   {
     TRACE_NO_INDENT();
@@ -345,7 +342,7 @@ void Game::wid_main_menu_select(void)
     auto w = wid_new_square_button(p, "New Game");
 
     point tl = make_point(0, y_at);
-    point br = make_point(width, y_at + box_height - 1);
+    point br = make_point(button_width, y_at + box_height - 1);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -361,7 +358,7 @@ void Game::wid_main_menu_select(void)
     auto w = wid_new_square_button(p, "Load Game");
 
     point tl = make_point(0, y_at);
-    point br = make_point(width, y_at + box_height - 1);
+    point br = make_point(button_width, y_at + box_height - 1);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -377,7 +374,7 @@ void Game::wid_main_menu_select(void)
     auto w = wid_new_square_button(p, "Options");
 
     point tl = make_point(0, y_at);
-    point br = make_point(width, y_at + box_height - 1);
+    point br = make_point(button_width, y_at + box_height - 1);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -393,7 +390,7 @@ void Game::wid_main_menu_select(void)
     auto w = wid_new_square_button(p, "Credits");
 
     point tl = make_point(0, y_at);
-    point br = make_point(width, y_at + box_height - 1);
+    point br = make_point(button_width, y_at + box_height - 1);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -409,7 +406,7 @@ void Game::wid_main_menu_select(void)
     auto w = wid_new_square_button(p, "Hiscores");
 
     point tl = make_point(0, y_at);
-    point br = make_point(width, y_at + box_height - 1);
+    point br = make_point(button_width, y_at + box_height - 1);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -425,7 +422,7 @@ void Game::wid_main_menu_select(void)
     auto w = wid_new_square_button(p, "Quit Game");
 
     point tl = make_point(0, y_at);
-    point br = make_point(width, y_at + box_height - 1);
+    point br = make_point(button_width, y_at + box_height - 1);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);

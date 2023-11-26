@@ -17,7 +17,7 @@ static void wid_cfg_gfx_destroy(void)
   TRACE_AND_INDENT();
   delete wid_cfg_gfx_window;
   wid_cfg_gfx_window = nullptr;
-  config_changed        = false;
+  config_changed     = false;
 }
 
 static uint8_t wid_cfg_gfx_cancel(Widp w, int x, int y, uint32_t button)
@@ -285,7 +285,7 @@ void Game::wid_cfg_gfx_select(void)
 
     point tl = make_point(1, y_at);
     point br = make_point(6, y_at + 2);
-    wid_set_style(w, UI_WID_STYLE_DARK);
+    wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(w, wid_cfg_gfx_back);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "%%fg=white$B%%fg=reset$ack");

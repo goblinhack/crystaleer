@@ -50,14 +50,6 @@ static uint8_t wid_cfg_top_sound(Widp w, int x, int y, uint32_t button)
   return true;
 }
 
-static uint8_t wid_cfg_top_other(Widp w, int x, int y, uint32_t button)
-{
-  TRACE_AND_INDENT();
-  wid_cfg_top_destroy();
-  game->wid_cfg_other_select();
-  return true;
-}
-
 static uint8_t wid_cfg_top_back(Widp w, int x, int y, uint32_t button)
 {
   TRACE_AND_INDENT();
@@ -87,7 +79,6 @@ static uint8_t wid_cfg_top_key_up(Widp w, const struct SDL_Keysym *key)
               case 'm' : wid_cfg_top_mouse(nullptr, 0, 0, 0); return true;
               case 's' : wid_cfg_top_sound(nullptr, 0, 0, 0); return true;
               case 'k' : wid_cfg_top_keyboard(nullptr, 0, 0, 0); return true;
-              case 'o' : wid_cfg_top_other(nullptr, 0, 0, 0); return true;
               case 'b' :
               case SDLK_ESCAPE : wid_cfg_top_back(nullptr, 0, 0, 0); return true;
             }
@@ -123,11 +114,13 @@ void Game::wid_cfg_top_menu(void)
   auto box_style           = UI_WID_STYLE_NORMAL;
   auto box_highlight_style = UI_WID_STYLE_NORMAL;
 
-  point tl    = make_point(TERM_WIDTH / 2 - UI_WID_POPUP_WIDTH_NORMAL / 2, TERM_HEIGHT / 2 - 4);
-  point br    = make_point(TERM_WIDTH / 2 + UI_WID_POPUP_WIDTH_NORMAL / 2 - 1, TERM_HEIGHT / 2 + 15);
-  auto  width = br.x - tl.x - 2;
-
+  int   menu_height  = 20;
+  int   menu_width   = UI_WID_POPUP_WIDTH_NORMAL;
+  point tl           = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
+  point br           = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
   wid_cfg_top_window = new WidPopup("Config menu", tl, br, nullptr, "nothing", false, false);
+
+  auto button_width = br.x - tl.x - 2;
 
   {
     TRACE_AND_INDENT();
@@ -143,7 +136,7 @@ void Game::wid_cfg_top_menu(void)
     auto w = wid_new_square_button(p, "gfx");
 
     point tl = make_point(0, y_at);
-    point br = make_point(width, y_at + box_height);
+    point br = make_point(button_width, y_at + box_height);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -159,7 +152,7 @@ void Game::wid_cfg_top_menu(void)
     auto w = wid_new_square_button(p, "mouse");
 
     point tl = make_point(0, y_at);
-    point br = make_point(width, y_at + box_height);
+    point br = make_point(button_width, y_at + box_height);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -175,14 +168,14 @@ void Game::wid_cfg_top_menu(void)
     auto w = wid_new_square_button(p, "sound");
 
     point tl = make_point(0, y_at);
-    point br = make_point(width, y_at + box_height);
+    point br = make_point(button_width, y_at + box_height);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
     wid_set_on_mouse_up(w, wid_cfg_top_sound);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "%%fg=white$S%%fg=reset$ound and music");
+    wid_set_text(w, "%%fg=white$S%%fg=reset$ound");
   }
   y_at += box_step;
   {
@@ -191,7 +184,7 @@ void Game::wid_cfg_top_menu(void)
     auto w = wid_new_square_button(p, "keyboard");
 
     point tl = make_point(0, y_at);
-    point br = make_point(width, y_at + box_height);
+    point br = make_point(button_width, y_at + box_height);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -204,26 +197,10 @@ void Game::wid_cfg_top_menu(void)
   {
     TRACE_AND_INDENT();
     auto p = wid_cfg_top_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "Other stuffs");
-
-    point tl = make_point(0, y_at);
-    point br = make_point(width, y_at + box_height);
-    wid_set_mode(w, WID_MODE_OVER);
-    wid_set_style(w, box_highlight_style);
-    wid_set_mode(w, WID_MODE_NORMAL);
-    wid_set_style(w, box_style);
-    wid_set_on_mouse_up(w, wid_cfg_top_other);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, "%%fg=white$O%%fg=reset$ther stuffs");
-  }
-  y_at += box_step;
-  {
-    TRACE_AND_INDENT();
-    auto p = wid_cfg_top_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Back");
 
     point tl = make_point(0, y_at);
-    point br = make_point(width, y_at + box_height);
+    point br = make_point(button_width, y_at + box_height);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);

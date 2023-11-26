@@ -1,4 +1,4 @@
-//
+///
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
@@ -300,7 +300,7 @@ uint8_t sdl_init(void)
   LOG("SDL: OpenGL Vendor   : %s", glGetString(GL_VENDOR));
   LOG("SDL: OpenGL Renderer : %s", glGetString(GL_RENDERER));
   LOG("SDL: OpenGL Version  : %s", glGetString(GL_VERSION));
-  LOG("SDL: OpenGL Exts     : %s", glGetString(GL_EXTENSIONS));
+  DBG("SDL: OpenGL Exts     : %s", glGetString(GL_EXTENSIONS));
 
   SDL_GL_GetAttribute(SDL_GL_RED_SIZE, &value);
   LOG("SDL: Red size    : %d", value);
@@ -870,10 +870,6 @@ void config_game_gfx_update(void)
   TERM_WIDTH  = game->config.ui_gfx_term_width;
   TERM_HEIGHT = game->config.ui_gfx_term_height;
 
-  LOG("SDL: Terminal");
-  LOG("SDL: - ascii gl size        : %ux%u", game->config.ascii_gl_width, game->config.ascii_gl_height);
-  LOG("SDL: - term size            : %dx%d", TERM_WIDTH, TERM_HEIGHT);
-
   if (! TERM_WIDTH) {
     ERR("TERM_WIDTH is zero");
     return;
@@ -913,7 +909,8 @@ void config_game_gfx_update(void)
     LOG("SDL: - exceeded pixel height, try height: %d", TERM_HEIGHT);
   }
 
-  LOG("SDL: Updated terminal");
+  LOG("SDL: Terminal");
+  LOG("SDL: - ascii gl size        : %ux%u", game->config.ascii_gl_width, game->config.ascii_gl_height);
   LOG("SDL: - term size            : %dx%d", TERM_WIDTH, TERM_HEIGHT);
   LOG("SDL: - width to height ratio: %f", game->config.video_w_h_ratio);
   LOG("SDL: Map");

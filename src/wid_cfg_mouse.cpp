@@ -16,7 +16,7 @@ static void wid_cfg_mouse_destroy(void)
   TRACE_AND_INDENT();
   delete wid_cfg_mouse_window;
   wid_cfg_mouse_window = nullptr;
-  config_changed          = false;
+  config_changed       = false;
 }
 
 static uint8_t wid_cfg_mouse_cancel(Widp w, int x, int y, uint32_t button)
@@ -124,14 +124,15 @@ void Game::wid_cfg_mouse_select(void)
 
   auto box_style           = UI_WID_STYLE_HORIZ_DARK;
   auto box_highlight_style = UI_WID_STYLE_HORIZ_LIGHT;
-  auto m                   = TERM_WIDTH / 2;
 
-  point tl = make_point(m - 20, TERM_HEIGHT / 2 - 5);
-  point br = make_point(m + 20, TERM_HEIGHT / 2 + 6);
+  int   menu_height    = 20;
+  int   menu_width     = UI_WID_POPUP_WIDTH_NORMAL * 2;
+  point tl             = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
+  point br             = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  wid_cfg_mouse_window = new WidPopup("Mouse", tl, br, nullptr, "", false, false);
 
-  auto width = br.x - tl.x - 2;
+  auto button_width = br.x - tl.x - 2;
 
-  wid_cfg_mouse_window = new WidPopup("Mouse select", tl, br, nullptr, "", false, false);
   {
     TRACE_AND_INDENT();
     Widp w = wid_cfg_mouse_window->wid_popup_container;
@@ -146,7 +147,7 @@ void Game::wid_cfg_mouse_select(void)
     auto w = wid_new_square_button(p, "configuration");
 
     point tl = make_point(1, y_at);
-    point br = make_point(width, y_at + 2);
+    point br = make_point(button_width, y_at + 2);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "Configuration");
@@ -160,7 +161,7 @@ void Game::wid_cfg_mouse_select(void)
 
     point tl = make_point(1, y_at);
     point br = make_point(6, y_at + 2);
-    wid_set_style(w, UI_WID_STYLE_DARK);
+    wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(w, wid_cfg_mouse_back);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "%%fg=white$B%%fg=reset$ack");
@@ -170,8 +171,8 @@ void Game::wid_cfg_mouse_select(void)
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Save");
 
-    point tl = make_point(width - 15, y_at);
-    point br = make_point(width - 10, y_at + 2);
+    point tl = make_point(button_width - 15, y_at);
+    point br = make_point(button_width - 10, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_GREEN);
     wid_set_on_mouse_up(w, wid_cfg_mouse_save);
     wid_set_pos(w, tl, br);
@@ -182,8 +183,8 @@ void Game::wid_cfg_mouse_select(void)
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Cancel");
 
-    point tl = make_point(width - 8, y_at);
-    point br = make_point(width - 1, y_at + 2);
+    point tl = make_point(button_width - 8, y_at);
+    point br = make_point(button_width - 1, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_RED);
     wid_set_on_mouse_up(w, wid_cfg_mouse_cancel);
     wid_set_pos(w, tl, br);
@@ -202,19 +203,19 @@ void Game::wid_cfg_mouse_select(void)
     auto w = wid_new_square_button(p, "Mouse scroll lr invert lr");
 
     point tl = make_point(1, y_at);
-    point br = make_point(width / 2, y_at);
+    point br = make_point(button_width, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
-    wid_set_text(w, "Mouse scroll l/r invert");
+    wid_set_text(w, "Mouse invert left/right");
   }
   {
     TRACE_AND_INDENT();
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Mouse scroll lr invert");
 
-    point tl = make_point(29, y_at);
-    point br = make_point(37, y_at);
+    point tl = make_point(28, y_at);
+    point br = make_point(34, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
@@ -239,19 +240,19 @@ void Game::wid_cfg_mouse_select(void)
     auto w = wid_new_square_button(p, "Mouse scroll ud invert");
 
     point tl = make_point(1, y_at);
-    point br = make_point(width / 2, y_at);
+    point br = make_point(button_width, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
     wid_set_text_lhs(w, true);
-    wid_set_text(w, "Mouse scroll u/d invert");
+    wid_set_text(w, "Mouse invert up/down");
   }
   {
     TRACE_AND_INDENT();
     auto p = wid_cfg_mouse_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Mouse scroll ud invert value");
 
-    point tl = make_point(29, y_at);
-    point br = make_point(37, y_at);
+    point tl = make_point(28, y_at);
+    point br = make_point(34, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);

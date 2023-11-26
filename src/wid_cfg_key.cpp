@@ -1241,8 +1241,8 @@ void Game::wid_cfg_keyboard_select(void)
   auto box_highlight_style = UI_WID_STYLE_HORIZ_LIGHT;
   auto m                   = TERM_WIDTH / 2;
 
-  point tl    = make_point(m - 25, 2);
-  point br    = make_point(m + 25, TERM_HEIGHT - 2);
+  point tl    = make_point(m - TERM_WIDTH / 2, 2);
+  point br    = make_point(m + TERM_WIDTH / 2 - 1, TERM_HEIGHT - 2);
   auto  width = br.x - tl.x;
 
   wid_cfg_keyboard_window = new WidPopup("Keyboard select", tl, br, nullptr, "", false, true);
@@ -1254,19 +1254,19 @@ void Game::wid_cfg_keyboard_select(void)
   }
 
   auto rhs_button_left  = 5;
-  auto rhs_button_right = 21;
+  auto rhs_button_right = 20;
 
   int y_at = 0;
   {
     TRACE_AND_INDENT();
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "Thine keys of mighty power");
+    auto w = wid_new_square_button(p, "Keyboard");
 
     point tl = make_point(0, y_at);
     point br = make_point(width - 1, y_at);
     wid_set_shape_none(w);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "Thine keys of mighty power");
+    wid_set_text(w, "Keyboard");
   }
 
   y_at = 2;
@@ -1278,7 +1278,7 @@ void Game::wid_cfg_keyboard_select(void)
     point tl = make_point(1, y_at);
     point br = make_point(8, y_at + 2);
     wid_set_shape_square(w);
-    wid_set_style(w, UI_WID_STYLE_DARK);
+    wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(w, wid_cfg_keyboard_back);
     wid_set_pos(w, tl, br);
     wid_set_text(w, "Back");
@@ -1288,8 +1288,8 @@ void Game::wid_cfg_keyboard_select(void)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Save");
 
-    point tl = make_point(width - 17, y_at);
-    point br = make_point(width - 12, y_at + 2);
+    point tl = make_point(width - 18, y_at);
+    point br = make_point(width - 13, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_GREEN);
     wid_set_on_mouse_up(w, wid_cfg_keyboard_save);
     wid_set_pos(w, tl, br);
@@ -1300,8 +1300,8 @@ void Game::wid_cfg_keyboard_select(void)
     auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
     auto w = wid_new_square_button(p, "Cancel");
 
-    point tl = make_point(width - 10, y_at);
-    point br = make_point(width - 3, y_at + 2);
+    point tl = make_point(width - 11, y_at);
+    point br = make_point(width - 4, y_at + 2);
     wid_set_style(w, UI_WID_STYLE_RED);
     wid_set_on_mouse_up(w, wid_cfg_keyboard_cancel);
     wid_set_pos(w, tl, br);
@@ -1319,14 +1319,14 @@ void Game::wid_cfg_keyboard_select(void)
     auto w = wid_new_square_button(p, "");
 
     point tl = make_point(1, y_at);
-    point br = make_point(46, y_at);
+    point br = make_point(width - 4, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
     wid_set_on_mouse_up(w, wid_cfg_keyboard_profile_wasd);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "Use W,A,S,D for moving, arrow keys for map");
+    wid_set_text(w, "Use W,A,S,D for moving");
   }
   y_at++;
   {
@@ -1335,27 +1335,14 @@ void Game::wid_cfg_keyboard_select(void)
     auto w = wid_new_square_button(p, "");
 
     point tl = make_point(1, y_at);
-    point br = make_point(46, y_at);
+    point br = make_point(width - 4, y_at);
     wid_set_mode(w, WID_MODE_OVER);
     wid_set_style(w, box_highlight_style);
     wid_set_mode(w, WID_MODE_NORMAL);
     wid_set_style(w, box_style);
     wid_set_on_mouse_up(w, wid_cfg_keyboard_profile_arrow_keys);
     wid_set_pos(w, tl, br);
-    wid_set_text(w, "Use arrow keys for moving, W,A,S,D for map");
-  }
-
-  y_at += 2;
-  {
-    TRACE_AND_INDENT();
-    auto p = wid_cfg_keyboard_window->wid_text_area->wid_text_area;
-    auto w = wid_new_square_button(p, "");
-
-    point tl = make_point(1, y_at);
-    point br = make_point(46, y_at);
-    wid_set_shape_none(w);
-    wid_set_pos(w, tl, br);
-    wid_set_text(w, "(Use double click to jump in chasms or lava)");
+    wid_set_text(w, "Use arrow keys for moving");
   }
 
   y_at++;

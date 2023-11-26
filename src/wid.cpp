@@ -16,8 +16,8 @@
 #include "my_wid_console.hpp"
 
 #undef ENABLE_DEBUG_GFX_GL_BLEND
-#define ENABLE_DEBUG_UI
-#define ENABLE_DEBUG_UI2
+#undef ENABLE_DEBUG_UI
+#undef ENABLE_DEBUG_UI2
 
 //
 // Unique key for each tree
@@ -1624,7 +1624,7 @@ void wid_set_tile(int depth, Widp w, Thingp t)
     if (g_opt_ascii) {
       auto tile = tile_index_to_tile(t->tile_curr);
       if (tile) {
-        wid_set_style(w, UI_WID_STYLE_DARK);
+        wid_set_style(w, UI_WID_STYLE_NORMAL);
         std::string text;
         text += tile->ascii_fg_char;
         wid_set_text(w, text);
@@ -2688,7 +2688,7 @@ static Widp wid_new_scroll_trough(Widp parent)
   wid_set_color(w, WID_COLOR_BG, WHITE);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
 
-  wid_set_style(w, UI_WID_STYLE_DARK);
+  wid_set_style(w, UI_WID_STYLE_NORMAL);
   WID_DBG(w, "new");
 
   return w;
@@ -2753,7 +2753,7 @@ static Widp wid_new_scroll_bar(Widp parent, std::string name, Widp scrollbar_own
   wid_set_color(w, WID_COLOR_BG, WHITE);
   wid_set_color(w, WID_COLOR_TEXT_FG, WHITE);
 
-  wid_set_style(w, UI_WID_STYLE_DARK);
+  wid_set_style(w, UI_WID_STYLE_NORMAL);
   WID_DBG(w, "new");
 
   return w;

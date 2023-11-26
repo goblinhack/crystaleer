@@ -845,7 +845,7 @@ Widp wid_keyboard(const std::string &text, const std::string &title, wid_keyboar
         wid_set_on_key_down(b, wid_keyboard_button_key_event);
         wid_set_on_joy_button(b, wid_keyboard_button_joy_button_event);
         wid_set_on_mouse_down(b, wid_keyboard_button_mouse_event);
-        wid_set_style(b, UI_WID_STYLE_DARK);
+        wid_set_style(b, UI_WID_STYLE_NORMAL);
 
         wid_set_color(b, WID_COLOR_TEXT_FG, GREEN);
 

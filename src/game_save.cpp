@@ -71,6 +71,7 @@ std::ostream &operator<<(std::ostream &out, Bits< const Config & > const my)
   out << bits(my.t.key_action7);
   out << bits(my.t.key_action8);
   out << bits(my.t.key_action9);
+  out << bits(my.t.key_attack);
   out << bits(my.t.key_console);
   out << bits(my.t.key_unused1);
   out << bits(my.t.key_unused2);

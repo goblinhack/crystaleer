@@ -12,13 +12,12 @@ class HiScore
 {
 public:
   HiScore(void) = default;
-  HiScore(std::string name, std::string when, int score, int level_reached, std::string defeated_by)
+  HiScore(std::string name, std::string when, int score, int level_reached)
   {
     this->name          = name;
     this->when          = when;
     this->score         = score;
     this->level_reached = level_reached;
-    this->defeated_by   = defeated_by;
   }
 
   ~HiScore(void) = default;
@@ -28,15 +27,14 @@ public:
   //
   std::string name;
   std::string when;
-  std::string defeated_by;
   int         score;
   int         level_reached;
 
   //
   // The number of scores in the table.
   //
-  static const int max           = 20;
-  static const int max_displayed = 20;
+  static const int max           = 10;
+  static const int max_displayed = 10;
 };
 
 class HiScores
@@ -50,7 +48,7 @@ public:
   //
   std::vector< HiScore > hiscores;
 
-  void        add_new_hiscore(int score, int level, const std::string &name, const std::string &defeated_by);
+  void        add_new_hiscore(int score, int level, const std::string &name);
   bool        is_new_hiscore(int score);
   bool        is_new_highest_hiscore(int score);
   const char *place_str(int score);
