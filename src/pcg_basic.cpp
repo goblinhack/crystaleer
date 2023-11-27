@@ -28,7 +28,7 @@
  * your project.
  */
 
-#include "my_backtrace.hpp"
+#include <stdint.h>
 
 // state for global RNGs
 

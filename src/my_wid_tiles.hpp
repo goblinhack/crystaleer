@@ -8,7 +8,7 @@
 
 #include "my_main.hpp"
 #include "my_tile.hpp"
-#include <memory>
+// REMOVED #include <memory>
 
 typedef std::shared_ptr< class WidTiles > wid_tilesp;
 

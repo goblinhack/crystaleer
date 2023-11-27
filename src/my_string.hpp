@@ -9,9 +9,9 @@
 #include "my_main.hpp"
 
 #include <iostream>
-#include <map>
+// REMOVED #include <map>
 #include <memory>
-#include <vector>
+// REMOVED #include <vector>
 
 using shared_vector_string = std::shared_ptr< std::vector< std::string > >;
 using shared_vector_string = std::shared_ptr< std::vector< std::string > >;

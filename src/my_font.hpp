@@ -6,7 +6,7 @@
 #ifndef _MY_FONT_HPP_
 #define _MY_FONT_HPP_
 
-#include "my_fwd.hpp"
+// REMOVED #include "my_fwd.hpp"
 #include "my_tile.hpp"
 #include <array> // do not remove
 

@@ -6,7 +6,7 @@
 #define _MY_CALLSTACK_HPP_
 
 #include "my_main.hpp"
-#include "my_sys.hpp"
+// REMOVED #include "my_sys.hpp"
 #include <string>
 
 #define CAT(A, B)  A##B

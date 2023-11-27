@@ -15,14 +15,14 @@
 
 #ifdef __IPHONE_OS_VERSION_MIN_REQUIRED
 #define __IPHONEOS__
-#include "SDL_opengles.h"
+// REMOVED #include "SDL_opengles.h"
 
 #define CreateVertexBuffers(nobuf, bufptr) glGenBuffers(nobuf, bufptr)
 #define DeleteVertexBuffers(nobuf, bufptr) glDeleteBuffers(nobuf, bufptr)
 #else
 
 #ifdef _WIN32
-#include "SDL_opengl.h"
+// REMOVED #include "SDL_opengl.h"
 #endif
 
 #define glOrthof glOrtho
@@ -31,9 +31,9 @@
 #ifdef _WIN32
 //    #include "GL/glew.h"
 #elif __APPLE__
-#include "OpenGL/gl.h"
-#include "OpenGL/glext.h"
-#include "TargetConditionals.h"
+// REMOVED #include "OpenGL/gl.h"
+// REMOVED #include "OpenGL/glext.h"
+// REMOVED #include "TargetConditionals.h"
 
 #if TARGET_IPHONE_SIMULATOR
 // iOS Simulator
@@ -47,7 +47,7 @@
 #else
 // linux
 #include "GL/gl.h"
-#include "GL/glext.h"
+// REMOVED #include "GL/glext.h"
 #endif
 
 #include "my_color.hpp"

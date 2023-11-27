@@ -7,7 +7,7 @@
 #define _MY_WID_HPP_
 
 #include <list>
-#include <map>
+// REMOVED #include <map>
 
 #include "my_ascii.hpp"
 #include "my_time.hpp"

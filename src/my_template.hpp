@@ -7,7 +7,7 @@
 #define _MY_TEMPLATE_HPP_
 
 #include <algorithm> // for std::transform()
-#include <map>
+// REMOVED #include <map>
 
 #include "my_random.hpp"
 

@@ -6,8 +6,8 @@
 #ifndef _MY_PARTICLE_HPP_
 #define _MY_PARTICLE_HPP_
 
-#include "my_callback.hpp"
-#include "my_size.hpp"
+// REMOVED #include "my_callback.hpp"
+// REMOVED #include "my_size.hpp"
 
 using Particle = class Particle_
 {
