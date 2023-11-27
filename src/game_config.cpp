@@ -4,11 +4,8 @@
 
 #include <SDL_mixer.h>
 
-#include "my_array_bounds_check.hpp"
 #include "my_ascii.hpp"
 #include "my_game.hpp"
-#include "my_sdl_proto.hpp"
-#include "my_ui.hpp"
 
 void Config::fini(void) { TRACE_AND_INDENT(); }
 

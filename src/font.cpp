@@ -4,8 +4,6 @@
 
 #include "my_array_bounds_check.hpp"
 #include "my_font.hpp"
-#include "my_game.hpp"
-#include "my_tile.hpp"
 
 Fontp font_ui;
 

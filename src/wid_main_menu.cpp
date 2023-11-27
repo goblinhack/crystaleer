@@ -6,7 +6,6 @@
 #include "my_game.hpp"
 #include "my_random.hpp"
 #include "my_sdl_proto.hpp"
-#include "my_string.hpp"
 #include "my_ui.hpp"
 #include "my_wid_popups.hpp"
 

@@ -29,7 +29,6 @@
  */
 
 #include "my_backtrace.hpp"
-#include "my_game.hpp"
 
 // state for global RNGs
 

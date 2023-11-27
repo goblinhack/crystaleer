@@ -5,14 +5,10 @@
 #include "my_array_bounds_check.hpp"
 #include "my_ascii.hpp"
 #include "my_color_defs.hpp"
-#include "my_console.hpp"
 #include "my_font.hpp"
 #include "my_game.hpp"
-#include "my_main.hpp"
-#include "my_sdl_event.hpp"
 #include "my_string.hpp"
 #include "my_ui.hpp"
-#include "my_wid.hpp"
 
 struct ascii_ ascii;
 

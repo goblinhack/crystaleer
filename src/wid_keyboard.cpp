@@ -4,7 +4,6 @@
 
 #include "my_color_defs.hpp"
 #include "my_game.hpp"
-#include "my_math.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_sdl_event.hpp"
 #include "my_ui.hpp"

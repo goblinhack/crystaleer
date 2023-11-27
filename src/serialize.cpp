@@ -2,7 +2,6 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "my_point.hpp"
 #include "my_point3d.hpp"
 #include "my_serialize.hpp"
 

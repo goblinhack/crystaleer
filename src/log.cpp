@@ -4,7 +4,6 @@
 
 #include "my_backtrace.hpp"
 #include "my_console.hpp"
-#include "my_game.hpp"
 #include "my_log.hpp"
 #include "my_string.hpp"
 #include "my_wid_console.hpp"

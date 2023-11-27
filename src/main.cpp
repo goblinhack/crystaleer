@@ -6,7 +6,6 @@
 
 #include <ctime>      // do not remove
 #include <libgen.h>   // dirname
-#include <random>     // std::default_random_engine
 #include <signal.h>   // dirname
 #include <string.h>   // do not remove
 #include <strings.h>  // do not remove
@@ -15,7 +14,6 @@
 #include <unistd.h>   // do not remove
 
 #include "my_audio.hpp"
-#include "my_backtrace.hpp"
 #include "my_command.hpp"
 #include "my_dir.hpp"
 #include "my_file.hpp"
@@ -27,7 +25,6 @@
 #include "my_random.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
-#include "my_string.hpp"
 #include "my_wid_console.hpp"
 
 static char **ARGV;

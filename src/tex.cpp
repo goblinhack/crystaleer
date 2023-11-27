@@ -4,7 +4,6 @@
 
 #include "my_file.hpp"
 #include "my_gl.hpp"
-#include "my_main.hpp"
 #include "my_pixel.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"

@@ -7,7 +7,6 @@
 #include "my_sdl_proto.hpp"
 #include "my_ui.hpp"
 #include "my_wid_popup.hpp"
-#include "my_wid_popups.hpp"
 
 static WidPopup *wid_error_window;
 

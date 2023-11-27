@@ -4,7 +4,6 @@
 
 #include <string>
 
-#include "my_fwd.hpp"
 
 class Game *game;
 

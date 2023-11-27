@@ -3,7 +3,6 @@
 //
 
 #include "my_game.hpp"
-#include "my_main.hpp"
 
 Game::Game(std::string appdata)
 {

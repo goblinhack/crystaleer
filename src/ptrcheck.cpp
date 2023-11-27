@@ -12,7 +12,6 @@
 #include <unistd.h>  // do not remove
 
 #include "my_backtrace.hpp"
-#include "my_main.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_sprintf.hpp"
 #include "my_time.hpp"

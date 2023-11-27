@@ -3,7 +3,6 @@
 //
 
 #include "my_log.hpp"
-#include "my_main.hpp"
 #include "my_string.hpp"
 #include "my_time.hpp"
 #include <cstring>  // do not remove

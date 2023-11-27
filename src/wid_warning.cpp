@@ -2,12 +2,10 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "my_backtrace.hpp"
 #include "my_game.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_ui.hpp"
 #include "my_wid_popup.hpp"
-#include "my_wid_popups.hpp"
 
 WidPopup *wid_warning_window;
 

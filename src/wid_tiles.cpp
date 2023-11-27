@@ -4,7 +4,6 @@
 
 #include "my_array_bounds_check.hpp"
 #include "my_tex.hpp"
-#include "my_tile.hpp"
 #include "my_wid_tiles.hpp"
 
 static int                                                        wid_tiles_init_done;

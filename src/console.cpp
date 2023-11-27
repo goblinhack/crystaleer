@@ -2,7 +2,6 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "my_color.hpp"
 #include "my_color_defs.hpp"
 #include "my_console.hpp"
 #include "my_main.hpp"

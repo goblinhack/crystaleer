@@ -5,10 +5,8 @@
 #include "my_array_bounds_check.hpp"
 #include "my_ascii.hpp"
 #include "my_color_defs.hpp"
-#include "my_main.hpp"
 #include "my_string.hpp"
 #include "my_ui.hpp"
-#include "my_wid.hpp"
 
 static void ascii_put_box__(int style, const TileLayers tiles_in, int x1, int y1, int x2, int y2, color col_bg,
                             color col_fg, void *context)
