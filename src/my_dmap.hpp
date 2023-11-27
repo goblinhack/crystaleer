@@ -6,10 +6,10 @@
 #ifndef _MY_DMAP_HPP_
 #define _MY_DMAP_HPP_
 
-// REMOVED #include "my_game_defs.hpp"
-// REMOVED #include "my_point.hpp"
+#include "my_game_defs.hpp"
+#include "my_point.hpp"
 
-// REMOVED #include <array>
+#include <array>
 
 using Dmap = struct Dmap_ {
   std::array< std::array< uint8_t, MAP_HEIGHT_MAX >, MAP_WIDTH_MAX > val {};

@@ -15,14 +15,14 @@
 
 #ifdef __IPHONE_OS_VERSION_MIN_REQUIRED
 #define __IPHONEOS__
-// REMOVED #include "SDL_opengles.h"
+#include "SDL_opengles.h"
 
 #define CreateVertexBuffers(nobuf, bufptr) glGenBuffers(nobuf, bufptr)
 #define DeleteVertexBuffers(nobuf, bufptr) glDeleteBuffers(nobuf, bufptr)
 #else
 
 #ifdef _WIN32
-// REMOVED #include "SDL_opengl.h"
+#include "SDL_opengl.h"
 #endif
 
 #define glOrthof glOrtho
@@ -31,9 +31,9 @@
 #ifdef _WIN32
 //    #include "GL/glew.h"
 #elif __APPLE__
-// REMOVED #include "OpenGL/gl.h"
-// REMOVED #include "OpenGL/glext.h"
-// REMOVED #include "TargetConditionals.h"
+#include "OpenGL/gl.h"
+#include "OpenGL/glext.h"
+#include "TargetConditionals.h"
 
 #if TARGET_IPHONE_SIMULATOR
 // iOS Simulator
@@ -47,7 +47,7 @@
 #else
 // linux
 #include "GL/gl.h"
-// REMOVED #include "GL/glext.h"
+#include "GL/glext.h"
 #endif
 
 #include "my_color.hpp"
@@ -250,28 +250,28 @@ extern PFNGLDEBUGMESSAGECALLBACKPROC    glDebugMessageCallback_EXT;
 #define FBO_FINAL                   17
 #define FBO_SCREEN_FADE_IN_AND_OUT  18
 #define FBO_SMALL_POINT_LIGHTS      19
-#define FBO_SPRITE1                 20
-#define FBO_SPRITE2                 21
-#define FBO_SPRITE3                 22
-#define FBO_MAP_DEBUG               23 // MUST BE LAST, as we generate more from this point
-#define FBO_MAP_DEBUG_END           (FBO_MAP_DEBUG + (DUNGEONS_GRID_CHUNK_WIDTH * DUNGEONS_GRID_CHUNK_HEIGHT))
-#define MAX_FBO                     (FBO_MAP_DEBUG_END + 1)
+#define MAX_FBO                     20
 
-extern uint32_t                      NUMBER_BYTES_PER_VERTICE_2D;
-extern GLfloat                      *bufp;
-extern GLfloat                      *bufp_end;
-extern GLushort                      glapi_last_bottom;
-extern GLushort                      glapi_last_right;
-extern float                        *gl_array_buf;
-extern float                        *gl_array_buf_end;
-extern float                         glapi_last_tex_bottom;
-extern float                         glapi_last_tex_right;
-extern int                           buf_tex;
+extern uint32_t NUMBER_BYTES_PER_VERTICE_2D;
+
+extern GLfloat *bufp;
+extern GLfloat *bufp_end;
+extern GLushort glapi_last_bottom;
+extern GLushort glapi_last_right;
+
+extern float *gl_array_buf;
+extern float *gl_array_buf_end;
+extern float  glapi_last_tex_bottom;
+extern float  glapi_last_tex_right;
+
+extern int buf_tex;
+
 extern std::array< GLuint, MAX_FBO > fbo_id;
 extern std::array< GLuint, MAX_FBO > fbo_tex_id;
 extern std::array< GLuint, MAX_FBO > render_buf_id;
 extern std::array< isize, MAX_FBO >  fbo_size;
-void                                 blit(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom);
+
+void blit(int tex, GLushort left, GLushort top, GLushort right, GLushort bottom);
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, GLushort left, GLushort top,
           GLushort right, GLushort bottom);
 void blit(int tex, float texMinX, float texMinY, float texMaxX, float texMaxY, point tl, point tr, point bl,

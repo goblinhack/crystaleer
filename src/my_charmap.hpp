@@ -77,7 +77,7 @@ public:
   };
 
   // begin sort marker2 {
-  bool is_ascend_dungeon {false};
+  bool is_entrance {false};
   bool is_barrel {false};
   bool is_block_of_crystal {false};
   bool is_block_of_ice {false};
@@ -86,7 +86,7 @@ public:
   bool is_chasm {false};
   bool is_corridor {false};
   bool is_deep_water {false};
-  bool is_descend_dungeon {false};
+  bool is_exit {false};
   bool is_descend_sewer {false};
   bool is_dirt {false};
   bool is_door {false};
