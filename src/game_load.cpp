@@ -680,31 +680,32 @@ void Game::wid_load_select(void)
 
   game_load_error = "";
 
-  auto  m     = TERM_WIDTH / 2;
-  auto  h     = TERM_HEIGHT / 2;
-  point tl    = make_point(m - 40, h - 7);
-  point br    = make_point(m + 40, h + 8);
-  auto  width = br.x - tl.x;
+  int   menu_height = UI_WID_SAVE_SLOTS + 8;
+  int   menu_width  = UI_WID_POPUP_WIDTH_WIDE;
+  point tl          = make_point(TERM_WIDTH / 2 - (menu_width / 2), TERM_HEIGHT / 2 - (menu_height / 2));
+  point br          = make_point(TERM_WIDTH / 2 + (menu_width / 2), TERM_HEIGHT / 2 + (menu_height / 2));
+  wid_load          = new WidPopup("Game load", tl, br, nullptr, "", false, false);
 
-  wid_load = new WidPopup("Game load", tl, br, tile_find_mand("load"), "", false, false);
   wid_set_on_key_up(wid_load->wid_popup_container, wid_load_key_up);
   wid_set_on_key_down(wid_load->wid_popup_container, wid_load_key_down);
 
-  //
-  // Close icon
-  //
   {
-    auto  w = wid_new_square_button(wid_load->wid_popup_container, "wid inventory window close");
-    point tl(width - 3, 0);
-    point br(width - 0, 3);
-    wid_set_pos(w, tl, br);
-    wid_set_tilename(TILE_LAYER_BG_0, w, "ui_icon_close");
+    TRACE_AND_INDENT();
+    auto p = wid_load->wid_text_area->wid_text_area;
+    auto w = wid_new_square_button(p, "back");
+
+    point tl = make_point(menu_width / 2 - 4, menu_height - 4);
+    point br = make_point(menu_width / 2 + 3, menu_height - 2);
+
+    wid_set_style(w, UI_WID_STYLE_NORMAL);
     wid_set_on_mouse_up(w, wid_load_cancel);
+
+    wid_set_pos(w, tl, br);
+    wid_set_text(w, "BACK");
   }
 
   game_load_headers_only = true;
 
-  wid_load->log(UI_LOGGING_EMPTY_LINE);
   wid_load->log("Choose a load slot.");
 
   int y_at = 3;
@@ -723,7 +724,7 @@ void Game::wid_load_select(void)
     auto  p  = wid_load->wid_text_area->wid_text_area;
     auto  w  = wid_new_square_button(p, "load slot");
     point tl = make_point(0, y_at);
-    point br = make_point(width - 2, y_at);
+    point br = make_point(menu_width - 2, y_at);
 
     std::string s = std::to_string(slot) + ": ";
     if (! load(tmp_file, tmp)) {
