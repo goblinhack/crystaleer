@@ -4,7 +4,6 @@
 
 #include <string>
 
-
 class Game *game;
 
 char *DATA_PATH;

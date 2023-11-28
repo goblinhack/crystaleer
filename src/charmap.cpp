@@ -143,9 +143,9 @@ void Charmap::init_charmaps(void)
   c->c              = char_index;
   c->is_secret_door = true;
 
-  char_index           = Charmap::CHAR_ENTRANCE;
-  c                    = &all_charmaps[ char_index ];
-  c->c                 = char_index;
+  char_index     = Charmap::CHAR_ENTRANCE;
+  c              = &all_charmaps[ char_index ];
+  c->c           = char_index;
   c->is_entrance = true;
 
   char_index       = Charmap::CHAR_DECO;
@@ -153,9 +153,9 @@ void Charmap::init_charmaps(void)
   c->c             = char_index;
   c->is_floor_deco = true;
 
-  char_index            = Charmap::CHAR_EXIT;
-  c                     = &all_charmaps[ char_index ];
-  c->c                  = char_index;
+  char_index = Charmap::CHAR_EXIT;
+  c          = &all_charmaps[ char_index ];
+  c->c       = char_index;
   c->is_exit = true;
 
   char_index = Charmap::CHAR_KEY;

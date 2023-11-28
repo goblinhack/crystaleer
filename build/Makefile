@@ -11,7 +11,6 @@ all: pre
 format:
 	(cd src ; sh ../build/tidy_source.sh do)
 	build/format.sh
-	build/list_types.sh do
 
 tidy:
 	build/tidy_source.sh
