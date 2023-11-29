@@ -127,7 +127,7 @@ redo:
   //
   auto pass        = 1;
   auto depth       = 1;
-  auto depth_limit = DUNGEON_MAX_DEPTH;
+  auto depth_limit = ROOMS_DEPTH;
 
   while (depth <= depth_limit) {
     set_max_depth();
@@ -327,8 +327,8 @@ void Nodes::dump(void)
 {
   const auto                             step   = 5;
   const auto                             center = 3;
-  const int                              h      = (DUNGEON_GRID_CHUNK_HEIGHT_MAX + 1) * step;
-  const int                              w      = (DUNGEON_GRID_CHUNK_WIDTH_MAX + 1) * step;
+  const int                              h      = (ROOMS_DOWN + 1) * step;
+  const int                              w      = (ROOMS_ACROSS + 1) * step;
   std::array< std::array< char, h >, w > out;
 
   for (auto y = 0; y < h; y++) {
@@ -1982,7 +1982,7 @@ void Nodes::make_paths_off_critical_path_reachable(void)
   dmap_process_no_diagonals(&d, dmap_start, dmap_end, false);
   // dmap_print_walls(&d);
 
-  std::array< std::array< bool, DUNGEON_GRID_CHUNK_HEIGHT_MAX >, DUNGEON_GRID_CHUNK_WIDTH_MAX > on_critical_path = {};
+  std::array< std::array< bool, ROOMS_DOWN >, ROOMS_ACROSS > on_critical_path = {};
 
   auto p = dmap_solve_manhattan(&d, start);
   for (auto c : p) {
@@ -2251,7 +2251,7 @@ class Nodes *grid_test(void)
 {
   auto x = 1;
   while (x--) {
-    /* auto d = */ new Nodes(DUNGEON_GRID_CHUNK_WIDTH_MAX, DUNGEON_GRID_CHUNK_HEIGHT_MAX, true);
+    /* auto d = */ new Nodes(ROOMS_ACROSS, ROOMS_DOWN, true);
 
     continue;
     //        return d;

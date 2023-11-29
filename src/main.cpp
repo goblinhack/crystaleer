@@ -16,6 +16,7 @@
 #include "my_audio.hpp"
 #include "my_command.hpp"
 #include "my_dir.hpp"
+#include "my_dungeons.hpp"
 #include "my_file.hpp"
 #include "my_font.hpp"
 #include "my_game.hpp"
@@ -743,8 +744,12 @@ int main(int argc, char *argv[])
 
   color_init();
 
+  LOG("INI: Init dungeons");
+  dungeons_init();
+
 #if 1
   extern int grid_test(void);
+  game->set_seed();
   grid_test();
   int x = 1;
   if (x) {
