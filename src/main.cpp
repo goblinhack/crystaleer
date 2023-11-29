@@ -743,12 +743,12 @@ int main(int argc, char *argv[])
 
   color_init();
 
-#if 0
+#if 1
   extern int grid_test(void);
   grid_test();
   int x = 1;
   if (x) {
-  DIE("X");
+    DIE("X");
   }
 #endif
 

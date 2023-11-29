@@ -9,9 +9,9 @@
 //
 // Grid chunks are used to construct the levels and the overall dungeon
 //
-#define DUNGEON_GRID_CHUNK_HEIGHT_MAX 5 // Levels are split into grids. Each grid can have a room.
-#define DUNGEON_GRID_CHUNK_WIDTH_MAX  5 // Rooms across and down
-#define DUNGEON_MAX_DEPTH             3 // Max difficulty level
+#define DUNGEON_GRID_CHUNK_HEIGHT_MAX 4 // Levels are split into grids. Each grid can have a room.
+#define DUNGEON_GRID_CHUNK_WIDTH_MAX  4 // Rooms across and down
+#define DUNGEON_MAX_DEPTH             2 // Max difficulty level
 
 //
 // The border needs to be big enough so that the player is not

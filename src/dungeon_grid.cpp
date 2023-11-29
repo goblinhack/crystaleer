@@ -308,9 +308,11 @@ redo:
   // If the exit flow of the level matches that of the direction
   // then we don't really have a different direction to consider.
   //
-  remove_redundant_directions();
+  if (0) {
+    remove_redundant_directions();
 
-  while (remove_dead_end_paths()) {}
+    while (remove_dead_end_paths()) {}
+  }
 
   remove_stubs();
 
@@ -722,12 +724,14 @@ void Nodes::init_nodes(void)
 
   auto obstacles = ((grid_width * grid_height) / 10);
 
-  while (obstacles--) {
-    auto x = pcg_random_range(0, grid_width);
-    auto y = pcg_random_range(0, grid_height);
+  if (0) {
+    while (obstacles--) {
+      auto x = pcg_random_range(0, grid_width);
+      auto y = pcg_random_range(0, grid_height);
 
-    auto o   = getn(x, y);
-    o->depth = depth_obstacle;
+      auto o   = getn(x, y);
+      o->depth = depth_obstacle;
+    }
   }
 
   max_depth  = 0;
@@ -2245,7 +2249,7 @@ bool Nodes::remove_dead_end_paths(void)
 
 class Nodes *grid_test(void)
 {
-  auto x = 1000;
+  auto x = 1;
   while (x--) {
     /* auto d = */ new Nodes(DUNGEON_GRID_CHUNK_WIDTH_MAX, DUNGEON_GRID_CHUNK_HEIGHT_MAX, true);
 
