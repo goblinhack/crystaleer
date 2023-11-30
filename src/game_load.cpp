@@ -326,9 +326,6 @@ std::istream &operator>>(std::istream &in, Bits< class Game & > my)
     return in;
   }
 
-  in >> bits(MAP_WIDTH);
-  in >> bits(MAP_HEIGHT);
-
   in >> bits(my.t.seed);
   in >> bits(my.t.seed_manually_set);
   in >> bits(my.t.seed_name);

@@ -7,6 +7,7 @@
 #define _MY_ROOM_HPP_
 
 #include <array>
+#include <string>
 
 #include "my_fwd.hpp"
 #include "my_game_defs.hpp"
@@ -36,20 +37,19 @@ public:
   //
   uint32_t    roomno {0};
   room_type_t type;
-  uint8_t     width {MAP_ROOM_WIDTH};
-  uint8_t     height {MAP_ROOM_HEIGHT};
+  uint8_t     width {ROOM_WIDTH};
+  uint8_t     height {ROOM_HEIGHT};
 
-  std::array< std::array< char, MAP_ROOM_HEIGHT >, MAP_ROOM_WIDTH > data {};
+  std::array< std::array< char, ROOM_HEIGHT >, ROOM_WIDTH > data {};
 
   uint16_t exits_up {};
   uint16_t exits_down {};
   uint16_t exits_left {};
   uint16_t exits_right {};
-
-  Roomp rooms_new(const std::string &data);
 };
 
-void rooms_init(void);
-void rooms_fini(void);
+void  rooms_init(void);
+void  rooms_fini(void);
+Roomp room_new(const std::string &data);
 
 #endif

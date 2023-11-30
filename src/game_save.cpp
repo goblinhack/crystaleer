@@ -146,9 +146,6 @@ std::ostream &operator<<(std::ostream &out, Bits< const class Game & > const my)
   out << bits(my.t.saved_dir);
   out << bits(my.t.config);
 
-  out << bits(MAP_WIDTH);
-  out << bits(MAP_HEIGHT);
-
   out << bits(my.t.seed);
   out << bits(my.t.seed_manually_set);
   out << bits(my.t.seed_name);

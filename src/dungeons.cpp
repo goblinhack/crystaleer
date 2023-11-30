@@ -4,9 +4,11 @@
 
 #include "my_dungeon.hpp"
 #include "my_dungeons.hpp"
+#include "my_main.hpp"
 
 void dungeons_init(void)
 {
+  TRACE_NO_INDENT();
   add_dungeon(
       /* [    v       *    * v] */
       /* [   1----1---S1----1 ] */
@@ -62,6 +64,7 @@ void dungeons_init(void)
       "1111111111 111...1111 1111111111 1....E...."
       "1111111111 11111....1 1111111111 1...111...");
 
+  TRACE_NO_INDENT();
   add_dungeon(
       /* [                 * v] */
       /* [   1----1----1---S1 ] */

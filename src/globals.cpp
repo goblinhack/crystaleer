@@ -51,8 +51,6 @@ int TILES_VISIBLE_DOWN;
 //
 int MAP_HEIGHT;
 int MAP_WIDTH;
-int DUNGEON_GRID_CHUNK_HEIGHT;
-int DUNGEON_GRID_CHUNK_WIDTH;
 
 int g_last_logged_callframes_depth;
 

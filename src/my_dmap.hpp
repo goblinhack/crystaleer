@@ -12,7 +12,7 @@
 #include <array>
 
 using Dmap = struct Dmap_ {
-  std::array< std::array< uint8_t, MAP_HEIGHT_MAX >, MAP_WIDTH_MAX > val {};
+  std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > val {};
 };
 
 extern void dmap_process_no_diagonals(Dmap *D, point tl, point br, bool place_border);

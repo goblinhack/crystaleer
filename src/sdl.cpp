@@ -745,14 +745,6 @@ void config_game_gfx_update(void)
   LOG("SDL: Pixelart mod undate");
   TRACE_AND_INDENT();
 
-  //
-  // Need to do this really early on as GL FBOs are created from the map size.
-  //
-  MAP_WIDTH                 = MAP_WIDTH_MAX;
-  MAP_HEIGHT                = MAP_HEIGHT_MAX;
-  DUNGEON_GRID_CHUNK_HEIGHT = ROOMS_DOWN;
-  DUNGEON_GRID_CHUNK_WIDTH  = ROOMS_ACROSS;
-
   game->config.tile_width  = TILE_WIDTH_LORES;
   game->config.tile_height = TILE_HEIGHT_LORES;
 

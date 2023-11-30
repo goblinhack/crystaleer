@@ -163,9 +163,9 @@ void dmap_process_no_diagonals(Dmap *D, point tl, point br, bool place_border)
   uint8_t                                                                   i;
   uint8_t                                                                   lowest;
   uint8_t                                                                   changed;
-  static std::array< std::array< uint8_t, MAP_HEIGHT_MAX >, MAP_WIDTH_MAX > orig;
-  static std::array< std::array< uint8_t, MAP_HEIGHT_MAX >, MAP_WIDTH_MAX > orig_valid;
-  static std::array< std::array< uint8_t, MAP_HEIGHT_MAX >, MAP_WIDTH_MAX > valid;
+  static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > orig;
+  static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > orig_valid;
+  static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > valid;
 
   int minx, miny, maxx, maxy;
   if (tl.x < br.x) {
@@ -433,9 +433,9 @@ void dmap_process_allow_diagonals(Dmap *D, point tl, point br, bool place_border
   uint8_t                                                                   i;
   uint8_t                                                                   lowest;
   uint8_t                                                                   changed;
-  static std::array< std::array< uint8_t, MAP_HEIGHT_MAX >, MAP_WIDTH_MAX > orig;
-  static std::array< std::array< uint8_t, MAP_HEIGHT_MAX >, MAP_WIDTH_MAX > orig_valid;
-  static std::array< std::array< uint8_t, MAP_HEIGHT_MAX >, MAP_WIDTH_MAX > valid;
+  static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > orig;
+  static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > orig_valid;
+  static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > valid;
 
   int minx, miny, maxx, maxy;
   if (tl.x < br.x) {
@@ -678,9 +678,9 @@ void dmap_process_reverse_allow_diagonals(Dmap *D, point tl, point br, bool plac
   uint8_t                                                                   i;
   uint8_t                                                                   highest;
   uint8_t                                                                   changed;
-  static std::array< std::array< uint8_t, MAP_HEIGHT_MAX >, MAP_WIDTH_MAX > orig;
-  static std::array< std::array< uint8_t, MAP_HEIGHT_MAX >, MAP_WIDTH_MAX > orig_valid;
-  static std::array< std::array< uint8_t, MAP_HEIGHT_MAX >, MAP_WIDTH_MAX > valid;
+  static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > orig;
+  static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > orig_valid;
+  static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > valid;
 
   int minx, miny, maxx, maxy;
   if (tl.x < br.x) {
@@ -975,7 +975,7 @@ bool dmap_can_i_move_diagonally(const Dmap *D, point a, point b, point c)
 static std::vector< point > dmap_solve_(const Dmap *D, const point start, const std::vector< point > &all_deltas,
                                         bool allow_diagonals)
 {
-  std::array< std::array< bool, MAP_HEIGHT_MAX >, MAP_WIDTH_MAX > walked = {};
+  std::array< std::array< bool, MAP_HEIGHT >, MAP_WIDTH > walked = {};
   std::vector< point >                                            out    = {};
   auto                                                            at     = start;
 

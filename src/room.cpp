@@ -27,7 +27,7 @@ Room::Room(const std::string &data)
 
 Room::~Room(void) { oldptr(MTYPE_ROOM, this); }
 
-Roomp Room::rooms_new(const std::string &data)
+Roomp room_new(const std::string &data)
 {
   TRACE_NO_INDENT();
   auto r = new Room(data);
