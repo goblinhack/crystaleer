@@ -10,6 +10,7 @@
 
 class Charmap;
 class Font;
+class Room;
 class Tex;
 class Tile;
 class Tp;
@@ -20,14 +21,15 @@ struct Dmap_;
 struct SDL_Surface;
 
 #define NoThingId 0
-using ThingId = unsigned int;
-using Thingp  = void *;
-using Tpp     = void *;
 using Dmapp   = struct Dmap_ *;
 using Fontp   = class Font *;
 using Lightp  = class Light *;
+using Roomp   = class Room *;
 using Texp    = class Tex *;
+using ThingId = unsigned int;
+using Thingp  = void *;
 using Tilemap = std::vector< class Tile * >;
+using Tpp     = void *;
 using Widp    = class Wid *;
 
 #endif

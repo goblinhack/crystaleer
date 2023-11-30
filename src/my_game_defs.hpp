@@ -9,9 +9,9 @@
 //
 // Grid chunks are used to construct the levels and the overall dungeon
 //
-#define ROOMS_DOWN 4 // Levels are split into grids. Each grid can have a room.
-#define ROOMS_ACROSS  4 // Rooms across and down
-#define ROOMS_DEPTH             2 // Max difficulty level
+#define ROOMS_DOWN   4 // Levels are split into grids. Each grid can have a room.
+#define ROOMS_ACROSS 4 // Rooms across and down
+#define ROOMS_DEPTH  2 // Max difficulty level
 
 //
 // The border needs to be big enough so that the player is not
