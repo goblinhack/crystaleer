@@ -29,7 +29,7 @@ private:
 public:
   static Rooms all_rooms;
 
-  Room(const std::string &data);
+  Room(void);
   ~Room(void);
 
   //
@@ -50,6 +50,6 @@ public:
 
 void  rooms_init(void);
 void  rooms_fini(void);
-Roomp room_new(const std::string &data);
+Roomp room_new(void);
 
 #endif

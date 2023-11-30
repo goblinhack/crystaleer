@@ -19,7 +19,7 @@ void rooms_fini(void)
   }
 }
 
-Room::Room(const std::string &data)
+Room::Room(void)
 {
   this->roomno = all_rooms.size();
   newptr(MTYPE_ROOM, this, "room");
@@ -27,10 +27,11 @@ Room::Room(const std::string &data)
 
 Room::~Room(void) { oldptr(MTYPE_ROOM, this); }
 
-Roomp room_new(const std::string &data)
+Roomp room_new(void)
 {
   TRACE_NO_INDENT();
-  auto r = new Room(data);
+
+  auto r = new Room();
   Room::all_rooms.push_back(r);
   return r;
 }
