@@ -8,14 +8,14 @@
 
 enum {
   // begin sort marker1 {
-  CHAR_ROCK     = 'R',
-  CHAR_WALL     = '1',
-  CHAR_LADDER   = 'H',
+  CHAR_DOOR     = 'D',
   CHAR_ENTRANCE = 'S',
   CHAR_EXIT     = 'E',
-  CHAR_DOOR     = 'D',
   CHAR_KEY      = 'k',
+  CHAR_LADDER   = 'H',
+  CHAR_ROCK     = 'R',
   CHAR_SECRET   = 's',
+  CHAR_WALL     = '1',
   // end sort marker1 }
 };
 

@@ -149,20 +149,20 @@ void dmap_print(const Dmap *D)
 
 void dmap_process_no_diagonals(Dmap *D, point tl, point br, bool place_border)
 {
-  auto                                                                      before = SDL_GetTicks();
-  uint8_t                                                                   x;
-  uint8_t                                                                   y;
-  uint8_t                                                                   a;
-  uint8_t                                                                   b;
-  uint8_t                                                                   c;
-  uint8_t                                                                   d;
-  uint8_t                                                                  *e;
-  uint8_t                                                                   f;
-  uint8_t                                                                   g;
-  uint8_t                                                                   h;
-  uint8_t                                                                   i;
-  uint8_t                                                                   lowest;
-  uint8_t                                                                   changed;
+  auto                                                              before = SDL_GetTicks();
+  uint8_t                                                           x;
+  uint8_t                                                           y;
+  uint8_t                                                           a;
+  uint8_t                                                           b;
+  uint8_t                                                           c;
+  uint8_t                                                           d;
+  uint8_t                                                          *e;
+  uint8_t                                                           f;
+  uint8_t                                                           g;
+  uint8_t                                                           h;
+  uint8_t                                                           i;
+  uint8_t                                                           lowest;
+  uint8_t                                                           changed;
   static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > orig;
   static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > orig_valid;
   static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > valid;
@@ -419,20 +419,20 @@ void dmap_process_no_diagonals(Dmap *D, point tl, point br, bool place_border)
 //
 void dmap_process_allow_diagonals(Dmap *D, point tl, point br, bool place_border)
 {
-  auto                                                                      before = SDL_GetTicks();
-  uint8_t                                                                   x;
-  uint8_t                                                                   y;
-  uint8_t                                                                   a;
-  uint8_t                                                                   b;
-  uint8_t                                                                   c;
-  uint8_t                                                                   d;
-  uint8_t                                                                  *e;
-  uint8_t                                                                   f;
-  uint8_t                                                                   g;
-  uint8_t                                                                   h;
-  uint8_t                                                                   i;
-  uint8_t                                                                   lowest;
-  uint8_t                                                                   changed;
+  auto                                                              before = SDL_GetTicks();
+  uint8_t                                                           x;
+  uint8_t                                                           y;
+  uint8_t                                                           a;
+  uint8_t                                                           b;
+  uint8_t                                                           c;
+  uint8_t                                                           d;
+  uint8_t                                                          *e;
+  uint8_t                                                           f;
+  uint8_t                                                           g;
+  uint8_t                                                           h;
+  uint8_t                                                           i;
+  uint8_t                                                           lowest;
+  uint8_t                                                           changed;
   static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > orig;
   static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > orig_valid;
   static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > valid;
@@ -664,20 +664,20 @@ void dmap_process_allow_diagonals(Dmap *D, point tl, point br, bool place_border
 //
 void dmap_process_reverse_allow_diagonals(Dmap *D, point tl, point br, bool place_border)
 {
-  auto                                                                      before = SDL_GetTicks();
-  uint8_t                                                                   x;
-  uint8_t                                                                   y;
-  uint8_t                                                                   a;
-  uint8_t                                                                   b;
-  uint8_t                                                                   c;
-  uint8_t                                                                   d;
-  uint8_t                                                                  *e;
-  uint8_t                                                                   f;
-  uint8_t                                                                   g;
-  uint8_t                                                                   h;
-  uint8_t                                                                   i;
-  uint8_t                                                                   highest;
-  uint8_t                                                                   changed;
+  auto                                                              before = SDL_GetTicks();
+  uint8_t                                                           x;
+  uint8_t                                                           y;
+  uint8_t                                                           a;
+  uint8_t                                                           b;
+  uint8_t                                                           c;
+  uint8_t                                                           d;
+  uint8_t                                                          *e;
+  uint8_t                                                           f;
+  uint8_t                                                           g;
+  uint8_t                                                           h;
+  uint8_t                                                           i;
+  uint8_t                                                           highest;
+  uint8_t                                                           changed;
   static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > orig;
   static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > orig_valid;
   static std::array< std::array< uint8_t, MAP_HEIGHT >, MAP_WIDTH > valid;
@@ -976,8 +976,8 @@ static std::vector< point > dmap_solve_(const Dmap *D, const point start, const 
                                         bool allow_diagonals)
 {
   std::array< std::array< bool, MAP_HEIGHT >, MAP_WIDTH > walked = {};
-  std::vector< point >                                            out    = {};
-  auto                                                            at     = start;
+  std::vector< point >                                    out    = {};
+  auto                                                    at     = start;
 
   for (; /*ever*/;) {
     auto x = at.x;
