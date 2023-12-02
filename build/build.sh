@@ -515,7 +515,6 @@ fi
 
 cd ..
 
-make pre
 echo make -f build/Makefile $CORES "$@" all
 make -f build/Makefile $CORES "$@" all
 

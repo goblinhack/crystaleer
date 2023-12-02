@@ -8,7 +8,7 @@
 
 enum {
   // begin sort marker1 {
-  CHAR_DOOR      = 'D',
+  CHAR_LOCK      = 'D',
   CHAR_ENTRANCE  = 'S',
   CHAR_EXIT      = 'E',
   CHAR_KEY       = 'k',

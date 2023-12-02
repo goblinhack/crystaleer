@@ -54,31 +54,31 @@ void add_dungeon(const char *data)
             case CHAR_LADDER : break;
             case CHAR_ENTRANCE :
               if (r->type != ROOM_TYPE_NORMAL) {
-                DIE("room type already set");
+                DIE("room type already set when trying to set entrance");
               }
               r->type = ROOM_TYPE_ENTRANCE;
               break;
             case CHAR_EXIT :
               if (r->type != ROOM_TYPE_NORMAL) {
-                DIE("room type already set");
+                DIE("room type already set when trying to set as exit");
               }
               r->type = ROOM_TYPE_EXIT;
               break;
-            case CHAR_DOOR :
-              if (r->type != ROOM_TYPE_NORMAL) {
-                DIE("room type already set");
+            case CHAR_LOCK :
+              if ((r->type != ROOM_TYPE_NORMAL) && (r->type != ROOM_TYPE_LOCK)) {
+                DIE("room type already set when trying to set as lock");
               }
               r->type = ROOM_TYPE_LOCK;
               break;
             case CHAR_KEY :
-              if (r->type != ROOM_TYPE_NORMAL) {
-                DIE("room type already set");
+              if ((r->type != ROOM_TYPE_NORMAL) && (r->type != ROOM_TYPE_KEY)) {
+                DIE("room type already set when trying to set as key");
               }
               r->type = ROOM_TYPE_KEY;
               break;
             case CHAR_SECRET :
-              if (r->type != ROOM_TYPE_NORMAL) {
-                DIE("room type already set");
+              if ((r->type != ROOM_TYPE_NORMAL) && (r->type != ROOM_TYPE_SECRET)) {
+                DIE("room type already set when trying to set as secret");
               }
               r->type = ROOM_TYPE_SECRET;
               break;
@@ -259,7 +259,7 @@ static bool solve_dungeon(Nodes &n, Dungeon &d, point at)
   auto r    = get(d.rooms, x, y);
   auto node = n.getn(x, y);
 
-  if (! node->on_critical_path) {
+  if (! node->on_critical_path && ! node->is_entrance) {
     // return true;
   }
 
