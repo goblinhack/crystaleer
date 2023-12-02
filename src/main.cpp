@@ -696,8 +696,17 @@ int main(int argc, char *argv[])
   LOG("INI: Init dungeons");
   dungeons_init();
   make_dungeon();
+  exit(1);
 
-#if 1
+#if 0
+  for (auto s = 0; s < 100000; s++) {
+    CON("SEED %d", s);
+    pcg_srand(s);
+    make_dungeon();
+  }
+#endif
+
+#if 0
   extern int grid_test(void);
   grid_test();
   int x = 1;

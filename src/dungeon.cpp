@@ -120,9 +120,17 @@ void add_dungeon(const char *data)
         }
       }
 
+      if (r->type == ROOM_TYPE_ENTRANCE) {
+        r->exits_up = 0;
+      }
+
+      if (r->type == ROOM_TYPE_EXIT) {
+        r->exits_down = 0;
+      }
+
       Room::all_rooms_of_type[ r->type ].push_back(r);
-      // auto f = r->flip();
-      // Room::all_rooms_of_type[ f->type ].push_back(f);
+      auto f = r->flip();
+      Room::all_rooms_of_type[ f->type ].push_back(f);
     }
   }
 }
@@ -259,6 +267,12 @@ static bool solve_dungeon(Nodes &n, Dungeon &d, point at)
   auto r    = get(d.rooms, x, y);
   auto node = n.getn(x, y);
 
+  if (node->on_critical_path) {
+    if (node->dir_up && ! node->dir_down && node->dir_left && node->dir_right && ! node->is_exit) {
+      return false;
+    }
+  }
+
   if (! node->on_critical_path && ! node->is_entrance) {
     // return true;
   }
@@ -298,7 +312,6 @@ static bool solve_dungeon(Nodes &n, Dungeon &d, point at)
     //
     r = get_fitted_room_type(node, left_room, right_room, up_room, down_room);
     if (! r) {
-      dump_dungeon(d);
       CON("COULD NOT FIT at %d,%d", x, y);
       return false;
     }
@@ -372,22 +385,7 @@ void make_dungeon(void)
     if (solve_dungeon(n, d, entrance_at)) {
       dump_dungeon(d);
       CON("ALL GOOD");
-      exit(1);
       return;
     }
-    exit(1);
   }
-
-//
-// Place the exit and entrance
-//
-#if 0
-  Roomp entrance = get_random_room_type(ROOM_TYPE_ENTRANCE);
-  point entrance_at(pcg_random_range(1, ROOMS_ACROSS - 2), 0);
-  set(d.rooms, entrance_at.x, entrance_at.y, entrance);
-
-  Roomp exit = get_random_room_type(ROOM_TYPE_ENTRANCE);
-  point exit_at(pcg_random_range(1, ROOMS_ACROSS - 2), ROOMS_DOWN - 1);
-  set(d.rooms, exit_at.x, exit_at.y, exit);
-#endif
 }

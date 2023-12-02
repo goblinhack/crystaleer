@@ -40,10 +40,22 @@ Roomp Room::flip(void)
   auto f = new Room();
 
   f->type        = type;
-  f->exits_up    = exits_up;
-  f->exits_down  = exits_down;
+  f->exits_up    = 0;
+  f->exits_down  = 0;
   f->exits_left  = exits_right;
   f->exits_right = exits_left;
+
+  //
+  // Bit reverse
+  //
+  for (auto x = 0; x < ROOM_WIDTH; x++) {
+    if (exits_up & (1 << x)) {
+      f->exits_up |= 1 << (ROOM_WIDTH - x - 1);
+    }
+    if (exits_down & (1 << x)) {
+      f->exits_down |= 1 << (ROOM_WIDTH - x - 1);
+    }
+  }
 
   for (auto x = 0; x < ROOM_WIDTH; x++) {
     for (auto y = 0; y < ROOM_HEIGHT; y++) {
