@@ -3,11 +3,13 @@
 //
 
 #include "my_array_bounds_check.hpp"
+#include "my_charmap.hpp"
 #include "my_ptrcheck.hpp"
 #include "my_room.hpp"
 #include "my_vector_bounds_check.hpp"
 
 std::vector< Roomp > Room::all_rooms;
+std::vector< Roomp > Room::all_rooms_of_type[ ROOM_TYPE_MAX ];
 
 void rooms_init(void) { TRACE_NO_INDENT(); }
 
@@ -21,16 +23,41 @@ void rooms_fini(void)
 
 Room::Room(void)
 {
+  TRACE_NO_INDENT();
   this->roomno = all_rooms.size();
   newptr(MTYPE_ROOM, this, "room");
 }
 
-Room::~Room(void) { oldptr(MTYPE_ROOM, this); }
+Room::~Room(void)
+{
+  TRACE_NO_INDENT();
+  oldptr(MTYPE_ROOM, this);
+}
+
+Roomp Room::flip(void)
+{
+  TRACE_NO_INDENT();
+  auto f = new Room();
+
+  f->type        = type;
+  f->exits_up    = exits_up;
+  f->exits_down  = exits_down;
+  f->exits_left  = exits_right;
+  f->exits_right = exits_left;
+
+  for (auto x = 0; x < ROOM_WIDTH; x++) {
+    for (auto y = 0; y < ROOM_HEIGHT; y++) {
+      auto c = get(data, x, y);
+      set(f->data, ROOM_WIDTH - x - 1, y, c);
+    }
+  }
+
+  return f;
+}
 
 Roomp room_new(void)
 {
   TRACE_NO_INDENT();
-
   auto r = new Room();
   Room::all_rooms.push_back(r);
   return r;

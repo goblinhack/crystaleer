@@ -7,6 +7,7 @@
 // Implements layered cycles that can be used to then create a dungeon
 //
 #include "my_fwd.hpp"
+#include "my_point.hpp"
 #include "my_random.hpp"
 
 class DungeonNode
@@ -128,10 +129,7 @@ public:
   //
   int depth_obstacle {-1};
 
-  Nodes(int grid_width, int grid_height, bool is_dungeon) : grid_width(grid_width), grid_height(grid_height)
-  {
-    finish_constructor();
-  }
+  Nodes(int grid_width, int grid_height) : grid_width(grid_width), grid_height(grid_height) { finish_constructor(); }
 
   Nodes() { finish_constructor(); }
 

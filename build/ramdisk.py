@@ -124,7 +124,7 @@ for record_number, (folder, filenames) in enumerate(sorted(files.items())):
             myfile.write("\n")
 
 #
-# This wierd thing appears harmless but is a warning. Not sure how to check for it.
+# This weird thing appears harmless but is a warning. Not sure how to check for it.
 #
 if sys.platform == "linux":
     for ram_file in range(number_of_ramdisk_files):

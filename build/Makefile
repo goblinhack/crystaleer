@@ -2,7 +2,7 @@ pre:
 	@build/check_files.sh
 	@build/ramdisk.py
 
-all: pre
+all:
 	@if [ ! -f src/Makefile ]; then \
 	    (./RUNME;) \
 	fi

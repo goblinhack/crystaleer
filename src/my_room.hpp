@@ -19,14 +19,16 @@ using room_type_t = enum {
   ROOM_TYPE_ENTRANCE,
   ROOM_TYPE_EXIT,
   ROOM_TYPE_KEY,
-  ROOM_TYPE_DOOR,
+  ROOM_TYPE_LOCK,
   ROOM_TYPE_SECRET,
+  ROOM_TYPE_MAX,
 };
 
 class Room
 {
 private:
 public:
+  static Rooms all_rooms_of_type[ ROOM_TYPE_MAX ];
   static Rooms all_rooms;
 
   Room(void);
@@ -46,6 +48,8 @@ public:
   uint16_t exits_down {};
   uint16_t exits_left {};
   uint16_t exits_right {};
+
+  Roomp flip(void);
 };
 
 void  rooms_init(void);

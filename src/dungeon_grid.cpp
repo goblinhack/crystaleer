@@ -432,7 +432,7 @@ void Nodes::dump(void)
       s += get(out, x, y);
     }
     if (s != "") {
-      LOG("Node-grid: [%s]", s.c_str());
+      CON("Node-grid: [%s]", s.c_str());
     }
   }
 
@@ -2251,7 +2251,7 @@ class Nodes *grid_test(void)
 {
   auto x = 1;
   while (x--) {
-    /* auto d = */ new Nodes(ROOMS_ACROSS, ROOMS_DOWN, true);
+    /* auto d = */ new Nodes(ROOMS_ACROSS, ROOMS_DOWN);
 
     continue;
     //        return d;

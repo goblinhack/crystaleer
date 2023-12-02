@@ -16,6 +16,7 @@
 #include "my_audio.hpp"
 #include "my_command.hpp"
 #include "my_dir.hpp"
+#include "my_dungeon.hpp"
 #include "my_dungeons.hpp"
 #include "my_file.hpp"
 #include "my_font.hpp"
@@ -690,6 +691,21 @@ int main(int argc, char *argv[])
     }
   }
 
+  game->set_seed();
+
+  LOG("INI: Init dungeons");
+  dungeons_init();
+  make_dungeon();
+
+#if 1
+  extern int grid_test(void);
+  grid_test();
+  int x = 1;
+  if (x) {
+    DIE("X");
+  }
+#endif
+
   {
     TRACE_NO_INDENT();
     if (! sdl_init()) {
@@ -743,19 +759,6 @@ int main(int argc, char *argv[])
   pcg_srand((unsigned int) std::time(nullptr));
 
   color_init();
-
-  LOG("INI: Init dungeons");
-  dungeons_init();
-
-#if 1
-  extern int grid_test(void);
-  game->set_seed();
-  grid_test();
-  int x = 1;
-  if (x) {
-    DIE("X");
-  }
-#endif
 
   {
     TRACE_NO_INDENT();
