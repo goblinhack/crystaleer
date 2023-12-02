@@ -33,8 +33,6 @@ RUN apt-get install -y libsdl2-ttf-dev
 RUN apt-get install -y libsmpeg-dev
 RUN apt-get install -y libx11-6
 RUN apt-get install -y libxext6
-RUN apt-get install -y python3
-RUN apt-get install -y python3-dev
 RUN apt-get install -y ssh
 RUN apt-get install -y vim
 RUN apt-get install -y xutils-dev

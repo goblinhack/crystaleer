@@ -61,8 +61,6 @@ help_full()
       log_warn "  dnf install -y SDL2_mixer-devel SDL2_mixer"
       log_warn "  dnf install -y SDL2 SDL2-devel"
       log_warn "  dnf install -y SDL2_image SDL2_image-devel"
-      log_warn "  dnf install -y python3"
-      log_warn "  dnf install -y python3-devel"
       log_warn "  dnf install -y git"
       log_warn "  dnf install -y make automake gcc-c++"
       log_warn "  dnf install -y vim"
@@ -91,8 +89,6 @@ help_full()
                       libsmpeg-dev \
                       libx11-6 \
                       libxext6 \
-                      python3 \
-                      python3-dev \
                       ssh \
                       vim \
                       xutils-dev
@@ -151,9 +147,6 @@ help_full()
         ${MINGW_PKG_TYPE}-x86_64-ncurses \
         ${MINGW_PKG_TYPE}-x86_64-openssl \
         ${MINGW_PKG_TYPE}-x86_64-portaudio \
-        ${MINGW_PKG_TYPE}-x86_64-python3 \
-        ${MINGW_PKG_TYPE}-x86_64-python3-pip \
-        ${MINGW_PKG_TYPE}-x86_64-python3-py \
         ${MINGW_PKG_TYPE}-x86_64-readline \
         ${MINGW_PKG_TYPE}-x86_64-smpeg2 \
         ${MINGW_PKG_TYPE}-x86_64-speex \
