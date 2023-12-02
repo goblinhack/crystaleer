@@ -17,9 +17,9 @@ number_of_ramdisk_files = 10
 root = pathlib.Path(".")
 
 if sys.platform == 'win32':
-    target="zorbash.exe"
+    target="crystaleer.exe"
 else:
-    target="zorbash"
+    target="crystaleer"
 
 #
 # If the make target exists, see if any graphics are newer than the
