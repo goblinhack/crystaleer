@@ -129,7 +129,15 @@ void room_set_add(const char *data)
       }
 
       // XXX
-      r->type = ROOM_TYPE_NORMAL;
+      if (r->type == ROOM_TYPE_SECRET) {
+        // ok
+      } else if (r->type == ROOM_TYPE_ENTRANCE) {
+        // ok
+      } else if (r->type == ROOM_TYPE_EXIT) {
+        // ok
+      } else {
+        r->type = ROOM_TYPE_NORMAL;
+      }
       Room::all_rooms_of_type[ r->type ].push_back(r);
       // r->dump();
 
@@ -146,6 +154,7 @@ static Roomp get_fitted_room_type(RoomNode *node, Roomp room_left, Roomp room_ri
 
   auto required_room_type = ROOM_TYPE_NORMAL;
 
+  // XXX
   if (node->is_entrance) {
     required_room_type = ROOM_TYPE_ENTRANCE;
   }
@@ -154,15 +163,15 @@ static Roomp get_fitted_room_type(RoomNode *node, Roomp room_left, Roomp room_ri
   }
   if (node->is_key) {
     required_room_type = ROOM_TYPE_KEY;
+    required_room_type = ROOM_TYPE_NORMAL;
   }
   if (node->is_lock) {
     required_room_type = ROOM_TYPE_LOCK;
+    required_room_type = ROOM_TYPE_NORMAL;
   }
   if (node->is_secret) {
     required_room_type = ROOM_TYPE_SECRET;
   }
-  // XXX
-  required_room_type = ROOM_TYPE_NORMAL;
 
   int  max_elems = Room::all_rooms_of_type[ required_room_type ].size();
   auto tries     = max_elems * 4;
