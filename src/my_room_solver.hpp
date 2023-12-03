@@ -4,4 +4,5 @@
 
 #pragma once
 
-void dungeons_init(void);
+void room_set_add(const char *);
+void room_solver(void);

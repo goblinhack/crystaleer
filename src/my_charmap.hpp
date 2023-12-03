@@ -8,16 +8,20 @@
 
 enum {
   // begin sort marker1 {
-  CHAR_LOCK      = 'D',
+  CHAR_CONNECTOR = '#',
+  CHAR_DOWN      = 'v',
+  CHAR_EMPTY     = '.',
   CHAR_ENTRANCE  = 'S',
   CHAR_EXIT      = 'E',
   CHAR_KEY       = 'k',
   CHAR_LADDER    = 'H',
+  CHAR_LEFT      = '<',
+  CHAR_LOCK      = 'D',
+  CHAR_RIGHT     = '>',
   CHAR_ROCK      = 'R',
   CHAR_SECRET    = 's',
+  CHAR_UP        = '^',
   CHAR_WALL      = '1',
-  CHAR_EMPTY     = '.',
-  CHAR_CONNECTOR = '#',
   // end sort marker1 }
 };
 

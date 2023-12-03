@@ -19,6 +19,8 @@ clean:
 	(cd src; $(MAKE) $@)
 	/bin/rm -rf data/sounds
 	/bin/rm -rf data/gfx
+	/bin/rm -rf build.log
+	/bin/rm -rf appdata
 
 clobber: clean
 	(cd src; $(MAKE) $@)

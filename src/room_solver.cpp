@@ -7,24 +7,24 @@
 
 #include "my_array_bounds_check.hpp"
 #include "my_charmap.hpp"
-#include "my_dungeon.hpp"
-#include "my_dungeon_grid.hpp"
 #include "my_main.hpp"
 #include "my_point.hpp"
 #include "my_room.hpp"
+#include "my_room_grid.hpp"
+#include "my_room_solver.hpp"
 #include "my_template.hpp"
 
-class Dungeon
+class RoomSolver
 {
 private:
 public:
-  Dungeon(void) {}
-  ~Dungeon(void) {}
+  RoomSolver(void) {}
+  ~RoomSolver(void) {}
 
   std::array< std::array< Roomp, ROOMS_DOWN >, ROOMS_ACROSS > rooms {};
 };
 
-void add_dungeon(const char *data)
+void room_set_add(const char *data)
 {
   TRACE_NO_INDENT();
   const auto row_len      = (((ROOM_WIDTH + 1) * ROOMS_ACROSS) + 1);
@@ -90,24 +90,24 @@ void add_dungeon(const char *data)
 
           if (rx == 0) {
             auto c = data[ offset - 1 ];
-            if (c == CHAR_CONNECTOR) {
+            if ((c == CHAR_CONNECTOR) || (c == CHAR_LEFT)) {
               r->exits_left |= 1U << (ROOM_HEIGHT - ry - 1);
             }
           } else if (rx == ROOM_WIDTH - 1) {
             auto c = data[ offset + 1 ];
-            if (c == CHAR_CONNECTOR) {
+            if ((c == CHAR_CONNECTOR) || (c == CHAR_RIGHT)) {
               r->exits_right |= 1U << (ROOM_HEIGHT - ry - 1);
             }
           }
 
           if (ry == 0) {
             auto c = data[ offset - row_len ];
-            if (c == CHAR_CONNECTOR) {
+            if ((c == CHAR_CONNECTOR) || (c == CHAR_UP)) {
               r->exits_up |= 1U << (ROOM_WIDTH - rx - 1);
             }
           } else if (ry == ROOM_HEIGHT - 1) {
             auto c = data[ offset + row_len ];
-            if (c == CHAR_CONNECTOR) {
+            if ((c == CHAR_CONNECTOR) || (c == CHAR_DOWN)) {
               r->exits_down |= 1U << (ROOM_WIDTH - rx - 1);
             }
           }
@@ -128,15 +128,19 @@ void add_dungeon(const char *data)
         r->exits_down = 0;
       }
 
+      // XXX
+      r->type = ROOM_TYPE_NORMAL;
       Room::all_rooms_of_type[ r->type ].push_back(r);
+      // r->dump();
+
       auto f = r->flip();
       Room::all_rooms_of_type[ f->type ].push_back(f);
+      // f->dump();
     }
   }
 }
 
-static Roomp get_fitted_room_type(DungeonNode *node, Roomp room_left, Roomp room_right, Roomp room_up,
-                                  Roomp room_down)
+static Roomp get_fitted_room_type(RoomNode *node, Roomp room_left, Roomp room_right, Roomp room_up, Roomp room_down)
 {
   TRACE_NO_INDENT();
 
@@ -157,6 +161,8 @@ static Roomp get_fitted_room_type(DungeonNode *node, Roomp room_left, Roomp room
   if (node->is_secret) {
     required_room_type = ROOM_TYPE_SECRET;
   }
+  // XXX
+  required_room_type = ROOM_TYPE_NORMAL;
 
   int  max_elems = Room::all_rooms_of_type[ required_room_type ].size();
   auto tries     = max_elems * 4;
@@ -167,28 +173,16 @@ static Roomp get_fitted_room_type(DungeonNode *node, Roomp room_left, Roomp room
       return nullptr;
     }
 
-    if (node->dir_left) {
-      if (! r->exits_left) {
-        continue;
-      }
-    }
+    int wanted = (((node->has_door_left || node->has_secret_exit_left) ? 1 : 0) << 3)
+               | (((node->has_door_right || node->has_secret_exit_right) ? 1 : 0) << 2)
+               | (((node->has_door_up || node->has_secret_exit_up) ? 1 : 0) << 1)
+               | ((node->has_door_down || node->has_secret_exit_down) ? 1 : 0);
 
-    if (node->dir_right) {
-      if (! r->exits_right) {
-        continue;
-      }
-    }
+    int candidate = ((r->exits_left) ? 1 : 0) << 3 | ((r->exits_right) ? 1 : 0) << 2 | ((r->exits_up) ? 1 : 0) << 1
+                  | ((r->exits_down) ? 1 : 0);
 
-    if (node->dir_up) {
-      if (! r->exits_up) {
-        continue;
-      }
-    }
-
-    if (node->dir_down) {
-      if (! r->exits_down) {
-        continue;
-      }
+    if (wanted != candidate) {
+      continue;
     }
 
     if (room_left && room_left->exits_right) {
@@ -220,11 +214,11 @@ static Roomp get_fitted_room_type(DungeonNode *node, Roomp room_left, Roomp room
   return nullptr;
 }
 
-static void dump_dungeon(Dungeon d)
+static void room_solver_dump(RoomSolver d)
 {
   TRACE_NO_INDENT();
 
-  std::array< std::array< char, MAP_HEIGHT + ROOMS_ACROSS >, MAP_WIDTH + ROOMS_DOWN > out {};
+  std::array< std::array< char, MAP_HEIGHT + ROOMS_DOWN >, MAP_WIDTH + ROOMS_ACROSS > out {};
 
   for (auto room_across = 0; room_across < ROOMS_ACROSS; room_across++) {
     for (auto room_down = 0; room_down < ROOMS_DOWN; room_down++) {
@@ -258,7 +252,7 @@ static void dump_dungeon(Dungeon d)
   CON("-");
 }
 
-static bool solve_dungeon(Nodes &n, Dungeon &d, point at)
+static bool room_solver_recursive(RoomNodes &n, RoomSolver &d, point at)
 {
   TRACE_NO_INDENT();
 
@@ -271,10 +265,6 @@ static bool solve_dungeon(Nodes &n, Dungeon &d, point at)
     if (node->dir_up && ! node->dir_down && node->dir_left && node->dir_right && ! node->is_exit) {
       return false;
     }
-  }
-
-  if (! node->on_critical_path && ! node->is_entrance) {
-    // return true;
   }
 
   if (! r) {
@@ -313,6 +303,7 @@ static bool solve_dungeon(Nodes &n, Dungeon &d, point at)
     r = get_fitted_room_type(node, left_room, right_room, up_room, down_room);
     if (! r) {
       CON("COULD NOT FIT at %d,%d", x, y);
+      exit(1);
       return false;
     }
     set(d.rooms, x, y, r);
@@ -320,7 +311,7 @@ static bool solve_dungeon(Nodes &n, Dungeon &d, point at)
 
   if (x > 0) {
     if (! get(d.rooms, x - 1, y)) {
-      if (! solve_dungeon(n, d, point(x - 1, y))) {
+      if (! room_solver_recursive(n, d, point(x - 1, y))) {
         return false;
       }
     }
@@ -328,7 +319,7 @@ static bool solve_dungeon(Nodes &n, Dungeon &d, point at)
 
   if (x < ROOMS_ACROSS - 1) {
     if (! get(d.rooms, x + 1, y)) {
-      if (! solve_dungeon(n, d, point(x + 1, y))) {
+      if (! room_solver_recursive(n, d, point(x + 1, y))) {
         return false;
       }
     }
@@ -336,7 +327,7 @@ static bool solve_dungeon(Nodes &n, Dungeon &d, point at)
 
   if (y > 0) {
     if (! get(d.rooms, x, y - 1)) {
-      if (! solve_dungeon(n, d, point(x, y - 1))) {
+      if (! room_solver_recursive(n, d, point(x, y - 1))) {
         return false;
       }
     }
@@ -344,7 +335,7 @@ static bool solve_dungeon(Nodes &n, Dungeon &d, point at)
 
   if (y < ROOMS_DOWN - 1) {
     if (! get(d.rooms, x, y + 1)) {
-      if (! solve_dungeon(n, d, point(x, y + 1))) {
+      if (! room_solver_recursive(n, d, point(x, y + 1))) {
         return false;
       }
     }
@@ -353,14 +344,14 @@ static bool solve_dungeon(Nodes &n, Dungeon &d, point at)
   return true;
 }
 
-void make_dungeon(void)
+void room_solver(void)
 {
   TRACE_NO_INDENT();
 
   for (;;) {
-    Dungeon d;
-    Nodes   n(ROOMS_ACROSS, ROOMS_DOWN);
-    point   entrance_at;
+    RoomSolver d;
+    RoomNodes  n(ROOMS_ACROSS, ROOMS_DOWN);
+    point      entrance_at;
     n.dump();
 
     //
@@ -382,8 +373,8 @@ void make_dungeon(void)
     //
     // Create all the rooms
     //
-    if (solve_dungeon(n, d, entrance_at)) {
-      dump_dungeon(d);
+    if (room_solver_recursive(n, d, entrance_at)) {
+      room_solver_dump(d);
       CON("ALL GOOD");
       return;
     }

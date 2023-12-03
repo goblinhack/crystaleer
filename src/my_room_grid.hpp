@@ -3,18 +3,20 @@
 //
 
 #pragma once
+
 //
-// Implements layered cycles that can be used to then create a dungeon
+// Implements layered cycles that can be used to then create a set of rooms
 //
 #include "my_fwd.hpp"
+#include "my_game_defs.hpp"
 #include "my_point.hpp"
 #include "my_random.hpp"
 
-class DungeonNode
+class RoomNode
 {
 public:
   //
-  // Nodes have a depth number, optional key, start and exit and corridors
+  // RoomNodes have a depth number, optional key, start and exit and corridors
   // to adjoining depths. Depth increases as we get closer to the exit.
   //
   int depth {0};
@@ -25,7 +27,7 @@ public:
   int walk_order_level_no {};
 
   //
-  // pass 1 is the main dungeon
+  // pass 1 is the critical path
   // pass 2 are secret levels
   //
   int pass {0};
@@ -110,16 +112,13 @@ public:
   }
 };
 
-class Nodes
+class RoomNodes
 {
 public:
-  std::vector< DungeonNode > nodes;
+  std::vector< RoomNode > nodes;
 
-  //
-  // We build either a single or all dungeons
-  //
-  int grid_width {5};
-  int grid_height {5};
+  int grid_width {ROOMS_ACROSS};
+  int grid_height {ROOMS_DOWN};
 
   int max_depth {0};
   int max_vdepth {0};
@@ -129,22 +128,25 @@ public:
   //
   int depth_obstacle {-1};
 
-  Nodes(int grid_width, int grid_height) : grid_width(grid_width), grid_height(grid_height) { finish_constructor(); }
+  RoomNodes(int grid_width, int grid_height) : grid_width(grid_width), grid_height(grid_height)
+  {
+    finish_constructor();
+  }
 
-  Nodes() { finish_constructor(); }
+  RoomNodes() { finish_constructor(); }
 
   bool create_path_to_exit(int pass);
   bool is_oob(const int x, const int y);
-  bool node_is_a_room(DungeonNode *n);
-  bool node_is_free(DungeonNode *n);
+  bool node_is_a_room(RoomNode *n);
+  bool node_is_free(RoomNode *n);
   bool place_entrance(void);
   bool place_exit(void);
   bool place_key(int depth, int pass);
   bool place_lock(int depth, int pass);
   bool remove_dead_end_paths(void);
 
-  DungeonNode *getn(const int x, const int y);
-  DungeonNode *node_addr(const int x, const int y);
+  RoomNode *getn(const int x, const int y);
+  RoomNode *node_addr(const int x, const int y);
 
   int offset(const int x, const int y);
   int snake_walk(int depth, int max_placed, int pass);
@@ -163,10 +165,10 @@ public:
   void join_nodes_of_same_depth(int depth, int pass);
   void log(void);
   void make_paths_off_critical_path_reachable(void);
-  void putn(const int x, const int y, const DungeonNode n);
+  void putn(const int x, const int y, const RoomNode n);
   void random_dir(int *dx, int *dy);
   void remove_redundant_directions(void);
   void remove_stubs();
   void set_max_depth(void);
 };
-extern class Nodes *grid_test(void);
+extern class RoomNodes *grid_test(void);

@@ -7,7 +7,7 @@
 #define _MY_GAME_DEFS_HPP_
 
 //
-// Grid chunks are used to construct the levels and the overall dungeon
+// Grid chunks are used to construct the levels
 //
 #define ROOMS_DOWN   4 // Levels are split into grids. Each grid can have a room.
 #define ROOMS_ACROSS 4 // Rooms across and down

@@ -18,7 +18,7 @@ static void wid_error_destroy(void)
 
   game->fini();
   game->wid_main_menu_select();
-  CON("The dungeon went dark briefly. What happened?");
+  CON("It all went dark briefly. What happened?");
 }
 
 static uint8_t wid_error_key_up(Widp w, const struct SDL_Keysym *key)

@@ -50,6 +50,7 @@ public:
   uint16_t exits_right {};
 
   Roomp flip(void);
+  void  dump(void);
 };
 
 void  rooms_init(void);

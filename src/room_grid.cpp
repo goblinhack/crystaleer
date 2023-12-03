@@ -3,15 +3,15 @@
 //
 
 //
-// Implements layered cycles that can be used to then create a dungeon
+// Implements layered cycles that can be used to then create a set of rooms
 //
 
 #include <list>
 
 #include "my_array_bounds_check.hpp"
 #include "my_dmap.hpp"
-#include "my_dungeon_grid.hpp"
 #include "my_main.hpp"
+#include "my_room_grid.hpp"
 
 static bool debug_enabled = false;
 
@@ -116,7 +116,7 @@ static bool debug_enabled = false;
  *      2-2-* E
  */
 
-void Nodes::finish_constructor(void)
+void RoomNodes::finish_constructor(void)
 {
 redo:
   init_nodes();
@@ -323,7 +323,7 @@ redo:
   }
 }
 
-void Nodes::dump(void)
+void RoomNodes::dump(void)
 {
   const auto                             step   = 5;
   const auto                             center = 3;
@@ -441,42 +441,42 @@ void Nodes::dump(void)
       auto node = getn(x, y);
       if (node->has_door_down) {
         if (y == grid_height - 1) {
-          ERR("DungeonNode %d,%d has exit down off end of map", x, y);
+          ERR("RoomNode %d,%d has exit down off end of map", x, y);
         }
       }
       if (node->has_door_right) {
         if (x == grid_width - 1) {
-          ERR("DungeonNode %d,%d has exit right off end of map", x, y);
+          ERR("RoomNode %d,%d has exit right off end of map", x, y);
         }
       }
       if (node->has_door_left) {
         if (x == 0) {
-          ERR("DungeonNode %d,%d has exit left off end of map", x, y);
+          ERR("RoomNode %d,%d has exit left off end of map", x, y);
         }
       }
       if (node->has_door_up) {
         if (y == 0) {
-          ERR("DungeonNode %d,%d has exit up off end of map", x, y);
+          ERR("RoomNode %d,%d has exit up off end of map", x, y);
         }
       }
       if (node->has_secret_exit_down) {
         if (y == grid_height - 1) {
-          ERR("DungeonNode %d,%d has secret exit down off end of map", x, y);
+          ERR("RoomNode %d,%d has secret exit down off end of map", x, y);
         }
       }
       if (node->has_secret_exit_right) {
         if (x == grid_width - 1) {
-          ERR("DungeonNode %d,%d has secret exit right off end of map", x, y);
+          ERR("RoomNode %d,%d has secret exit right off end of map", x, y);
         }
       }
       if (node->has_secret_exit_left) {
         if (x == 0) {
-          ERR("DungeonNode %d,%d has secret exit left off end of map", x, y);
+          ERR("RoomNode %d,%d has secret exit left off end of map", x, y);
         }
       }
       if (node->has_secret_exit_up) {
         if (y == 0) {
-          ERR("DungeonNode %d,%d has secret exit up off end of map", x, y);
+          ERR("RoomNode %d,%d has secret exit up off end of map", x, y);
         }
       }
     }
@@ -488,25 +488,25 @@ void Nodes::dump(void)
       if (node->has_door_down) {
         auto o = getn(x, y + 1);
         if (! o || ! o->depth) {
-          ERR("DungeonNode %d,%d has exit down but no node exists", x, y);
+          ERR("RoomNode %d,%d has exit down but no node exists", x, y);
         }
       }
       if (node->has_door_right) {
         auto o = getn(x + 1, y);
         if (! o || ! o->depth) {
-          ERR("DungeonNode %d,%d has exit right but no node exists", x, y);
+          ERR("RoomNode %d,%d has exit right but no node exists", x, y);
         }
       }
       if (node->has_door_left) {
         auto o = getn(x - 1, y);
         if (! o || ! o->depth) {
-          ERR("DungeonNode %d,%d has exit left but no node exists", x, y);
+          ERR("RoomNode %d,%d has exit left but no node exists", x, y);
         }
       }
       if (node->has_door_up) {
         auto o = getn(x, y - 1);
         if (! o || ! o->depth) {
-          ERR("DungeonNode %d,%d has exit up but no node exists", x, y);
+          ERR("RoomNode %d,%d has exit up but no node exists", x, y);
         }
       }
     }
@@ -518,49 +518,49 @@ void Nodes::dump(void)
       if (node->has_door_down) {
         auto o = getn(x, y + 1);
         if (o->depth == depth_obstacle) {
-          ERR("DungeonNode %d,%d has exit down but that node is an obstacle", x, y);
+          ERR("RoomNode %d,%d has exit down but that node is an obstacle", x, y);
         }
       }
       if (node->has_door_right) {
         auto o = getn(x + 1, y);
         if (o->depth == depth_obstacle) {
-          ERR("DungeonNode %d,%d has exit right but that node is an obstacle", x, y);
+          ERR("RoomNode %d,%d has exit right but that node is an obstacle", x, y);
         }
       }
       if (node->has_door_left) {
         auto o = getn(x - 1, y);
         if (o->depth == depth_obstacle) {
-          ERR("DungeonNode %d,%d has exit left but that node is an obstacle", x, y);
+          ERR("RoomNode %d,%d has exit left but that node is an obstacle", x, y);
         }
       }
       if (node->has_door_up) {
         auto o = getn(x, y - 1);
         if (o->depth == depth_obstacle) {
-          ERR("DungeonNode %d,%d has exit up but that node is an obstacle", x, y);
+          ERR("RoomNode %d,%d has exit up but that node is an obstacle", x, y);
         }
       }
       if (node->has_secret_exit_down) {
         auto o = getn(x, y + 1);
         if (o->depth == depth_obstacle) {
-          ERR("DungeonNode %d,%d has secret exit down but that node is an obstacle", x, y);
+          ERR("RoomNode %d,%d has secret exit down but that node is an obstacle", x, y);
         }
       }
       if (node->has_secret_exit_right) {
         auto o = getn(x + 1, y);
         if (o->depth == depth_obstacle) {
-          ERR("DungeonNode %d,%d has secret exit right but that node is an obstacle", x, y);
+          ERR("RoomNode %d,%d has secret exit right but that node is an obstacle", x, y);
         }
       }
       if (node->has_secret_exit_left) {
         auto o = getn(x - 1, y);
         if (o->depth == depth_obstacle) {
-          ERR("DungeonNode %d,%d has secret exit left but that node is an obstacle", x, y);
+          ERR("RoomNode %d,%d has secret exit left but that node is an obstacle", x, y);
         }
       }
       if (node->has_secret_exit_up) {
         auto o = getn(x, y - 1);
         if (o->depth == depth_obstacle) {
-          ERR("DungeonNode %d,%d has secret exit up but that node is an obstacle", x, y);
+          ERR("RoomNode %d,%d has secret exit up but that node is an obstacle", x, y);
         }
       }
     }
@@ -571,29 +571,29 @@ void Nodes::dump(void)
       auto node = getn(x, y);
       if (node->has_door_down) {
         if (node->has_secret_exit_down) {
-          ERR("DungeonNode %d,%d has both normal and secret exits down", x, y);
+          ERR("RoomNode %d,%d has both normal and secret exits down", x, y);
         }
       }
       if (node->has_door_right) {
         if (node->has_secret_exit_right) {
-          ERR("DungeonNode %d,%d has both normal and secret exits right", x, y);
+          ERR("RoomNode %d,%d has both normal and secret exits right", x, y);
         }
       }
       if (node->has_door_left) {
         if (node->has_secret_exit_left) {
-          ERR("DungeonNode %d,%d has both normal and secret exits left", x, y);
+          ERR("RoomNode %d,%d has both normal and secret exits left", x, y);
         }
       }
       if (node->has_door_up) {
         if (node->has_secret_exit_up) {
-          ERR("DungeonNode %d,%d has both normal and secret exits up", x, y);
+          ERR("RoomNode %d,%d has both normal and secret exits up", x, y);
         }
       }
     }
   }
 }
 
-void Nodes::debug(std::string msg)
+void RoomNodes::debug(std::string msg)
 {
   if (! debug_enabled) {
     return;
@@ -603,7 +603,7 @@ void Nodes::debug(std::string msg)
   LOG("Node-grid: ^^^^^ %s ^^^^^", msg.c_str());
 }
 
-int Nodes::offset(const int x, const int y)
+int RoomNodes::offset(const int x, const int y)
 {
   auto offset = grid_width * y;
   offset += x;
@@ -611,12 +611,12 @@ int Nodes::offset(const int x, const int y)
   return offset;
 }
 
-bool Nodes::is_oob(const int x, const int y)
+bool RoomNodes::is_oob(const int x, const int y)
 {
   return ((x < 0) || (x >= grid_width) || (y < 0) || (y >= grid_height));
 }
 
-DungeonNode *Nodes::node_addr(const int x, const int y)
+RoomNode *RoomNodes::node_addr(const int x, const int y)
 {
   if (unlikely(is_oob(x, y))) {
     return nullptr;
@@ -625,7 +625,7 @@ DungeonNode *Nodes::node_addr(const int x, const int y)
   return (&nodes[ offset(x, y) ]);
 }
 
-void Nodes::putn(const int x, const int y, const DungeonNode n)
+void RoomNodes::putn(const int x, const int y, const RoomNode n)
 {
   auto p = node_addr(x, y);
   if (p != nullptr) {
@@ -633,13 +633,13 @@ void Nodes::putn(const int x, const int y, const DungeonNode n)
   }
 }
 
-DungeonNode *Nodes::getn(const int x, const int y)
+RoomNode *RoomNodes::getn(const int x, const int y)
 {
   auto p = node_addr(x, y);
   return p;
 }
 
-point Nodes::random_dir(void)
+point RoomNodes::random_dir(void)
 {
   auto dx = 0, dy = 0;
 
@@ -664,7 +664,7 @@ point Nodes::random_dir(void)
   return (point(dx, dy));
 }
 
-void Nodes::random_dir(int *dx, int *dy)
+void RoomNodes::random_dir(int *dx, int *dy)
 {
   switch (pcg_random_range(0, 4)) {
     case 0 :
@@ -689,7 +689,7 @@ void Nodes::random_dir(int *dx, int *dy)
 //
 // Set up nodes so they know their coords
 //
-void Nodes::init_nodes(void)
+void RoomNodes::init_nodes(void)
 {
   nodes.resize(grid_width * grid_height);
 
@@ -742,11 +742,11 @@ void Nodes::init_nodes(void)
 // Walk the depth randomly, ala snake until you hit your own tail,
 // forking randomly also
 //
-bool Nodes::node_is_free(DungeonNode *n) { return (n && ! n->depth); }
+bool RoomNodes::node_is_free(RoomNode *n) { return (n && ! n->depth); }
 
-bool Nodes::node_is_a_room(DungeonNode *n) { return (n && n->depth && (n->depth != depth_obstacle)); }
+bool RoomNodes::node_is_a_room(RoomNode *n) { return (n && n->depth && (n->depth != depth_obstacle)); }
 
-int Nodes::snake_walk(int depth, int max_placed, int pass)
+int RoomNodes::snake_walk(int depth, int max_placed, int pass)
 {
   std::list< point > s;
 
@@ -1037,7 +1037,7 @@ int Nodes::snake_walk(int depth, int max_placed, int pass)
   return placed;
 }
 
-void Nodes::join_nodes_of_same_depth(int depth, int pass)
+void RoomNodes::join_nodes_of_same_depth(int depth, int pass)
 {
   //
   // Connect up the nodes on the same depth
@@ -1095,7 +1095,7 @@ void Nodes::join_nodes_of_same_depth(int depth, int pass)
 //
 // Connect up the nodes to the next depth. We need at least one.
 //
-void Nodes::join_depth_to_next_depth(int depth, int pass)
+void RoomNodes::join_depth_to_next_depth(int depth, int pass)
 {
   std::vector< std::pair< point, point > > s;
 
@@ -1185,7 +1185,7 @@ void Nodes::join_depth_to_next_depth(int depth, int pass)
   }
 }
 
-void Nodes::join_depth_secret(int depth, int pass)
+void RoomNodes::join_depth_secret(int depth, int pass)
 {
   std::vector< std::pair< point, point > > s;
 
@@ -1296,7 +1296,7 @@ void Nodes::join_depth_secret(int depth, int pass)
   }
 }
 
-bool Nodes::place_lock(int depth, int pass)
+bool RoomNodes::place_lock(int depth, int pass)
 {
   std::vector< point > s;
 
@@ -1353,7 +1353,7 @@ bool Nodes::place_lock(int depth, int pass)
   return true;
 }
 
-void Nodes::hide_other_locks(int depth, int pass)
+void RoomNodes::hide_other_locks(int depth, int pass)
 {
   std::vector< point > s;
 
@@ -1402,7 +1402,7 @@ void Nodes::hide_other_locks(int depth, int pass)
   }
 }
 
-bool Nodes::place_key(int depth, int pass)
+bool RoomNodes::place_key(int depth, int pass)
 {
   std::vector< point > s;
 
@@ -1447,7 +1447,7 @@ bool Nodes::place_key(int depth, int pass)
   return true;
 }
 
-bool Nodes::place_entrance(void)
+bool RoomNodes::place_entrance(void)
 {
   std::vector< point > s;
 
@@ -1489,7 +1489,7 @@ bool Nodes::place_entrance(void)
   return true;
 }
 
-bool Nodes::place_exit(void)
+bool RoomNodes::place_exit(void)
 {
   std::vector< point > s;
 
@@ -1530,7 +1530,7 @@ bool Nodes::place_exit(void)
   return true;
 }
 
-void Nodes::remove_stubs(void)
+void RoomNodes::remove_stubs(void)
 {
   std::vector< point > s;
 
@@ -1590,7 +1590,7 @@ void Nodes::remove_stubs(void)
   }
 }
 
-void Nodes::dmap_print_walls(Dmap *d)
+void RoomNodes::dmap_print_walls(Dmap *d)
 {
   for (auto y = 0; y < grid_height * 2 + 1; y++) {
     for (auto x = 0; x < grid_width * 2 + 1; x++) {
@@ -1615,7 +1615,7 @@ void Nodes::dmap_print_walls(Dmap *d)
   printf("\n");
 }
 
-bool Nodes::create_path_to_exit(int pass)
+bool RoomNodes::create_path_to_exit(int pass)
 {
   //
   // Choose start and end of the dmap
@@ -1781,7 +1781,7 @@ bool Nodes::create_path_to_exit(int pass)
   return true;
 }
 
-void Nodes::create_path_lock_to_key(int depth)
+void RoomNodes::create_path_lock_to_key(int depth)
 {
   //
   // Choose start and end of the dmap
@@ -1903,7 +1903,7 @@ void Nodes::create_path_lock_to_key(int depth)
   }
 }
 
-void Nodes::make_paths_off_critical_path_reachable(void)
+void RoomNodes::make_paths_off_critical_path_reachable(void)
 {
   //
   // Choose start and end of the dmap
@@ -2052,7 +2052,7 @@ void Nodes::make_paths_off_critical_path_reachable(void)
   }
 }
 
-void Nodes::set_max_depth(void)
+void RoomNodes::set_max_depth(void)
 {
   std::vector< point > s;
   auto                 max_depth_  = 0;
@@ -2080,7 +2080,7 @@ void Nodes::set_max_depth(void)
   max_vdepth = max_vdepth_;
 }
 
-void Nodes::remove_redundant_directions(void)
+void RoomNodes::remove_redundant_directions(void)
 {
   for (auto x = 0; x < grid_width; x++) {
     for (auto y = 0; y < grid_height; y++) {
@@ -2136,7 +2136,7 @@ void Nodes::remove_redundant_directions(void)
   }
 }
 
-bool Nodes::remove_dead_end_paths(void)
+bool RoomNodes::remove_dead_end_paths(void)
 {
   bool got_one = false;
 
@@ -2247,11 +2247,11 @@ bool Nodes::remove_dead_end_paths(void)
   return got_one;
 }
 
-class Nodes *grid_test(void)
+class RoomNodes *grid_test(void)
 {
   auto x = 1;
   while (x--) {
-    /* auto d = */ new Nodes(ROOMS_ACROSS, ROOMS_DOWN);
+    /* auto d = */ new RoomNodes(ROOMS_ACROSS, ROOMS_DOWN);
 
     continue;
     //        return d;

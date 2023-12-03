@@ -67,6 +67,38 @@ Roomp Room::flip(void)
   return f;
 }
 
+void Room::dump(void)
+{
+  TRACE_NO_INDENT();
+
+  CON("Roomno: %u", roomno);
+
+  std::array< std::array< char, ROOM_WIDTH >, MAP_HEIGHT > out {};
+
+  for (auto ry = 0; ry < ROOM_HEIGHT; ry++) {
+    for (auto rx = 0; rx < ROOM_WIDTH; rx++) {
+      auto c = get(data, rx, ry);
+      set(out, rx, ry, c);
+    }
+  }
+
+  for (auto y = 0; y < ROOM_HEIGHT; y++) {
+    std::string s;
+    for (auto x = 0; x < ROOM_WIDTH; x++) {
+      auto c = get(out, x, y);
+      if (c) {
+        s += c;
+      } else {
+        s += ' ';
+      }
+    }
+    CON("%s", s.c_str());
+  }
+
+  CON("Exits left %x right %x up %x down %x", exits_left, exits_right, exits_up, exits_down);
+  CON("-");
+}
+
 Roomp room_new(void)
 {
   TRACE_NO_INDENT();

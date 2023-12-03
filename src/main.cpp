@@ -16,8 +16,6 @@
 #include "my_audio.hpp"
 #include "my_command.hpp"
 #include "my_dir.hpp"
-#include "my_dungeon.hpp"
-#include "my_dungeons.hpp"
 #include "my_file.hpp"
 #include "my_font.hpp"
 #include "my_game.hpp"
@@ -25,6 +23,9 @@
 #include "my_music.hpp"
 #include "my_ramdisk.hpp"
 #include "my_random.hpp"
+#include "my_room_grid.hpp"
+#include "my_room_solver.hpp"
+#include "my_rooms.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_wid_console.hpp"
@@ -429,7 +430,7 @@ static void usage(void)
   CON("Crystaleer, options:");
   CON(" ");
   CON("Commonly used options:");
-  CON(" --seed <name/number>        -- Set the random dungeon seed.");
+  CON(" --seed <name/number>        -- Set the random seed.");
   CON(" ");
   CON("Debugging options:");
   CON(" --debug                     -- Basic debug.");
@@ -693,16 +694,21 @@ int main(int argc, char *argv[])
 
   game->set_seed();
 
-  LOG("INI: Init dungeons");
-  dungeons_init();
-  make_dungeon();
+  LOG("INI: Init roms");
+  rooms_normal_init();
+  rooms_entrance_init();
+  rooms_exit_init();
+  rooms_secret_init();
+  rooms_lock_init();
+  rooms_key_init();
+  room_solver();
   exit(1);
 
 #if 0
   for (auto s = 0; s < 100000; s++) {
     CON("SEED %d", s);
     pcg_srand(s);
-    make_dungeon();
+    room_solver();
   }
 #endif
 

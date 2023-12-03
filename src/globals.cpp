@@ -28,7 +28,7 @@ bool g_need_restart;             // Need to restart game
 bool g_opt_no_slow_log_flush;    // Do not flush after each console log at start
 bool g_opt_override_debug_level; // Temporary used to disable debugs on load
 bool g_quitting;                 // Exiting the game
-bool g_opt_test_skip_main_menu;  // Start in the dungeon menu
+bool g_opt_test_skip_main_menu;  // Start in the main menu
 
 // --debug  Basic debug
 // --debug2 Map is visible and memory checks enabled
