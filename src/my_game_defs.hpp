@@ -16,8 +16,9 @@
 #define ROOM_HEIGHT 8  // Max room dimensions
 #define ROOM_WIDTH  10 // Max room dimensions
 
-#define MAP_HEIGHT (ROOMS_DOWN * ROOM_HEIGHT)
-#define MAP_WIDTH  (ROOMS_ACROSS * ROOM_WIDTH)
+#define MAP_BORDER 1
+#define MAP_HEIGHT ((ROOMS_DOWN * ROOM_HEIGHT) + MAP_BORDER)
+#define MAP_WIDTH  ((ROOMS_ACROSS * ROOM_WIDTH) + MAP_BORDER)
 
 #define GAME_MOST_ZOOMED_IN   5
 #define GAME_MOST_ZOOMED_OUT  1

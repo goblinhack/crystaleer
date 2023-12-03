@@ -50,7 +50,10 @@ void room_set_add(const char *data)
 
           switch (c) {
             case CHAR_ROCK : break;
-            case CHAR_WALL : break;
+            case CHAR_WALL_100_PERCENT : break;
+            case CHAR_SPIKE_33_PERCENT : break;
+            case CHAR_OBSTACLE_GROUND : break;
+            case CHAR_OBSTACLE_AIR : break;
             case CHAR_LADDER : break;
             case CHAR_ENTRANCE :
               if (r->type != ROOM_TYPE_NORMAL) {
@@ -128,7 +131,7 @@ void room_set_add(const char *data)
         r->exits_down = 0;
       }
 
-      // XXX
+      // TODO
       if (r->type == ROOM_TYPE_SECRET) {
         // ok
       } else if (r->type == ROOM_TYPE_ENTRANCE) {
@@ -148,13 +151,15 @@ void room_set_add(const char *data)
   }
 }
 
+void room_obstacle_add(const char *key, const char *data) { TRACE_NO_INDENT(); }
+
 static Roomp get_fitted_room_type(RoomNode *node, Roomp room_left, Roomp room_right, Roomp room_up, Roomp room_down)
 {
   TRACE_NO_INDENT();
 
   auto required_room_type = ROOM_TYPE_NORMAL;
 
-  // XXX
+  // TODO
   if (node->is_entrance) {
     required_room_type = ROOM_TYPE_ENTRANCE;
   }

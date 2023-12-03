@@ -10,3 +10,4 @@ void rooms_exit_init(void);
 void rooms_secret_init(void);
 void rooms_lock_init(void);
 void rooms_key_init(void);
+void rooms_obstacles_init(void);

@@ -701,6 +701,7 @@ int main(int argc, char *argv[])
   rooms_secret_init();
   rooms_lock_init();
   rooms_key_init();
+  rooms_obstacles_init();
   room_solver();
   exit(1);
 
