@@ -7,28 +7,28 @@
 
 #include "my_array_bounds_check.hpp"
 #include "my_charmap.hpp"
+#include "my_level_ph1.hpp"
+#include "my_level_ph2.hpp"
+#include "my_level_ph2_room.hpp"
 #include "my_main.hpp"
 #include "my_point.hpp"
-#include "my_room.hpp"
-#include "my_room_grid.hpp"
-#include "my_room_solver.hpp"
 #include "my_template.hpp"
 
-class RoomSolver
+class LevelPh2RoomSolver
 {
 private:
 public:
-  RoomSolver(void) {}
-  ~RoomSolver(void) {}
+  LevelPh2RoomSolver(void) {}
+  ~LevelPh2RoomSolver(void) {}
 
-  std::array< std::array< Roomp, ROOMS_DOWN >, ROOMS_ACROSS > rooms {};
+  std::array< std::array< LevelPh2Roomp, LEVEL_PH1_DOWN >, LEVEL_PH1_ACROSS > rooms {};
 };
 
-void room_set_add(const char *data)
+void level_ph2_room_set_add(const char *data)
 {
   TRACE_NO_INDENT();
-  const auto row_len      = (((ROOM_WIDTH + 1) * ROOMS_ACROSS) + 1);
-  auto       expected_len = (row_len) * (((ROOM_HEIGHT + 1) * ROOMS_DOWN) + 1);
+  const auto row_len      = (((LEVEL_PH2_ROOM_WIDTH + 1) * LEVEL_PH1_ACROSS) + 1);
+  auto       expected_len = (row_len) * (((LEVEL_PH2_ROOM_HEIGHT + 1) * LEVEL_PH1_DOWN) + 1);
 
   if (strlen(data) != expected_len) {
     DIE("bad room size, expected %d, got %d", (int) strlen(data), (int) expected_len);
@@ -37,20 +37,22 @@ void room_set_add(const char *data)
   //
   // Break the grid of rooms up into individual rooms
   //
-  for (auto room_across = 0; room_across < ROOMS_ACROSS; room_across++) {
-    for (auto room_down = 0; room_down < ROOMS_DOWN; room_down++) {
+  for (auto room_across = 0; room_across < LEVEL_PH1_ACROSS; room_across++) {
+    for (auto room_down = 0; room_down < LEVEL_PH1_DOWN; room_down++) {
       auto r  = room_new();
       r->type = ROOM_TYPE_NORMAL;
 
-      for (auto ry = 0; ry < ROOM_HEIGHT; ry++) {
-        for (auto rx = 0; rx < ROOM_WIDTH; rx++) {
-          auto offset = row_len + (((ROOM_HEIGHT + 1) * room_down) * row_len) + (row_len * ry)
-                      + (room_across * (ROOM_WIDTH + 1)) + rx + 1;
+      for (auto ry = 0; ry < LEVEL_PH2_ROOM_HEIGHT; ry++) {
+        for (auto rx = 0; rx < LEVEL_PH2_ROOM_WIDTH; rx++) {
+          auto offset = row_len + (((LEVEL_PH2_ROOM_HEIGHT + 1) * room_down) * row_len) + (row_len * ry)
+                      + (room_across * (LEVEL_PH2_ROOM_WIDTH + 1)) + rx + 1;
           auto c = data[ offset ];
 
           switch (c) {
             case CHAR_ROCK : break;
+            case CHAR_WILDCARD : break;
             case CHAR_WALL_100_PERCENT : break;
+            case CHAR_WALL_50_PERCENT : break;
             case CHAR_SPIKE_33_PERCENT : break;
             case CHAR_OBSTACLE_GROUND : break;
             case CHAR_OBSTACLE_AIR : break;
@@ -94,24 +96,24 @@ void room_set_add(const char *data)
           if (rx == 0) {
             auto c = data[ offset - 1 ];
             if ((c == CHAR_CONNECTOR) || (c == CHAR_LEFT)) {
-              r->exits_left |= 1U << (ROOM_HEIGHT - ry - 1);
+              r->exits_left |= 1U << (LEVEL_PH2_ROOM_HEIGHT - ry - 1);
             }
-          } else if (rx == ROOM_WIDTH - 1) {
+          } else if (rx == LEVEL_PH2_ROOM_WIDTH - 1) {
             auto c = data[ offset + 1 ];
             if ((c == CHAR_CONNECTOR) || (c == CHAR_RIGHT)) {
-              r->exits_right |= 1U << (ROOM_HEIGHT - ry - 1);
+              r->exits_right |= 1U << (LEVEL_PH2_ROOM_HEIGHT - ry - 1);
             }
           }
 
           if (ry == 0) {
             auto c = data[ offset - row_len ];
             if ((c == CHAR_CONNECTOR) || (c == CHAR_UP)) {
-              r->exits_up |= 1U << (ROOM_WIDTH - rx - 1);
+              r->exits_up |= 1U << (LEVEL_PH2_ROOM_WIDTH - rx - 1);
             }
-          } else if (ry == ROOM_HEIGHT - 1) {
+          } else if (ry == LEVEL_PH2_ROOM_HEIGHT - 1) {
             auto c = data[ offset + row_len ];
             if ((c == CHAR_CONNECTOR) || (c == CHAR_DOWN)) {
-              r->exits_down |= 1U << (ROOM_WIDTH - rx - 1);
+              r->exits_down |= 1U << (LEVEL_PH2_ROOM_WIDTH - rx - 1);
             }
           }
         }
@@ -141,19 +143,21 @@ void room_set_add(const char *data)
       } else {
         r->type = ROOM_TYPE_NORMAL;
       }
-      Room::all_rooms_of_type[ r->type ].push_back(r);
+      LevelPh2Room::all_rooms_of_type[ r->type ].push_back(r);
       // r->dump();
 
       auto f = r->flip();
-      Room::all_rooms_of_type[ f->type ].push_back(f);
+      LevelPh2Room::all_rooms_of_type[ f->type ].push_back(f);
       // f->dump();
     }
   }
 }
 
-void room_obstacle_add(const char *key, const char *data) { TRACE_NO_INDENT(); }
+void level_ph3_obst_add(const char key, const char *data) { TRACE_NO_INDENT(); }
 
-static Roomp get_fitted_room_type(RoomNode *node, Roomp room_left, Roomp room_right, Roomp room_up, Roomp room_down)
+static LevelPh2Roomp get_fitted_room_type(const Level1Node *node, const LevelPh2Roomp room_left,
+                                          const LevelPh2Roomp room_right, const LevelPh2Roomp room_up,
+                                          const LevelPh2Roomp room_down)
 {
   TRACE_NO_INDENT();
 
@@ -178,11 +182,11 @@ static Roomp get_fitted_room_type(RoomNode *node, Roomp room_left, Roomp room_ri
     required_room_type = ROOM_TYPE_SECRET;
   }
 
-  int  max_elems = Room::all_rooms_of_type[ required_room_type ].size();
+  int  max_elems = LevelPh2Room::all_rooms_of_type[ required_room_type ].size();
   auto tries     = max_elems * 4;
 
   while (tries-- > 0) {
-    auto r = pcg_one_of(Room::all_rooms_of_type[ required_room_type ]);
+    auto r = pcg_one_of(LevelPh2Room::all_rooms_of_type[ required_room_type ]);
     if (! r) {
       return nullptr;
     }
@@ -228,21 +232,21 @@ static Roomp get_fitted_room_type(RoomNode *node, Roomp room_left, Roomp room_ri
   return nullptr;
 }
 
-static void room_solver_dump(RoomSolver d)
+static void level_dump(LevelPh2RoomSolver ph2_solver)
 {
   TRACE_NO_INDENT();
 
-  std::array< std::array< char, MAP_HEIGHT + ROOMS_DOWN >, MAP_WIDTH + ROOMS_ACROSS > out {};
+  std::array< std::array< char, LEVEL_PH2_HEIGHT + LEVEL_PH1_DOWN >, LEVEL_PH2_WIDTH + LEVEL_PH1_ACROSS > out {};
 
-  for (auto room_across = 0; room_across < ROOMS_ACROSS; room_across++) {
-    for (auto room_down = 0; room_down < ROOMS_DOWN; room_down++) {
-      auto r = get(d.rooms, room_across, room_down);
+  for (auto room_across = 0; room_across < LEVEL_PH1_ACROSS; room_across++) {
+    for (auto room_down = 0; room_down < LEVEL_PH1_DOWN; room_down++) {
+      LevelPh2Roomp r = get(ph2_solver.rooms, room_across, room_down);
       if (r) {
-        for (auto ry = 0; ry < ROOM_HEIGHT; ry++) {
-          for (auto rx = 0; rx < ROOM_WIDTH; rx++) {
+        for (auto ry = 0; ry < LEVEL_PH2_ROOM_HEIGHT; ry++) {
+          for (auto rx = 0; rx < LEVEL_PH2_ROOM_WIDTH; rx++) {
             auto c = get(r->data, rx, ry);
-            auto x = (room_across * (ROOM_WIDTH + 1)) + rx;
-            auto y = (room_down * (ROOM_HEIGHT + 1)) + ry;
+            auto x = (room_across * (LEVEL_PH2_ROOM_WIDTH + 1)) + rx;
+            auto y = (room_down * (LEVEL_PH2_ROOM_HEIGHT + 1)) + ry;
             set(out, x, y, c);
           }
         }
@@ -250,9 +254,9 @@ static void room_solver_dump(RoomSolver d)
     }
   }
 
-  for (auto y = 0; y < MAP_HEIGHT + ROOMS_DOWN; y++) {
+  for (auto y = 0; y < LEVEL_PH2_HEIGHT + LEVEL_PH1_DOWN; y++) {
     std::string s;
-    for (auto x = 0; x < MAP_WIDTH + ROOMS_ACROSS; x++) {
+    for (auto x = 0; x < LEVEL_PH2_WIDTH + LEVEL_PH1_ACROSS; x++) {
       auto c = get(out, x, y);
       if (c) {
         s += c;
@@ -266,14 +270,16 @@ static void room_solver_dump(RoomSolver d)
   CON("-");
 }
 
-static bool room_solver_recursive(RoomNodes &n, RoomSolver &d, point at)
+void LevelPh2::dump(void) { TRACE_NO_INDENT(); }
+
+static bool level_recursive(const LevelPh1 &ph1, LevelPh2RoomSolver &ph2_solver, point at)
 {
   TRACE_NO_INDENT();
 
   auto x    = at.x;
   auto y    = at.y;
-  auto r    = get(d.rooms, x, y);
-  auto node = n.getn(x, y);
+  auto r    = get(ph2_solver.rooms, x, y);
+  auto node = ph1.get_node_ptr_const(x, y);
 
   if (node->on_critical_path) {
     if (node->dir_up && ! node->dir_down && node->dir_left && node->dir_right && ! node->is_exit) {
@@ -285,28 +291,28 @@ static bool room_solver_recursive(RoomNodes &n, RoomSolver &d, point at)
     //
     // Place a room that fits
     //
-    Roomp left_room;
-    Roomp right_room;
-    Roomp up_room;
-    Roomp down_room;
+    LevelPh2Roomp left_room;
+    LevelPh2Roomp right_room;
+    LevelPh2Roomp up_room;
+    LevelPh2Roomp down_room;
 
     if (x > 0) {
-      left_room = get(d.rooms, x - 1, y);
+      left_room = get(ph2_solver.rooms, x - 1, y);
     } else {
       left_room = nullptr;
     }
-    if (x < ROOMS_ACROSS - 1) {
-      right_room = get(d.rooms, x + 1, y);
+    if (x < LEVEL_PH1_ACROSS - 1) {
+      right_room = get(ph2_solver.rooms, x + 1, y);
     } else {
       right_room = nullptr;
     }
     if (y > 0) {
-      up_room = get(d.rooms, x, y - 1);
+      up_room = get(ph2_solver.rooms, x, y - 1);
     } else {
       up_room = nullptr;
     }
-    if (y < ROOMS_DOWN - 1) {
-      down_room = get(d.rooms, x, y + 1);
+    if (y < LEVEL_PH1_DOWN - 1) {
+      down_room = get(ph2_solver.rooms, x, y + 1);
     } else {
       down_room = nullptr;
     }
@@ -320,36 +326,36 @@ static bool room_solver_recursive(RoomNodes &n, RoomSolver &d, point at)
       exit(1);
       return false;
     }
-    set(d.rooms, x, y, r);
+    set(ph2_solver.rooms, x, y, r);
   }
 
   if (x > 0) {
-    if (! get(d.rooms, x - 1, y)) {
-      if (! room_solver_recursive(n, d, point(x - 1, y))) {
+    if (! get(ph2_solver.rooms, x - 1, y)) {
+      if (! level_recursive(ph1, ph2_solver, point(x - 1, y))) {
         return false;
       }
     }
   }
 
-  if (x < ROOMS_ACROSS - 1) {
-    if (! get(d.rooms, x + 1, y)) {
-      if (! room_solver_recursive(n, d, point(x + 1, y))) {
+  if (x < LEVEL_PH1_ACROSS - 1) {
+    if (! get(ph2_solver.rooms, x + 1, y)) {
+      if (! level_recursive(ph1, ph2_solver, point(x + 1, y))) {
         return false;
       }
     }
   }
 
   if (y > 0) {
-    if (! get(d.rooms, x, y - 1)) {
-      if (! room_solver_recursive(n, d, point(x, y - 1))) {
+    if (! get(ph2_solver.rooms, x, y - 1)) {
+      if (! level_recursive(ph1, ph2_solver, point(x, y - 1))) {
         return false;
       }
     }
   }
 
-  if (y < ROOMS_DOWN - 1) {
-    if (! get(d.rooms, x, y + 1)) {
-      if (! room_solver_recursive(n, d, point(x, y + 1))) {
+  if (y < LEVEL_PH1_DOWN - 1) {
+    if (! get(ph2_solver.rooms, x, y + 1)) {
+      if (! level_recursive(ph1, ph2_solver, point(x, y + 1))) {
         return false;
       }
     }
@@ -358,39 +364,47 @@ static bool room_solver_recursive(RoomNodes &n, RoomSolver &d, point at)
   return true;
 }
 
-void room_solver(void)
+LevelPh2::LevelPh2(const LevelPh1 &ph1)
 {
   TRACE_NO_INDENT();
 
-  for (;;) {
-    RoomSolver d;
-    RoomNodes  n(ROOMS_ACROSS, ROOMS_DOWN);
-    point      entrance_at;
-    n.dump();
+  LevelPh2RoomSolver ph2_solver;
+  point              entrance_at;
 
-    //
-    // Find the starting point, the entrance
-    //
-    for (auto y = 0; y < n.grid_height; y++) {
-      for (auto x = 0; x < n.grid_width; x++) {
-        auto node = n.getn(x, y);
-        if (node->is_entrance) {
-          entrance_at = point(x, y);
-          goto got_entrance;
-        }
+  //
+  // Find the starting point, the entrance
+  //
+  for (auto y = 0; y < ph1.grid_height; y++) {
+    for (auto x = 0; x < ph1.grid_width; x++) {
+      auto node = ph1.get_node_ptr_const(x, y);
+      if (node->is_entrance) {
+        entrance_at = point(x, y);
+        goto got_entrance;
       }
     }
-
-    continue;
-
-  got_entrance:
-    //
-    // Create all the rooms
-    //
-    if (room_solver_recursive(n, d, entrance_at)) {
-      room_solver_dump(d);
-      CON("ALL GOOD");
-      return;
-    }
   }
+
+  //
+  // No entrance
+  //
+  return;
+
+got_entrance:
+  //
+  // Create all the rooms
+  //
+  if (level_recursive(ph1, ph2_solver, entrance_at)) {
+    level_dump(ph2_solver);
+    CON("ALL GOOD");
+    ok = true;
+    return;
+  }
+}
+
+LevelPh2 level_ph2(const LevelPh1 &ph1)
+{
+  TRACE_AND_INDENT();
+
+  LevelPh2 ph2(ph1);
+  return ph2;
 }

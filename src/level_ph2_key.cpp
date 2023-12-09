@@ -2,17 +2,15 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "my_main.hpp"
-#include "my_room_solver.hpp"
-#include "my_rooms.hpp"
+#include "my_level_ph2.hpp"
 
-void rooms_lock_init(void)
+void level_ph2_key_init(void)
 {
   //
   // Single exit left or right rooms
   //
   TRACE_NO_INDENT();
-  room_set_add(
+  level_ph2_room_set_add(
       "                                             "
       " 1111111111 1111111111 1111111111 1111111111 "
       " 1111111111 1111111111 1111111111 1111111111 "
@@ -55,7 +53,7 @@ void rooms_lock_init(void)
   // Corner rooms
   //
   TRACE_NO_INDENT();
-  room_set_add(
+  level_ph2_room_set_add(
       "                                             "
       " 1111111111 1111111111 1111111111 1111111111 "
       " 1111111111 1111111111 1111111111 1111111111 "
@@ -98,7 +96,7 @@ void rooms_lock_init(void)
   // Corner L shaped rooms
   //
   TRACE_NO_INDENT();
-  room_set_add(
+  level_ph2_room_set_add(
       "          ^          ^          ^          ^ "
       " 111111111. 111111111. 111111111. 111111111. "
       " 111111111. 111111111. 111111111. 111111111. "
@@ -141,7 +139,7 @@ void rooms_lock_init(void)
   // T shaped rooms
   //
   TRACE_NO_INDENT();
-  room_set_add(
+  level_ph2_room_set_add(
       "                                             "
       " 1111111111 1111111111 1111111111 1111111111 "
       " 1111111111 1111111111 1111111111 1111111111 "
@@ -184,7 +182,7 @@ void rooms_lock_init(void)
   // Left/right shaped rooms
   //
   TRACE_NO_INDENT();
-  room_set_add(
+  level_ph2_room_set_add(
       "                                             "
       " 1111111111 1111111111 1111111111 1111111111 "
       " 1111111111 1111111111 1111111111 1111111111 "
@@ -227,7 +225,7 @@ void rooms_lock_init(void)
   // T shape, sideways rooms
   //
   TRACE_NO_INDENT();
-  room_set_add(
+  level_ph2_room_set_add(
       " #           #           #           #       "
       " .111111111 1.11111111 11.1111111 111.111111 "
       " ...1111111 1.11111111 11.1111111 111.111111 "
@@ -270,7 +268,7 @@ void rooms_lock_init(void)
   // Four way rooms
   //
   TRACE_NO_INDENT();
-  room_set_add(
+  level_ph2_room_set_add(
       " #           #           #           #       "
       " .111111111 1.11111111 11.1111111 111.111111 "
       " ...1111111 1.11111111 11.1111111 111.111111 "
@@ -313,7 +311,7 @@ void rooms_lock_init(void)
   // T shape, upside down rooms
   //
   TRACE_NO_INDENT();
-  room_set_add(
+  level_ph2_room_set_add(
       " ^           ^           ^           ^       "
       " .111111111 1.11111111 11.1111111 111.111111 "
       " ...1111111 1.11111111 11.1111111 111.111111 "
@@ -356,7 +354,7 @@ void rooms_lock_init(void)
   // Up rooms
   //
   TRACE_NO_INDENT();
-  room_set_add(
+  level_ph2_room_set_add(
       " ^           ^           ^           ^       "
       " ..11111111 ..11111111 11.1111111 111.111111 "
       " ....111111 1...111111 11..111111 11..111111 "
@@ -399,7 +397,7 @@ void rooms_lock_init(void)
   // Up/down rooms
   //
   TRACE_NO_INDENT();
-  room_set_add(
+  level_ph2_room_set_add(
       " #           #           #           #       "
       " ..11111111 ..11111111 11.1111111 111.111111 "
       " ....111111 1...111111 11..111111 11..111111 "
@@ -442,7 +440,7 @@ void rooms_lock_init(void)
   // Down rooms
   //
   TRACE_NO_INDENT();
-  room_set_add(
+  level_ph2_room_set_add(
       "                                             "
       " 1111111111 1111111111 1111111111 1111111111 "
       " 11......11 11......11 11......11 11......11 "

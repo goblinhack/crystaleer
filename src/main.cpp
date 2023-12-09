@@ -20,12 +20,12 @@
 #include "my_font.hpp"
 #include "my_game.hpp"
 #include "my_gfx.hpp"
+#include "my_level_ph1.hpp"
+#include "my_level_ph2.hpp"
+#include "my_level_ph3.hpp"
 #include "my_music.hpp"
 #include "my_ramdisk.hpp"
 #include "my_random.hpp"
-#include "my_room_grid.hpp"
-#include "my_room_solver.hpp"
-#include "my_rooms.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
 #include "my_wid_console.hpp"
@@ -694,33 +694,95 @@ int main(int argc, char *argv[])
 
   game->set_seed();
 
-  LOG("INI: Init roms");
-  rooms_normal_init();
-  rooms_entrance_init();
-  rooms_exit_init();
-  rooms_secret_init();
-  rooms_lock_init();
-  rooms_key_init();
-  rooms_obstacles_init();
-  room_solver();
+  LOG("INI: Init level phases");
+  level_ph2_norm_init();
+  level_ph2_init_init();
+  level_ph2_exit_init();
+  level_ph2_secr_init();
+  level_ph2_lock_init();
+  level_ph2_key_init();
+  level_ph3_obst_init();
+
+  for (;;) {
+
+    /*
+     * Phase 1: create a framework for the level solution e.g.
+     *
+     *           v    v  * v
+     *     1----1----1---S1
+     *      >  <|>  <|>  <|
+     *          |    |    |
+     *          |    |    |
+     *          |   *|v  *|
+     *    s.    1----1----1
+     *         ^?>  <|>  <
+     *          ?    |
+     *          ?    |
+     *      v   ?   *|   * v
+     *     2???s1???K1---D2
+     *     |        ^ >  <|
+     *     |              |
+     *     |              |
+     *     |   *    *    *|
+     *     2---E2----2----2
+     *    ^ >  <    <    <
+     */
+    auto ph1 = level_ph1();
+    if (ph1.ok) {
+      continue;
+    }
+    ph1.dump();
+
+    /*
+     * Phase 2: create a set of rooms that satisfy the solution e.g.:
+     *
+     * 1111111111 1........1 1111111111 1111111111
+     * 1111111111 1........1 1111111111 1111111111
+     * 11........ 11...S..11 11......11 ........11
+     * 11........ 11..111.11 11......11 ........11
+     * 11........ 11..111.11 11......11 ........11
+     * 11........ .......... .......... ........11
+     * 11111..111 1111111111 11..111111 11..111111
+     * 111111.111 1111111111 111.111111 11.1111111
+     *
+     * 111111s111 1111111111 111.111111 11.1111111
+     * 111111..11 1111111111 111.111111 11.1111111
+     * 11......11 11........ 11......11 11......11
+     * 11......11 11........ 11......11 11......11
+     * 11......11 11........ 11......11 11......11
+     * 11......11 11........ .......... ........11
+     * 111...1111 1111111111 1111..1111 11111..111
+     * 1111s11111 1111111111 11111.1111 11111.1111
+     *
+     * 1111.11111 1111111111 11111.1111 11111.1111
+     * 1111.11111 1111111111 11111.1111 1111....11
+     * 11......11 11......11 11......11 11......11
+     * 11......11 11......11 11......11 11......11
+     * 11......11 11......11 11......11 11......11
+     * 11........ .......... ........11 11......11
+     * ...1111111 1111111111 1111111... 1111111111
+     * .111111111 1111111111 111111111. 1111111111
+     *
+     * ..11111111 1111111111 111111111. 1111111111
+     * ....111111 1111111111 111111111. 1111111111
+     * 11......11 11........ 11........ ........11
+     * 11......11 11........ 11......11 ........11
+     * 11......11 11...E.... 11......11 ........11
+     * 11......11 11..111... .......... ........11
+     * 1111111111 1111111111 1111111111 1111111111
+     * 1111111111 1111111111 1111111111 1111111111
+     */
+    auto ph2 = level_ph2(ph1);
+    if (ph2.ok) {
+      continue;
+    }
+    ph2.dump();
+
+    LevelPh3 ph3;
+    level_ph3(ph2, ph3);
+  }
+
   exit(1);
-
-#if 0
-  for (auto s = 0; s < 100000; s++) {
-    CON("SEED %d", s);
-    pcg_srand(s);
-    room_solver();
-  }
-#endif
-
-#if 0
-  extern int grid_test(void);
-  grid_test();
-  int x = 1;
-  if (x) {
-    DIE("X");
-  }
-#endif
 
   {
     TRACE_NO_INDENT();

@@ -6,19 +6,22 @@
 #ifndef _MY_GAME_DEFS_HPP_
 #define _MY_GAME_DEFS_HPP_
 
-//
-// Grid chunks are used to construct the levels
-//
-#define ROOMS_DOWN   4 // Levels are split into grids. Each grid can have a room.
-#define ROOMS_ACROSS 4 // Rooms across and down
-#define ROOMS_DEPTH  2 // Max difficulty level
+#define LEVEL_PH1_DOWN       4 // Levels are split into grids. Each grid can have a room.
+#define LEVEL_PH1_ACROSS     4 //
+#define LEVEL_PH1_LOCK_DEPTH 2 // Max difficulty level
 
-#define ROOM_HEIGHT 8  // Max room dimensions
-#define ROOM_WIDTH  10 // Max room dimensions
+#define LEVEL_PH2_ROOM_HEIGHT 8  // Max room dimensions
+#define LEVEL_PH2_ROOM_WIDTH  10 // Max room dimensions
 
-#define MAP_BORDER 1
-#define MAP_HEIGHT ((ROOMS_DOWN * ROOM_HEIGHT) + MAP_BORDER)
-#define MAP_WIDTH  ((ROOMS_ACROSS * ROOM_WIDTH) + MAP_BORDER)
+#define LEVEL_PH3_BLOCK_SIZE 3 // LevelPh2Room blocks are composed of X*X character cells
+
+#define LEVEL_PH2_MAP_BORDER 1 // Border around the level
+
+#define LEVEL_PH2_HEIGHT ((LEVEL_PH1_DOWN * LEVEL_PH2_ROOM_HEIGHT) + LEVEL_PH2_MAP_BORDER)
+#define LEVEL_PH2_WIDTH  ((LEVEL_PH1_ACROSS * LEVEL_PH2_ROOM_WIDTH) + LEVEL_PH2_MAP_BORDER)
+
+#define MAP_HEIGHT (LEVEL_PH2_HEIGHT * LEVEL_PH3_BLOCK_SIZE)
+#define MAP_WIDTH  (LEVEL_PH2_WIDTH * LEVEL_PH3_BLOCK_SIZE)
 
 #define GAME_MOST_ZOOMED_IN   5
 #define GAME_MOST_ZOOMED_OUT  1

@@ -2,17 +2,15 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
-#include "my_main.hpp"
-#include "my_room_solver.hpp"
-#include "my_rooms.hpp"
+#include "my_level_ph2.hpp"
 
-void rooms_entrance_init(void)
+void level_ph2_init_init(void)
 {
   //
   // Single exit left or right rooms
   //
   TRACE_NO_INDENT();
-  room_set_add(
+  level_ph2_room_set_add(
       "                                             "
       " 1111111111 1111111111 1111111111 1111111111 "
       " 1111111111 1111111111 1111111111 1111111111 "
@@ -55,7 +53,7 @@ void rooms_entrance_init(void)
   // Corner rooms
   //
   TRACE_NO_INDENT();
-  room_set_add(
+  level_ph2_room_set_add(
       "                                             "
       " 1111111111 1111111111 1111111111 1111111111 "
       " 1111111111 1111111111 1111111111 1111111111 "
@@ -98,7 +96,7 @@ void rooms_entrance_init(void)
   // T shaped rooms
   //
   TRACE_NO_INDENT();
-  room_set_add(
+  level_ph2_room_set_add(
       "                                             "
       " 1111111111 1111111111 1111111111 1111111111 "
       " 1111111111 1111111111 1111111111 1111111111 "
@@ -141,15 +139,15 @@ void rooms_entrance_init(void)
   // Left/right shaped rooms
   //
   TRACE_NO_INDENT();
-  room_set_add(
+  level_ph2_room_set_add(
       "                                             "
       " 1111111111 1111111111 1111111111 11......11 "
       " 1........1 1........1 1........1 1....S...1 "
-      " 11......11 11...S..11 11......11 1...111111 "
-      " 11......11 11......11 11...S..11 1.......11 "
-      " 11...S..11 11......11 11......11 11......11 "
-      "#....111...#....111...#....111...#..........#"
-      " 1111111111 1111111111 1111111111 1..5.....1 "
+      " 11......11 11...S..11 11......11 122.111221 "
+      " 11......11 11......11 11...S..11 1........1 "
+      " 11...S..11 11......11 11......11 125****..1 "
+      "#....111...#....111...#....111...#..*****...#"
+      " 1111111111 1111111111 1111111111 1.*****.21 "
       " 1111111111 1111111111 1111111111 1111111111 "
       "                                             "
       " 1........1 1........1 1........1 1........1 "
@@ -184,7 +182,7 @@ void rooms_entrance_init(void)
   // Down rooms
   //
   TRACE_NO_INDENT();
-  room_set_add(
+  level_ph2_room_set_add(
       "                                             "
       " 1111111111 1111111111 1111111111 1111111111 "
       " 11......11 11......11 11......11 11......11 "

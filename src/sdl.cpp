@@ -800,16 +800,6 @@ void config_game_gfx_update(void)
   game->config.ui_pix_width  = game->config.game_pix_width;
   game->config.ui_pix_height = game->config.game_pix_height;
 
-  if (! MAP_WIDTH) {
-    ERR("MAP_WIDTH zero");
-    return;
-  }
-
-  if (! MAP_HEIGHT) {
-    ERR("MAP_HEIGHT zero");
-    return;
-  }
-
   if (! TILE_WIDTH) {
     ERR("TILE_WIDTH zero");
     return;
@@ -904,6 +894,4 @@ void config_game_gfx_update(void)
   LOG("SDL: - ascii gl size        : %ux%u", game->config.ascii_gl_width, game->config.ascii_gl_height);
   LOG("SDL: - term size            : %dx%d", TERM_WIDTH, TERM_HEIGHT);
   LOG("SDL: - width to height ratio: %f", game->config.video_w_h_ratio);
-  LOG("SDL: Map");
-  LOG("SDL: - map size             : %dx%d", MAP_WIDTH, MAP_HEIGHT);
 }

@@ -46,10 +46,16 @@ int TILES_VISIBLE_ACROSS;
 int TILES_VISIBLE_DOWN;
 
 //
-// Flexible map size
+// Map size
 //
 int MAP_HEIGHT;
 int MAP_WIDTH;
+
+//
+// Map room cells
+//
+int LEVEL_PH2_HEIGHT;
+int LEVEL_PH2_WIDTH;
 
 int g_last_logged_callframes_depth;
 

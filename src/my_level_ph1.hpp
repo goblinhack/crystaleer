@@ -12,11 +12,11 @@
 #include "my_point.hpp"
 #include "my_random.hpp"
 
-class RoomNode
+class Level1Node
 {
 public:
   //
-  // RoomNodes have a depth number, optional key, start and exit and corridors
+  // LevelPh1 have a depth number, optional key, start and exit and corridors
   // to adjoining depths. Depth increases as we get closer to the exit.
   //
   int depth {0};
@@ -112,13 +112,18 @@ public:
   }
 };
 
-class RoomNodes
+class LevelPh1
 {
 public:
-  std::vector< RoomNode > nodes;
+  //
+  // Set on success
+  //
+  bool ok {};
 
-  int grid_width {ROOMS_ACROSS};
-  int grid_height {ROOMS_DOWN};
+  std::vector< Level1Node > nodes;
+
+  int grid_width {LEVEL_PH1_ACROSS};
+  int grid_height {LEVEL_PH1_DOWN};
 
   int max_depth {0};
   int max_vdepth {0};
@@ -128,27 +133,23 @@ public:
   //
   int depth_obstacle {-1};
 
-  RoomNodes(int grid_width, int grid_height) : grid_width(grid_width), grid_height(grid_height)
-  {
-    finish_constructor();
-  }
-
-  RoomNodes() { finish_constructor(); }
+  LevelPh1(int grid_width, int grid_height) : grid_width(grid_width), grid_height(grid_height) {}
 
   bool create_path_to_exit(int pass);
-  bool is_oob(const int x, const int y);
-  bool node_is_a_room(RoomNode *n);
-  bool node_is_free(RoomNode *n);
+  bool is_oob(const int x, const int y) const;
+  bool node_is_a_room(Level1Node *n);
+  bool node_is_free(Level1Node *n);
   bool place_entrance(void);
   bool place_exit(void);
   bool place_key(int depth, int pass);
   bool place_lock(int depth, int pass);
   bool remove_dead_end_paths(void);
 
-  RoomNode *getn(const int x, const int y);
-  RoomNode *node_addr(const int x, const int y);
+  const Level1Node *get_node_ptr_const(const int x, const int y) const;
+  Level1Node       *get_node_ptr(const int x, const int y);
+  Level1Node       *node_addr(const int x, const int y);
 
-  int offset(const int x, const int y);
+  int offset(const int x, const int y) const;
   int snake_walk(int depth, int max_placed, int pass);
 
   point random_dir(void);
@@ -157,7 +158,7 @@ public:
   void debug(std::string msg);
   void dmap_print_walls(Dmapp d);
   void dump(void);
-  void finish_constructor(void);
+  void construct(void);
   void hide_other_locks(int depth, int pass);
   void init_nodes(void);
   void join_depth_secret(int depth, int pass);
@@ -165,10 +166,11 @@ public:
   void join_nodes_of_same_depth(int depth, int pass);
   void log(void);
   void make_paths_off_critical_path_reachable(void);
-  void putn(const int x, const int y, const RoomNode n);
+  void putn(const int x, const int y, const Level1Node n);
   void random_dir(int *dx, int *dy);
   void remove_redundant_directions(void);
   void remove_stubs();
   void set_max_depth(void);
 };
-extern class RoomNodes *grid_test(void);
+
+LevelPh1 level_ph1(void);
