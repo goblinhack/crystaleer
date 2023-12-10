@@ -14,7 +14,7 @@
 
 using LevelPh2Rooms = std::vector< LevelPh2Roomp >;
 
-using room_type_t = enum {
+using RoomType = enum {
   ROOM_TYPE_NORMAL,
   ROOM_TYPE_ENTRANCE,
   ROOM_TYPE_EXIT,
@@ -37,10 +37,10 @@ public:
   //
   // Unique per room.
   //
-  uint32_t    roomno {0};
-  room_type_t type;
-  uint8_t     width {LEVEL_PH2_ROOM_WIDTH};
-  uint8_t     height {LEVEL_PH2_ROOM_HEIGHT};
+  uint32_t roomno {0};
+  RoomType type;
+  uint8_t  width {LEVEL_PH2_ROOM_WIDTH};
+  uint8_t  height {LEVEL_PH2_ROOM_HEIGHT};
 
   std::array< std::array< char, LEVEL_PH2_ROOM_HEIGHT >, LEVEL_PH2_ROOM_WIDTH > data {};
 

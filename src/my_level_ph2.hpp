@@ -26,7 +26,7 @@ public:
 
 void level_ph2_room_set_add(const char *);
 void level_ph2_norm_init(void);
-void level_ph2_init_init(void);
+void level_ph2_entrances(void);
 void level_ph2_exit_init(void);
 void level_ph2_secr_init(void);
 void level_ph2_lock_init(void);

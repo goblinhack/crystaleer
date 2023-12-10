@@ -7,11 +7,13 @@
 
 #include "my_array_bounds_check.hpp"
 #include "my_charmap.hpp"
+#include "my_dice.hpp"
 #include "my_level_ph1.hpp"
 #include "my_level_ph2.hpp"
 #include "my_level_ph3.hpp"
 #include "my_main.hpp"
 #include "my_point.hpp"
+#include "my_random.hpp"
 #include "my_template.hpp"
 
 void LevelPh3::dump(void)
@@ -44,7 +46,7 @@ bool LevelPh3::expand(const LevelPh2 &ph2)
 
   for (auto y = 0; y < h; y++) {
     for (auto x = 0; x < w; x++) {
-      set(data, x, y, (char) CHAR_ROCK);
+      set(data, x, y, (char) PH2_CHAR_ROCK);
     }
   }
 
@@ -67,11 +69,91 @@ bool LevelPh3::expand(const LevelPh2 &ph2)
   return true;
 }
 
+void LevelPh3::add_obstacle_at(const LevelPh2 &ph2, point at, LevelPh3Obstp o)
+{
+  TRACE_NO_INDENT();
+
+  for (auto y = 0; y < LEVEL_PH3_OBST_HEIGHT; y++) {
+    for (auto x = 0; x < LEVEL_PH3_OBST_WIDTH; x++) {
+      //
+      // For each obst char, check there is a wildcard char on the level
+      //
+      auto c = get(o->data, x, y);
+      switch (get(data, at.x + x, at.y + y)) {
+        default : break;
+        case PH2_CHAR_WILDCARD :
+        case PH2_CHAR_OBSTACLE_AIR :
+        case PH2_CHAR_OBSTACLE_GROUND : set(data, at.x + x, at.y + y, c); break;
+      }
+    }
+  }
+}
+
+void LevelPh3::add_obstacles(const LevelPh2 &ph2)
+{
+  TRACE_NO_INDENT();
+
+  const auto w = LEVEL_PH3_WIDTH;
+  const auto h = LEVEL_PH3_HEIGHT;
+
+  for (auto y = 0; y < h; y++) {
+    for (auto x = 0; x < w; x++) {
+      point at(x, y);
+      switch (get(data, x, y)) {
+        case PH2_CHAR_OBSTACLE_AIR :
+          add_obstacle_at(ph2, at, pcg_one_of(LevelPh3Obst::all_obsts_of_type[ OBST_TYPE_AIR ]));
+          break;
+        case PH2_CHAR_OBSTACLE_GROUND :
+          add_obstacle_at(ph2, at, pcg_one_of(LevelPh3Obst::all_obsts_of_type[ OBST_TYPE_GROUND ]));
+          break;
+      }
+    }
+  }
+}
+
+void LevelPh3::fix_obstacles(const LevelPh2 &ph2)
+{
+  TRACE_NO_INDENT();
+
+  const auto w = LEVEL_PH3_WIDTH;
+  const auto h = LEVEL_PH3_HEIGHT;
+
+  for (auto y = 0; y < h; y++) {
+    for (auto x = 0; x < w; x++) {
+      point at(x, y);
+      switch (get(data, x, y)) {
+        case PH2_CHAR_SPIKE_33_PERCENT :
+          if (d100() > 33) {
+            set(data, x, y, (char) PH2_CHAR_EMPTY);
+          }
+          break;
+        case PH2_CHAR_WALL_100_PERCENT : break;
+        case PH2_CHAR_WALL_50_PERCENT :
+          if (d100() > 50) {
+            set(data, x, y, (char) PH2_CHAR_EMPTY);
+          } else {
+            set(data, x, y, (char) PH2_CHAR_WALL_100_PERCENT);
+          }
+      }
+    }
+  }
+}
+
 LevelPh3::LevelPh3(const LevelPh2 &ph2)
 {
   TRACE_NO_INDENT();
 
+  CON("Initial layout:");
   expand(ph2);
+  dump();
+
+  CON("Add obstacles:");
+  add_obstacles(ph2);
+  dump();
+
+  CON("Fix obstacles with a chance of appearing:");
+  fix_obstacles(ph2);
+  dump();
 
   ok = true;
 }

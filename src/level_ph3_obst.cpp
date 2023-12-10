@@ -2,170 +2,143 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include <string.h>
+
+#include "my_array_bounds_check.hpp"
 #include "my_charmap.hpp"
-#include "my_level_ph3.hpp"
+#include "my_level_ph3_obst.hpp"
+#include "my_ptrcheck.hpp"
 
-void level_ph3_obst_init(void)
+LevelPh3Obsts LevelPh3Obst::all_obsts_of_type[ OBST_TYPE_MAX ];
+LevelPh3Obsts LevelPh3Obst::all_obsts;
+
+void level_ph3_init(void) { TRACE_NO_INDENT(); }
+
+void level_ph3_fini(void)
 {
-  //
-  // Ground
-  //
   TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_GROUND,
-                     "11111"
-                     "....."
-                     ".....");
+  for (auto &o : LevelPh3Obst::all_obsts) {
+    delete o;
+  }
+}
 
+LevelPh3Obst::LevelPh3Obst(void)
+{
   TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_GROUND,
-                     "....."
-                     "1111."
-                     ".....");
+  this->obstno = all_obsts.size();
+  newptr(MTYPE_OBST, this, "obst");
+}
 
+LevelPh3Obst::~LevelPh3Obst(void)
+{
   TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_GROUND,
-                     "....."
-                     ".1111"
-                     ".....");
+  oldptr(MTYPE_OBST, this);
+}
 
+LevelPh3Obstp LevelPh3Obst::flip(void)
+{
   TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_GROUND,
-                     "....."
-                     "....."
-                     "11111");
+  auto f = new LevelPh3Obst();
 
-  TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_GROUND,
-                     "....."
-                     "2.2.."
-                     "17177");
+  f->type = type;
 
-  TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_GROUND,
-                     "....."
-                     ".2.2."
-                     "71717");
+  for (auto x = 0; x < LEVEL_PH3_OBST_WIDTH; x++) {
+    for (auto y = 0; y < LEVEL_PH3_OBST_HEIGHT; y++) {
+      auto c = get(data, x, y);
+      set(f->data, LEVEL_PH3_OBST_WIDTH - x - 1, y, c);
+    }
+  }
 
-  TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_GROUND,
-                     "....."
-                     "..2.2"
-                     "77171");
+  return f;
+}
 
+void LevelPh3Obst::dump(void)
+{
   TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_GROUND,
-                     "....."
-                     "222.."
-                     "111..");
 
-  TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_GROUND,
-                     "....."
-                     ".222."
-                     ".111.");
+  CON("LevelPh3Obstno: %u", obstno);
 
-  TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_GROUND,
-                     "....."
-                     "..222"
-                     "..111");
+  std::array< std::array< char, LEVEL_PH3_OBST_WIDTH >, LEVEL_PH3_OBST_HEIGHT > out {};
 
-  TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_GROUND,
-                     "111.."
-                     "222.."
-                     ".....");
+  for (auto ry = 0; ry < LEVEL_PH3_OBST_HEIGHT; ry++) {
+    for (auto rx = 0; rx < LEVEL_PH3_OBST_WIDTH; rx++) {
+      auto c = get(data, rx, ry);
+      set(out, rx, ry, c);
+    }
+  }
 
-  TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_GROUND,
-                     ".111."
-                     ".222."
-                     ".....");
+  for (auto y = 0; y < LEVEL_PH3_OBST_HEIGHT; y++) {
+    std::string s;
+    for (auto x = 0; x < LEVEL_PH3_OBST_WIDTH; x++) {
+      auto c = get(out, x, y);
+      if (c) {
+        s += c;
+      } else {
+        s += ' ';
+      }
+    }
+    CON("%s", s.c_str());
+  }
 
-  TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_GROUND,
-                     "..111"
-                     "..222"
-                     ".....");
+  CON("-");
+}
 
+LevelPh3Obstp obst_new(void)
+{
   TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_GROUND,
-                     "....."
-                     ".222."
-                     "21112");
+  auto o = new LevelPh3Obst();
+  LevelPh3Obst::all_obsts.push_back(o);
+  return o;
+}
 
+void level_ph3_obst_add(ObsType type, const char *data)
+{
   TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_GROUND,
-                     "....."
-                     "2.1.."
-                     "77117");
 
-  TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_GROUND,
-                     "....."
-                     "..1.2"
-                     "71177");
+  const auto row_len      = LEVEL_PH3_OBST_WIDTH;
+  auto       expected_len = row_len * LEVEL_PH3_OBST_HEIGHT;
+
+  if (strlen(data) != expected_len) {
+    DIE("bad obstacle size, expected %d, got %d", (int) strlen(data), (int) expected_len);
+  }
 
   //
-  // Air
+  // Break the grid of obsts up into individual obsts
   //
-  TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_AIR,
-                     "11111"
-                     "....."
-                     ".....");
+  auto o  = obst_new();
+  o->type = type;
 
-  TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_AIR,
-                     "22222"
-                     "....."
-                     ".....");
+  for (auto ry = 0; ry < LEVEL_PH3_OBST_HEIGHT; ry++) {
+    for (auto rx = 0; rx < LEVEL_PH3_OBST_WIDTH; rx++) {
+      auto offset = (row_len * ry) + rx;
+      auto c      = data[ offset ];
 
-  TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_AIR,
-                     "111.."
-                     "222.."
-                     ".....");
+      switch (c) {
+        case PH2_CHAR_ROCK : break;
+        case PH2_CHAR_WILDCARD : DIE("obstacle should not have a wildcard"); break;
+        case PH2_CHAR_WALL_100_PERCENT : break;
+        case PH2_CHAR_WALL_50_PERCENT : break;
+        case PH2_CHAR_SPIKE_33_PERCENT : break;
+        case PH2_CHAR_OBSTACLE_GROUND : break;
+        case PH2_CHAR_OBSTACLE_AIR : break;
+        case PH2_CHAR_LADDER : break;
+        case PH2_CHAR_ENTRANCE : DIE("obstacle should not have an entrance"); break;
+        case PH2_CHAR_EXIT : DIE("obstacle should not have an exit"); break;
+        case PH2_CHAR_LOCK : break;
+        case PH2_CHAR_KEY : break;
+        case PH2_CHAR_SECRET_DOOR : DIE("obstacle should not have a secret door"); break;
+        case PH2_CHAR_EMPTY : break;
+        default : DIE("unexpected obstacle char '%c'", c);
+      }
 
-  TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_AIR,
-                     ".111."
-                     ".222."
-                     ".....");
+      o->data[ rx ][ ry ] = c;
+    }
+  }
 
-  TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_AIR,
-                     "..111"
-                     "..222"
-                     ".....");
+  LevelPh3Obst::all_obsts_of_type[ o->type ].push_back(o);
+  o->dump();
 
-  TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_AIR,
-                     "....."
-                     ".111."
-                     ".....");
-
-  TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_AIR,
-                     "....."
-                     ".111."
-                     ".222.");
-
-  TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_AIR,
-                     "....."
-                     ".222."
-                     ".111.");
-
-  TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_AIR,
-                     "....."
-                     "..22."
-                     ".1111");
-
-  TRACE_NO_INDENT();
-  level_ph3_obst_add(CHAR_OBSTACLE_AIR,
-                     "....."
-                     "222.."
-                     "111..");
+  auto f = o->flip();
+  LevelPh3Obst::all_obsts_of_type[ f->type ].push_back(f);
+  f->dump();
 }

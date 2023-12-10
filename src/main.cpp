@@ -696,7 +696,7 @@ int main(int argc, char *argv[])
 
   LOG("INI: Init level phases");
   level_ph2_norm_init();
-  level_ph2_init_init();
+  level_ph2_entrances();
   level_ph2_exit_init();
   level_ph2_secr_init();
   level_ph2_lock_init();
@@ -788,7 +788,6 @@ int main(int argc, char *argv[])
       exit(1);
       continue;
     }
-    ph3.dump();
     CON("ALL GOOD");
 
     exit(1);
