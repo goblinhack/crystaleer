@@ -125,7 +125,7 @@ void LevelPh2::dump(void)
         s += ' ';
       }
     }
-    CON("Phase2: [%s]", s.c_str());
+    LOG("Phase2: [%s]", s.c_str());
   }
 }
 
@@ -179,8 +179,6 @@ bool LevelPh2::solve(const LevelPh1 &ph1, point at)
     //
     r = get_fitted_room_type(node, left_room, right_room, up_room, down_room);
     if (! r) {
-      CON("COULD NOT FIT at %d,%d", x, y);
-      exit(1);
       return false;
     }
     set(rooms, x, y, r);
@@ -257,7 +255,7 @@ got_entrance:
 
 LevelPh2 level_ph2(const LevelPh1 &ph1)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   LevelPh2 ph2(ph1);
   return ph2;

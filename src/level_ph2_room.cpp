@@ -72,7 +72,7 @@ void LevelPh2Room::dump(void)
 {
   TRACE_NO_INDENT();
 
-  CON("LevelPh2Roomno: %u", roomno);
+  LOG("LevelPh2Roomno: %u", roomno);
 
   std::array< std::array< char, LEVEL_PH2_ROOM_WIDTH >, LEVEL_PH2_ROOM_HEIGHT > out {};
 
@@ -93,11 +93,11 @@ void LevelPh2Room::dump(void)
         s += ' ';
       }
     }
-    CON("%s", s.c_str());
+    LOG("%s", s.c_str());
   }
 
-  CON("Exits left %x right %x up %x down %x", exits_left, exits_right, exits_up, exits_down);
-  CON("-");
+  LOG("Exits left %x right %x up %x down %x", exits_left, exits_right, exits_up, exits_down);
+  LOG("-");
 }
 
 LevelPh2Roomp room_new(void)

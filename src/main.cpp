@@ -802,8 +802,6 @@ int main(int argc, char *argv[])
     exit(1);
   }
 
-  exit(1);
-
   {
     TRACE_NO_INDENT();
     if (! sdl_init()) {

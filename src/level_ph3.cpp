@@ -33,7 +33,7 @@ void LevelPh3::dump(void)
         s += ' ';
       }
     }
-    CON("Phase3: [%s]", s.c_str());
+    LOG("Phase3: [%s]", s.c_str());
   }
 }
 
@@ -143,15 +143,15 @@ LevelPh3::LevelPh3(const LevelPh2 &ph2)
 {
   TRACE_NO_INDENT();
 
-  CON("Initial layout:");
+  LOG("Initial layout:");
   expand(ph2);
   dump();
 
-  CON("Add obstacles:");
+  LOG("Add obstacles:");
   add_obstacles(ph2);
   dump();
 
-  CON("Fix obstacles with a chance of appearing:");
+  LOG("Fix obstacles with a chance of appearing:");
   fix_obstacles(ph2);
   dump();
 
@@ -160,7 +160,7 @@ LevelPh3::LevelPh3(const LevelPh2 &ph2)
 
 LevelPh3 level_ph3(const LevelPh2 &ph2)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   LevelPh3 ph3(ph2);
 

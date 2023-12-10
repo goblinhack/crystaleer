@@ -33,7 +33,7 @@ void LevelPh4::dump(void)
         s += ' ';
       }
     }
-    CON("Phase3: [%s]", s.c_str());
+    LOG("Phase4: [%s]", s.c_str());
   }
 }
 
@@ -57,7 +57,7 @@ LevelPh4::LevelPh4(const LevelPh3 &ph3)
 {
   TRACE_NO_INDENT();
 
-  CON("Initial layout:");
+  LOG("Initial layout:");
   expand(ph3);
   dump();
 
@@ -66,7 +66,7 @@ LevelPh4::LevelPh4(const LevelPh3 &ph3)
 
 LevelPh4 level_ph4(const LevelPh3 &ph3)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   LevelPh4 ph4(ph3);
 

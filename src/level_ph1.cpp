@@ -434,7 +434,7 @@ void LevelPh1::dump(void)
       s += get(out, x, y);
     }
     if (s != "") {
-      CON("Phase1: [%s]", s.c_str());
+      LOG("Phase1: [%s]", s.c_str());
     }
   }
 
@@ -2256,7 +2256,7 @@ bool LevelPh1::remove_dead_end_paths(void)
 
 LevelPh1 level_ph1(void)
 {
-  TRACE_AND_INDENT();
+  TRACE_NO_INDENT();
 
   LevelPh1 ph1(LEVEL_PH1_WIDTH, LEVEL_PH1_HEIGHT);
   ph1.construct();

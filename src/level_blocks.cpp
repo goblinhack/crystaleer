@@ -16,10 +16,23 @@ void level_ph4_block_init(void)
   //
   TRACE_NO_INDENT();
   level_ph4_block_add(BLOCK_TYPE_NORMAL,
-                      "***" // look for this pattern
+                      // look for this pattern
+                      "***"
                       ".11"
                       "*.*",
-                      "111" // replaced with
+                      // replaced with
+                      "111"
                       ".11"
                       "..1");
+
+  TRACE_NO_INDENT();
+  level_ph4_block_add(BLOCK_TYPE_NORMAL,
+                      // look for this pattern
+                      "***"
+                      "*|*"
+                      "***",
+                      // replaced with
+                      "..."
+                      ".|."
+                      "|1|");
 }

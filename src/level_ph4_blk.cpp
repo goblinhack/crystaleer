@@ -56,7 +56,7 @@ void LevelPh4Block::dump(void)
 {
   TRACE_NO_INDENT();
 
-  CON("LevelPh4Blockno: %u", blkno);
+  LOG("LevelPh4Blockno: %u", blkno);
 
   std::array< std::array< char, LEVEL_PH4_BLOCK_WIDTH >, LEVEL_PH4_BLOCK_HEIGHT > out {};
 
@@ -77,10 +77,10 @@ void LevelPh4Block::dump(void)
         s += ' ';
       }
     }
-    CON("%s", s.c_str());
+    LOG("%s", s.c_str());
   }
 
-  CON("-");
+  LOG("-");
 }
 
 LevelPh4Blockp block_new(void)
@@ -118,11 +118,12 @@ void level_ph4_block_add(BlockType type, const char *pattern, const char *data)
       auto c      = data[ offset ];
 
       switch (c) {
-        case PH4_CHAR_WILDCARD : DIE("blkacle should not have a wildcard"); break;
+        case PH4_CHAR_WILDCARD : DIE("block should not have a wildcard"); break;
+        case PH4_CHAR_SPIKE_33_PERCENT : break;
         case PH4_CHAR_WALL_100_PERCENT : break;
         case PH4_CHAR_WALL_50_PERCENT : break;
         case PH4_CHAR_EMPTY : break;
-        default : DIE("unexpected blkacle char '%c'", c);
+        default : DIE("unexpected block char '%c'", c);
       }
 
       o->data[ rx ][ ry ] = c;
@@ -130,9 +131,9 @@ void level_ph4_block_add(BlockType type, const char *pattern, const char *data)
   }
 
   LevelPh4Block::all_blocks_of_type[ o->type ].push_back(o);
-  o->dump();
+  // o->dump();
 
   auto f = o->flip();
   LevelPh4Block::all_blocks_of_type[ f->type ].push_back(f);
-  f->dump();
+  // f->dump();
 }

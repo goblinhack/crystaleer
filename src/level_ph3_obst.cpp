@@ -56,7 +56,7 @@ void LevelPh3Obstaclet::dump(void)
 {
   TRACE_NO_INDENT();
 
-  CON("LevelPh3Obstacletno: %u", obstno);
+  LOG("LevelPh3Obstacletno: %u", obstno);
 
   std::array< std::array< char, LEVEL_PH3_OBSTACLE_WIDTH >, LEVEL_PH3_OBSTACLE_HEIGHT > out {};
 
@@ -77,10 +77,10 @@ void LevelPh3Obstaclet::dump(void)
         s += ' ';
       }
     }
-    CON("%s", s.c_str());
+    LOG("%s", s.c_str());
   }
 
-  CON("-");
+  LOG("-");
 }
 
 LevelPh3Obstacletp obstacle_new(void)
@@ -136,9 +136,9 @@ void level_ph3_obstacle_add(ObstacleType type, const char *data)
   }
 
   LevelPh3Obstaclet::all_obsts_of_type[ o->type ].push_back(o);
-  o->dump();
+  // o->dump();
 
   auto f = o->flip();
   LevelPh3Obstaclet::all_obsts_of_type[ f->type ].push_back(f);
-  f->dump();
+  // f->dump();
 }
