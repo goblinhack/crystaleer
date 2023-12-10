@@ -23,6 +23,7 @@
 #include "my_level_ph1.hpp"
 #include "my_level_ph2.hpp"
 #include "my_level_ph3.hpp"
+#include "my_level_ph4.hpp"
 #include "my_music.hpp"
 #include "my_ramdisk.hpp"
 #include "my_random.hpp"
@@ -701,7 +702,8 @@ int main(int argc, char *argv[])
   level_ph2_secr_init();
   level_ph2_lock_init();
   level_ph2_key_init();
-  level_ph3_obst_init();
+  level_ph3_obstacle_init();
+  level_ph4_block_init();
 
   for (;;) {
 
@@ -785,6 +787,13 @@ int main(int argc, char *argv[])
     auto ph3 = level_ph3(ph2);
     if (! ph3.ok) {
       CON("COULD NOT SOLVE PH3");
+      exit(1);
+      continue;
+    }
+
+    auto ph4 = level_ph4(ph3);
+    if (! ph4.ok) {
+      CON("COULD NOT SOLVE PH4");
       exit(1);
       continue;
     }

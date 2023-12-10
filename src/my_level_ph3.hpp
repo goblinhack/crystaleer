@@ -22,12 +22,9 @@ public:
 
   void dump(void);
   bool expand(const LevelPh2 &);
-  void add_obstacle_at(const LevelPh2 &, point at, LevelPh3Obstp);
+  void add_obstacle_at(const LevelPh2 &, point at, LevelPh3Obstacletp);
   void add_obstacles(const LevelPh2 &);
   void fix_obstacles(const LevelPh2 &);
 };
-
-void level_ph3_obst_init(void);
-void level_ph3_obst_add(ObsType, const char *);
 
 LevelPh3 level_ph3(const LevelPh2 &);

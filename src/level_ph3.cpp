@@ -69,12 +69,12 @@ bool LevelPh3::expand(const LevelPh2 &ph2)
   return true;
 }
 
-void LevelPh3::add_obstacle_at(const LevelPh2 &ph2, point at, LevelPh3Obstp o)
+void LevelPh3::add_obstacle_at(const LevelPh2 &ph2, point at, LevelPh3Obstacletp o)
 {
   TRACE_NO_INDENT();
 
-  for (auto y = 0; y < LEVEL_PH3_OBST_HEIGHT; y++) {
-    for (auto x = 0; x < LEVEL_PH3_OBST_WIDTH; x++) {
+  for (auto y = 0; y < LEVEL_PH3_OBSTACLE_HEIGHT; y++) {
+    for (auto x = 0; x < LEVEL_PH3_OBSTACLE_WIDTH; x++) {
       //
       // For each obst char, check there is a wildcard char on the level
       //
@@ -101,10 +101,10 @@ void LevelPh3::add_obstacles(const LevelPh2 &ph2)
       point at(x, y);
       switch (get(data, x, y)) {
         case PH2_CHAR_OBSTACLE_AIR :
-          add_obstacle_at(ph2, at, pcg_one_of(LevelPh3Obst::all_obsts_of_type[ OBST_TYPE_AIR ]));
+          add_obstacle_at(ph2, at, pcg_one_of(LevelPh3Obstaclet::all_obsts_of_type[ OBSTACLE_TYPE_AIR ]));
           break;
         case PH2_CHAR_OBSTACLE_GROUND :
-          add_obstacle_at(ph2, at, pcg_one_of(LevelPh3Obst::all_obsts_of_type[ OBST_TYPE_GROUND ]));
+          add_obstacle_at(ph2, at, pcg_one_of(LevelPh3Obstaclet::all_obsts_of_type[ OBSTACLE_TYPE_GROUND ]));
           break;
       }
     }

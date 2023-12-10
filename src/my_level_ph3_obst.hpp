@@ -3,8 +3,8 @@
 //
 
 #pragma once
-#ifndef _MY_LEVEL_PH3_OBST_HPP_
-#define _MY_LEVEL_PH3_OBST_HPP_
+#ifndef _MY_LEVEL_PH3_OBSTACLE_HPP_
+#define _MY_LEVEL_PH3_OBSTACLE_HPP_
 
 #include <array>
 #include <string>
@@ -12,41 +12,44 @@
 #include "my_fwd.hpp"
 #include "my_game_defs.hpp"
 
-using LevelPh3Obsts = std::vector< LevelPh3Obstp >;
+using LevelPh3Obstaclets = std::vector< LevelPh3Obstacletp >;
 
-using ObsType = enum {
-  OBST_TYPE_AIR,
-  OBST_TYPE_GROUND,
-  OBST_TYPE_MAX,
+using ObstacleType = enum {
+  OBSTACLE_TYPE_AIR,
+  OBSTACLE_TYPE_GROUND,
+  OBSTACLE_TYPE_MAX,
 };
 
-class LevelPh3Obst
+class LevelPh3Obstaclet
 {
 private:
 public:
-  static LevelPh3Obsts all_obsts_of_type[ OBST_TYPE_MAX ];
-  static LevelPh3Obsts all_obsts;
+  static LevelPh3Obstaclets all_obsts_of_type[ OBSTACLE_TYPE_MAX ];
+  static LevelPh3Obstaclets all_obsts;
 
-  LevelPh3Obst(void);
-  ~LevelPh3Obst(void);
+  LevelPh3Obstaclet(void);
+  ~LevelPh3Obstaclet(void);
 
   //
   // Unique per obst.
   //
-  uint32_t obstno {0};
-  ObsType  type;
-  uint8_t  width {LEVEL_PH3_OBST_WIDTH};
-  uint8_t  height {LEVEL_PH3_OBST_HEIGHT};
+  uint32_t     obstno {0};
+  ObstacleType type;
+  uint8_t      width {LEVEL_PH3_OBSTACLE_WIDTH};
+  uint8_t      height {LEVEL_PH3_OBSTACLE_HEIGHT};
 
-  std::array< std::array< char, LEVEL_PH3_OBST_HEIGHT >, LEVEL_PH3_OBST_WIDTH > data {};
+  std::array< std::array< char, LEVEL_PH3_OBSTACLE_HEIGHT >, LEVEL_PH3_OBSTACLE_WIDTH > data {};
 
-  LevelPh3Obstp flip(void);
-  void          dump(void);
+  LevelPh3Obstacletp flip(void);
+  void               dump(void);
 };
 
 void level_ph3_init(void);
 void level_ph3_fini(void);
 
-LevelPh3Obstp obst_new(void);
+LevelPh3Obstacletp obstacle_new(void);
+
+void level_ph3_obstacle_init(void);
+void level_ph3_obstacle_add(ObstacleType, const char *);
 
 #endif

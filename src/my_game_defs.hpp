@@ -114,21 +114,22 @@
  * R1111111111111111111111111111111111111111R
  * RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
  */
-#define LEVEL_PH3_MAP_BORDER  1 // Border around the level
-#define LEVEL_PH3_WIDTH       ((LEVEL_PH2_WIDTH * LEVEL_PH2_ROOM_WIDTH) + (LEVEL_PH3_MAP_BORDER * 2))
-#define LEVEL_PH3_HEIGHT      ((LEVEL_PH2_HEIGHT * LEVEL_PH2_ROOM_HEIGHT) + (LEVEL_PH3_MAP_BORDER * 2))
-#define LEVEL_PH3_OBST_WIDTH  5 // Max obstacle dimensions
-#define LEVEL_PH3_OBST_HEIGHT 3 // Max obstacle dimensions
+#define LEVEL_PH3_MAP_BORDER      1 // Border around the level
+#define LEVEL_PH3_WIDTH           ((LEVEL_PH2_WIDTH * LEVEL_PH2_ROOM_WIDTH) + (LEVEL_PH3_MAP_BORDER * 2))
+#define LEVEL_PH3_HEIGHT          ((LEVEL_PH2_HEIGHT * LEVEL_PH2_ROOM_HEIGHT) + (LEVEL_PH3_MAP_BORDER * 2))
+#define LEVEL_PH3_OBSTACLE_WIDTH  5 // Max obstacle dimensions
+#define LEVEL_PH3_OBSTACLE_HEIGHT 3 // Max obstacle dimensions
 
 /*
  * Phase 4: expand each block into an X*X char cell
  */
-#define LEVEL_PH4_WIDTH      LEVEL_PH3_WIDTH
-#define LEVEL_PH4_HEIGHT     LEVEL_PH3_HEIGHT
-#define LEVEL_PH4_BLOCK_SIZE 3 // Blocks are composed of X*X character cells
+#define LEVEL_PH4_BLOCK_WIDTH  3 // Max obstacle dimensions
+#define LEVEL_PH4_BLOCK_HEIGHT 3 // Max obstacle dimensions
+#define LEVEL_PH4_WIDTH        (LEVEL_PH3_WIDTH * LEVEL_PH4_BLOCK_WIDTH)
+#define LEVEL_PH4_HEIGHT       (LEVEL_PH3_HEIGHT * LEVEL_PH4_BLOCK_HEIGHT)
 
-#define MAP_WIDTH  (LEVEL_PH4_WIDTH * LEVEL_PH4_BLOCK_SIZE)
-#define MAP_HEIGHT (LEVEL_PH4_HEIGHT * LEVEL_PH4_BLOCK_SIZE)
+#define MAP_WIDTH  LEVEL_PH4_WIDTH
+#define MAP_HEIGHT LEVEL_PH4_HEIGHT
 
 #define GAME_MOST_ZOOMED_IN   5
 #define GAME_MOST_ZOOMED_OUT  1

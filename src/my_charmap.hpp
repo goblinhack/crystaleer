@@ -44,4 +44,14 @@ enum {
   // end sort marker2 }
 };
 
+enum {
+  // begin sort marker3 {
+  PH4_CHAR_EMPTY            = '.',
+  PH4_CHAR_SPIKE_33_PERCENT = '|',
+  PH4_CHAR_WALL_100_PERCENT = '1',
+  PH4_CHAR_WALL_50_PERCENT  = '2',
+  PH4_CHAR_WILDCARD         = '*',
+  // end sort marker3 }
+};
+
 #endif

@@ -9,131 +9,131 @@
 #include "my_ptrcheck.hpp"
 #include "my_vector_bounds_check.hpp"
 
-void level_ph3_obst_init(void)
+void level_ph3_obstacle_init(void)
 {
   //
   // Ground
   //
   TRACE_NO_INDENT();
-  level_ph3_obst_add(OBST_TYPE_GROUND,
-                     "11111"
-                     "....."
-                     ".....");
+  level_ph3_obstacle_add(OBSTACLE_TYPE_GROUND,
+                         "11111"
+                         "....."
+                         ".....");
 
   TRACE_NO_INDENT();
-  level_ph3_obst_add(OBST_TYPE_GROUND,
-                     "....."
-                     "1111."
-                     ".....");
+  level_ph3_obstacle_add(OBSTACLE_TYPE_GROUND,
+                         "....."
+                         "1111."
+                         ".....");
 
   TRACE_NO_INDENT();
-  level_ph3_obst_add(OBST_TYPE_GROUND,
-                     "....."
-                     ".|.|."
-                     "11111");
+  level_ph3_obstacle_add(OBSTACLE_TYPE_GROUND,
+                         "....."
+                         ".|.|."
+                         "11111");
 
   TRACE_NO_INDENT();
-  level_ph3_obst_add(OBST_TYPE_GROUND,
-                     "....."
-                     "2.2.."
-                     "1|1||");
+  level_ph3_obstacle_add(OBSTACLE_TYPE_GROUND,
+                         "....."
+                         "2.2.."
+                         "1|1||");
 
   TRACE_NO_INDENT();
-  level_ph3_obst_add(OBST_TYPE_GROUND,
-                     "....."
-                     ".2.2."
-                     "|1|1|");
+  level_ph3_obstacle_add(OBSTACLE_TYPE_GROUND,
+                         "....."
+                         ".2.2."
+                         "|1|1|");
 
   TRACE_NO_INDENT();
-  level_ph3_obst_add(OBST_TYPE_GROUND,
-                     "....."
-                     "222.."
-                     "111|.");
+  level_ph3_obstacle_add(OBSTACLE_TYPE_GROUND,
+                         "....."
+                         "222.."
+                         "111|.");
 
   TRACE_NO_INDENT();
-  level_ph3_obst_add(OBST_TYPE_GROUND,
-                     "....."
-                     ".222."
-                     ".111.");
+  level_ph3_obstacle_add(OBSTACLE_TYPE_GROUND,
+                         "....."
+                         ".222."
+                         ".111.");
 
   TRACE_NO_INDENT();
-  level_ph3_obst_add(OBST_TYPE_GROUND,
-                     "111.."
-                     "222.."
-                     ".....");
+  level_ph3_obstacle_add(OBSTACLE_TYPE_GROUND,
+                         "111.."
+                         "222.."
+                         ".....");
 
   TRACE_NO_INDENT();
-  level_ph3_obst_add(OBST_TYPE_GROUND,
-                     ".111."
-                     ".222."
-                     ".....");
+  level_ph3_obstacle_add(OBSTACLE_TYPE_GROUND,
+                         ".111."
+                         ".222."
+                         ".....");
 
   TRACE_NO_INDENT();
-  level_ph3_obst_add(OBST_TYPE_GROUND,
-                     "....."
-                     ".222."
-                     "21112");
+  level_ph3_obstacle_add(OBSTACLE_TYPE_GROUND,
+                         "....."
+                         ".222."
+                         "21112");
 
   TRACE_NO_INDENT();
-  level_ph3_obst_add(OBST_TYPE_GROUND,
-                     "....."
-                     "2.1.."
-                     "||11|");
+  level_ph3_obstacle_add(OBSTACLE_TYPE_GROUND,
+                         "....."
+                         "2.1.."
+                         "||11|");
 
   //
   // Air
   //
   TRACE_NO_INDENT();
-  level_ph3_obst_add(OBST_TYPE_AIR,
-                     "11111"
-                     "....."
-                     ".....");
+  level_ph3_obstacle_add(OBSTACLE_TYPE_AIR,
+                         "11111"
+                         "....."
+                         ".....");
 
   TRACE_NO_INDENT();
-  level_ph3_obst_add(OBST_TYPE_AIR,
-                     "22222"
-                     "....."
-                     ".....");
+  level_ph3_obstacle_add(OBSTACLE_TYPE_AIR,
+                         "22222"
+                         "....."
+                         ".....");
 
   TRACE_NO_INDENT();
-  level_ph3_obst_add(OBST_TYPE_AIR,
-                     "111.."
-                     "222.."
-                     ".....");
+  level_ph3_obstacle_add(OBSTACLE_TYPE_AIR,
+                         "111.."
+                         "222.."
+                         ".....");
 
   TRACE_NO_INDENT();
-  level_ph3_obst_add(OBST_TYPE_AIR,
-                     ".111."
-                     ".222."
-                     ".....");
+  level_ph3_obstacle_add(OBSTACLE_TYPE_AIR,
+                         ".111."
+                         ".222."
+                         ".....");
 
   TRACE_NO_INDENT();
-  level_ph3_obst_add(OBST_TYPE_AIR,
-                     "....."
-                     ".111."
-                     ".....");
+  level_ph3_obstacle_add(OBSTACLE_TYPE_AIR,
+                         "....."
+                         ".111."
+                         ".....");
 
   TRACE_NO_INDENT();
-  level_ph3_obst_add(OBST_TYPE_AIR,
-                     "....."
-                     ".111."
-                     ".222.");
+  level_ph3_obstacle_add(OBSTACLE_TYPE_AIR,
+                         "....."
+                         ".111."
+                         ".222.");
 
   TRACE_NO_INDENT();
-  level_ph3_obst_add(OBST_TYPE_AIR,
-                     "....."
-                     ".222."
-                     ".111.");
+  level_ph3_obstacle_add(OBSTACLE_TYPE_AIR,
+                         "....."
+                         ".222."
+                         ".111.");
 
   TRACE_NO_INDENT();
-  level_ph3_obst_add(OBST_TYPE_AIR,
-                     "....."
-                     "..22."
-                     ".1111");
+  level_ph3_obstacle_add(OBSTACLE_TYPE_AIR,
+                         "....."
+                         "..22."
+                         ".1111");
 
   TRACE_NO_INDENT();
-  level_ph3_obst_add(OBST_TYPE_AIR,
-                     "....."
-                     "222.."
-                     "111..");
+  level_ph3_obstacle_add(OBSTACLE_TYPE_AIR,
+                         "....."
+                         "222.."
+                         "111..");
 }
