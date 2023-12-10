@@ -8,6 +8,7 @@
 
 #include "my_game_defs.hpp"
 #include "my_level_ph1.hpp"
+#include "my_level_ph2_room.hpp"
 #include "my_sys.hpp"
 
 class LevelPh2
