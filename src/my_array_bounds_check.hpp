@@ -1,8 +1,9 @@
 #pragma once
-#include "my_callstack.hpp"
-// REMOVED #include <array>
+#include <array>
 #include <iostream>
 #include <sstream>
+
+#include "my_callstack.hpp"
 
 //
 // Single dimension array check

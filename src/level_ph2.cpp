@@ -14,21 +14,11 @@
 #include "my_point.hpp"
 #include "my_template.hpp"
 
-class LevelPh2RoomSolver
-{
-private:
-public:
-  LevelPh2RoomSolver(void) {}
-  ~LevelPh2RoomSolver(void) {}
-
-  std::array< std::array< LevelPh2Roomp, LEVEL_PH1_DOWN >, LEVEL_PH1_ACROSS > rooms {};
-};
-
 void level_ph2_room_set_add(const char *data)
 {
   TRACE_NO_INDENT();
-  const auto row_len      = (((LEVEL_PH2_ROOM_WIDTH + 1) * LEVEL_PH1_ACROSS) + 1);
-  auto       expected_len = (row_len) * (((LEVEL_PH2_ROOM_HEIGHT + 1) * LEVEL_PH1_DOWN) + 1);
+  const auto row_len      = (((LEVEL_PH2_ROOM_WIDTH + 1) * LEVEL_PH1_WIDTH) + 1);
+  auto       expected_len = (row_len) * (((LEVEL_PH2_ROOM_HEIGHT + 1) * LEVEL_PH1_HEIGHT) + 1);
 
   if (strlen(data) != expected_len) {
     DIE("bad room size, expected %d, got %d", (int) strlen(data), (int) expected_len);
@@ -37,8 +27,8 @@ void level_ph2_room_set_add(const char *data)
   //
   // Break the grid of rooms up into individual rooms
   //
-  for (auto room_across = 0; room_across < LEVEL_PH1_ACROSS; room_across++) {
-    for (auto room_down = 0; room_down < LEVEL_PH1_DOWN; room_down++) {
+  for (auto room_across = 0; room_across < LEVEL_PH1_WIDTH; room_across++) {
+    for (auto room_down = 0; room_down < LEVEL_PH1_HEIGHT; room_down++) {
       auto r  = room_new();
       r->type = ROOM_TYPE_NORMAL;
 
@@ -232,31 +222,34 @@ static LevelPh2Roomp get_fitted_room_type(const Level1Node *node, const LevelPh2
   return nullptr;
 }
 
-static void level_dump(LevelPh2RoomSolver ph2_solver)
+void LevelPh2::dump(void)
 {
   TRACE_NO_INDENT();
 
-  std::array< std::array< char, LEVEL_PH2_HEIGHT + LEVEL_PH1_DOWN >, LEVEL_PH2_WIDTH + LEVEL_PH1_ACROSS > out {};
+  const auto w = ((LEVEL_PH2_ROOM_WIDTH + 1) * LEVEL_PH1_WIDTH) + 1;
+  const auto h = ((LEVEL_PH2_ROOM_HEIGHT + 1) * LEVEL_PH1_HEIGHT) + 1;
 
-  for (auto room_across = 0; room_across < LEVEL_PH1_ACROSS; room_across++) {
-    for (auto room_down = 0; room_down < LEVEL_PH1_DOWN; room_down++) {
-      LevelPh2Roomp r = get(ph2_solver.rooms, room_across, room_down);
+  std::array< std::array< char, h >, w > out {};
+
+  for (auto room_across = 0; room_across < LEVEL_PH1_WIDTH; room_across++) {
+    for (auto room_down = 0; room_down < LEVEL_PH1_HEIGHT; room_down++) {
+      LevelPh2Roomp r = get(rooms, room_across, room_down);
       if (r) {
         for (auto ry = 0; ry < LEVEL_PH2_ROOM_HEIGHT; ry++) {
           for (auto rx = 0; rx < LEVEL_PH2_ROOM_WIDTH; rx++) {
             auto c = get(r->data, rx, ry);
             auto x = (room_across * (LEVEL_PH2_ROOM_WIDTH + 1)) + rx;
             auto y = (room_down * (LEVEL_PH2_ROOM_HEIGHT + 1)) + ry;
-            set(out, x, y, c);
+            set(out, x + 1, y + 1, c);
           }
         }
       }
     }
   }
 
-  for (auto y = 0; y < LEVEL_PH2_HEIGHT + LEVEL_PH1_DOWN; y++) {
+  for (auto y = 0; y < h; y++) {
     std::string s;
-    for (auto x = 0; x < LEVEL_PH2_WIDTH + LEVEL_PH1_ACROSS; x++) {
+    for (auto x = 0; x < w; x++) {
       auto c = get(out, x, y);
       if (c) {
         s += c;
@@ -264,21 +257,17 @@ static void level_dump(LevelPh2RoomSolver ph2_solver)
         s += ' ';
       }
     }
-    CON("%s", s.c_str());
+    CON("Phase2: [%s]", s.c_str());
   }
-
-  CON("-");
 }
 
-void LevelPh2::dump(void) { TRACE_NO_INDENT(); }
-
-static bool level_recursive(const LevelPh1 &ph1, LevelPh2RoomSolver &ph2_solver, point at)
+bool LevelPh2::solve(const LevelPh1 &ph1, point at)
 {
   TRACE_NO_INDENT();
 
   auto x    = at.x;
   auto y    = at.y;
-  auto r    = get(ph2_solver.rooms, x, y);
+  auto r    = get(rooms, x, y);
   auto node = ph1.get_node_ptr_const(x, y);
 
   if (node->on_critical_path) {
@@ -297,22 +286,22 @@ static bool level_recursive(const LevelPh1 &ph1, LevelPh2RoomSolver &ph2_solver,
     LevelPh2Roomp down_room;
 
     if (x > 0) {
-      left_room = get(ph2_solver.rooms, x - 1, y);
+      left_room = get(rooms, x - 1, y);
     } else {
       left_room = nullptr;
     }
-    if (x < LEVEL_PH1_ACROSS - 1) {
-      right_room = get(ph2_solver.rooms, x + 1, y);
+    if (x < LEVEL_PH1_WIDTH - 1) {
+      right_room = get(rooms, x + 1, y);
     } else {
       right_room = nullptr;
     }
     if (y > 0) {
-      up_room = get(ph2_solver.rooms, x, y - 1);
+      up_room = get(rooms, x, y - 1);
     } else {
       up_room = nullptr;
     }
-    if (y < LEVEL_PH1_DOWN - 1) {
-      down_room = get(ph2_solver.rooms, x, y + 1);
+    if (y < LEVEL_PH1_HEIGHT - 1) {
+      down_room = get(rooms, x, y + 1);
     } else {
       down_room = nullptr;
     }
@@ -326,36 +315,36 @@ static bool level_recursive(const LevelPh1 &ph1, LevelPh2RoomSolver &ph2_solver,
       exit(1);
       return false;
     }
-    set(ph2_solver.rooms, x, y, r);
+    set(rooms, x, y, r);
   }
 
   if (x > 0) {
-    if (! get(ph2_solver.rooms, x - 1, y)) {
-      if (! level_recursive(ph1, ph2_solver, point(x - 1, y))) {
+    if (! get(rooms, x - 1, y)) {
+      if (! solve(ph1, point(x - 1, y))) {
         return false;
       }
     }
   }
 
-  if (x < LEVEL_PH1_ACROSS - 1) {
-    if (! get(ph2_solver.rooms, x + 1, y)) {
-      if (! level_recursive(ph1, ph2_solver, point(x + 1, y))) {
+  if (x < LEVEL_PH1_WIDTH - 1) {
+    if (! get(rooms, x + 1, y)) {
+      if (! solve(ph1, point(x + 1, y))) {
         return false;
       }
     }
   }
 
   if (y > 0) {
-    if (! get(ph2_solver.rooms, x, y - 1)) {
-      if (! level_recursive(ph1, ph2_solver, point(x, y - 1))) {
+    if (! get(rooms, x, y - 1)) {
+      if (! solve(ph1, point(x, y - 1))) {
         return false;
       }
     }
   }
 
-  if (y < LEVEL_PH1_DOWN - 1) {
-    if (! get(ph2_solver.rooms, x, y + 1)) {
-      if (! level_recursive(ph1, ph2_solver, point(x, y + 1))) {
+  if (y < LEVEL_PH1_HEIGHT - 1) {
+    if (! get(rooms, x, y + 1)) {
+      if (! solve(ph1, point(x, y + 1))) {
         return false;
       }
     }
@@ -368,8 +357,7 @@ LevelPh2::LevelPh2(const LevelPh1 &ph1)
 {
   TRACE_NO_INDENT();
 
-  LevelPh2RoomSolver ph2_solver;
-  point              entrance_at;
+  point entrance_at;
 
   //
   // Find the starting point, the entrance
@@ -393,9 +381,7 @@ got_entrance:
   //
   // Create all the rooms
   //
-  if (level_recursive(ph1, ph2_solver, entrance_at)) {
-    level_dump(ph2_solver);
-    CON("ALL GOOD");
+  if (solve(ph1, entrance_at)) {
     ok = true;
     return;
   }

@@ -321,14 +321,16 @@ redo:
     dump();
     LOG("Final map: ^^^^^^^^^^");
   }
+
+  ok = true;
 }
 
 void LevelPh1::dump(void)
 {
   const auto                             step   = 5;
   const auto                             center = 3;
-  const int                              h      = (LEVEL_PH1_DOWN + 1) * step;
-  const int                              w      = (LEVEL_PH1_ACROSS + 1) * step;
+  const int                              h      = (LEVEL_PH1_HEIGHT + 1) * step;
+  const int                              w      = (LEVEL_PH1_WIDTH + 1) * step;
   std::array< std::array< char, h >, w > out;
 
   for (auto y = 0; y < h; y++) {
@@ -339,8 +341,8 @@ void LevelPh1::dump(void)
 
   for (auto y = 0; y < grid_height; y++) {
     for (auto x = 0; x < grid_width; x++) {
-      auto ox   = (x * step) + center;
-      auto oy   = (y * step) + center;
+      auto ox   = (x * step) + center - 1;
+      auto oy   = (y * step) + center - 1;
       auto node = get_node_ptr(x, y);
       if (node->has_door_down) {
         set(out, ox, oy + 1, '|');
@@ -1987,7 +1989,7 @@ void LevelPh1::make_paths_off_critical_path_reachable(void)
   dmap_process_no_diagonals(&d, dmap_start, dmap_end, false);
   // dmap_print_walls(&d);
 
-  std::array< std::array< bool, LEVEL_PH1_DOWN >, LEVEL_PH1_ACROSS > on_critical_path = {};
+  std::array< std::array< bool, LEVEL_PH1_HEIGHT >, LEVEL_PH1_WIDTH > on_critical_path = {};
 
   auto p = dmap_solve_manhattan(&d, start);
   for (auto c : p) {
@@ -2256,7 +2258,7 @@ LevelPh1 level_ph1(void)
 {
   TRACE_AND_INDENT();
 
-  LevelPh1 ph1(LEVEL_PH1_ACROSS, LEVEL_PH1_DOWN);
+  LevelPh1 ph1(LEVEL_PH1_WIDTH, LEVEL_PH1_HEIGHT);
   ph1.construct();
   return ph1;
 }

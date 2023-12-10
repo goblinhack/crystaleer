@@ -728,7 +728,9 @@ int main(int argc, char *argv[])
      *    ^ >  <    <    <
      */
     auto ph1 = level_ph1();
-    if (ph1.ok) {
+    if (! ph1.ok) {
+      CON("COULD NOT SOLVE PH1");
+      exit(1);
       continue;
     }
     ph1.dump();
@@ -773,13 +775,23 @@ int main(int argc, char *argv[])
      * 1111111111 1111111111 1111111111 1111111111
      */
     auto ph2 = level_ph2(ph1);
-    if (ph2.ok) {
+    if (! ph2.ok) {
+      CON("COULD NOT SOLVE PH2");
+      exit(1);
       continue;
     }
     ph2.dump();
 
-    LevelPh3 ph3;
-    level_ph3(ph2, ph3);
+    auto ph3 = level_ph3(ph2);
+    if (! ph3.ok) {
+      CON("COULD NOT SOLVE PH3");
+      exit(1);
+      continue;
+    }
+    ph3.dump();
+    CON("ALL GOOD");
+
+    exit(1);
   }
 
   exit(1);

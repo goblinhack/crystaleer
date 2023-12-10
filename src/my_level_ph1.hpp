@@ -122,8 +122,8 @@ public:
 
   std::vector< Level1Node > nodes;
 
-  int grid_width {LEVEL_PH1_ACROSS};
-  int grid_height {LEVEL_PH1_DOWN};
+  int grid_width {LEVEL_PH1_WIDTH};
+  int grid_height {LEVEL_PH1_HEIGHT};
 
   int max_depth {0};
   int max_vdepth {0};

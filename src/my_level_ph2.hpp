@@ -13,13 +13,14 @@
 class LevelPh2
 {
 public:
-  std::array< std::array< uint8_t, LEVEL_PH2_HEIGHT >, LEVEL_PH2_WIDTH > val {};
+  std::array< std::array< LevelPh2Roomp, LEVEL_PH2_HEIGHT >, LEVEL_PH2_WIDTH > rooms {};
 
   bool ok {};
 
-  LevelPh2(const LevelPh1 &in);
+  LevelPh2(const LevelPh1 &);
 
   void dump(void);
+  bool solve(const LevelPh1 &, point);
 };
 
 void level_ph2_room_set_add(const char *);
@@ -30,4 +31,4 @@ void level_ph2_secr_init(void);
 void level_ph2_lock_init(void);
 void level_ph2_key_init(void);
 
-LevelPh2 level_ph2(const LevelPh1 &ph1);
+LevelPh2 level_ph2(const LevelPh1 &);

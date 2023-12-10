@@ -6,22 +6,92 @@
 #ifndef _MY_GAME_DEFS_HPP_
 #define _MY_GAME_DEFS_HPP_
 
-#define LEVEL_PH1_DOWN       4 // Levels are split into grids. Each grid can have a room.
-#define LEVEL_PH1_ACROSS     4 //
+/*
+ * Phase 1: create a framework for the level solution e.g.
+ *
+ *           v    v  * v
+ *     1----1----1---S1
+ *      >  <|>  <|>  <|
+ *          |    |    |
+ *          |    |    |
+ *          |   *|v  *|
+ *    s.    1----1----1
+ *         ^?>  <|>  <
+ *          ?    |
+ *          ?    |
+ *      v   ?   *|   * v
+ *     2???s1???K1---D2
+ *     |        ^ >  <|
+ *     |              |
+ *     |              |
+ *     |   *    *    *|
+ *     2---E2----2----2
+ *    ^ >  <    <    <
+ */
+#define LEVEL_PH1_WIDTH      4 // Levels are split into grids. Each grid can have a room.
+#define LEVEL_PH1_HEIGHT     4 // Levels are split into grids. Each grid can have a room.
 #define LEVEL_PH1_LOCK_DEPTH 2 // Max difficulty level
 
-#define LEVEL_PH2_ROOM_HEIGHT 8  // Max room dimensions
+/*
+ * Phase 2: create a set of rooms that satisfy the solution e.g.:
+ *
+ * 1111111111 1........1 1111111111 1111111111
+ * 1111111111 1........1 1111111111 1111111111
+ * 11........ 11...S..11 11......11 ........11
+ * 11........ 11..111.11 11......11 ........11
+ * 11........ 11..111.11 11......11 ........11
+ * 11........ .......... .......... ........11
+ * 11111..111 1111111111 11..111111 11..111111
+ * 111111.111 1111111111 111.111111 11.1111111
+ *
+ * 111111s111 1111111111 111.111111 11.1111111
+ * 111111..11 1111111111 111.111111 11.1111111
+ * 11......11 11........ 11......11 11......11
+ * 11......11 11........ 11......11 11......11
+ * 11......11 11........ 11......11 11......11
+ * 11......11 11........ .......... ........11
+ * 111...1111 1111111111 1111..1111 11111..111
+ * 1111s11111 1111111111 11111.1111 11111.1111
+ *
+ * 1111.11111 1111111111 11111.1111 11111.1111
+ * 1111.11111 1111111111 11111.1111 1111....11
+ * 11......11 11......11 11......11 11......11
+ * 11......11 11......11 11......11 11......11
+ * 11......11 11......11 11......11 11......11
+ * 11........ .......... ........11 11......11
+ * ...1111111 1111111111 1111111... 1111111111
+ * .111111111 1111111111 111111111. 1111111111
+ *
+ * ..11111111 1111111111 111111111. 1111111111
+ * ....111111 1111111111 111111111. 1111111111
+ * 11......11 11........ 11........ ........11
+ * 11......11 11........ 11......11 ........11
+ * 11......11 11...E.... 11......11 ........11
+ * 11......11 11..111... .......... ........11
+ * 1111111111 1111111111 1111111111 1111111111
+ * 1111111111 1111111111 1111111111 1111111111
+ */
+#define LEVEL_PH2_WIDTH       LEVEL_PH1_WIDTH
+#define LEVEL_PH2_HEIGHT      LEVEL_PH1_HEIGHT
 #define LEVEL_PH2_ROOM_WIDTH  10 // Max room dimensions
+#define LEVEL_PH2_ROOM_HEIGHT 8  // Max room dimensions
 
-#define LEVEL_PH3_BLOCK_SIZE 3 // LevelPh2Room blocks are composed of X*X character cells
+/*
+ * Phase 3: join the rooms together and expand any wildcards
+ */
+#define LEVEL_PH3_MAP_BORDER 1 // Border around the level
+#define LEVEL_PH3_WIDTH      ((LEVEL_PH2_WIDTH * LEVEL_PH2_ROOM_WIDTH) + (LEVEL_PH3_MAP_BORDER * 2))
+#define LEVEL_PH3_HEIGHT     ((LEVEL_PH2_HEIGHT * LEVEL_PH2_ROOM_HEIGHT) + (LEVEL_PH3_MAP_BORDER * 2))
 
-#define LEVEL_PH2_MAP_BORDER 1 // Border around the level
+/*
+ * Phase 4: expand each block into an X*X char cell
+ */
+#define LEVEL_PH4_WIDTH      LEVEL_PH3_WIDTH
+#define LEVEL_PH4_HEIGHT     LEVEL_PH3_HEIGHT
+#define LEVEL_PH4_BLOCK_SIZE 3 // Blocks are composed of X*X character cells
 
-#define LEVEL_PH2_HEIGHT ((LEVEL_PH1_DOWN * LEVEL_PH2_ROOM_HEIGHT) + LEVEL_PH2_MAP_BORDER)
-#define LEVEL_PH2_WIDTH  ((LEVEL_PH1_ACROSS * LEVEL_PH2_ROOM_WIDTH) + LEVEL_PH2_MAP_BORDER)
-
-#define MAP_HEIGHT (LEVEL_PH2_HEIGHT * LEVEL_PH3_BLOCK_SIZE)
-#define MAP_WIDTH  (LEVEL_PH2_WIDTH * LEVEL_PH3_BLOCK_SIZE)
+#define MAP_WIDTH  (LEVEL_PH4_WIDTH * LEVEL_PH4_BLOCK_SIZE)
+#define MAP_HEIGHT (LEVEL_PH4_HEIGHT * LEVEL_PH4_BLOCK_SIZE)
 
 #define GAME_MOST_ZOOMED_IN   5
 #define GAME_MOST_ZOOMED_OUT  1
