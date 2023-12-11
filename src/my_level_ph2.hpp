@@ -24,7 +24,6 @@ public:
   bool solve(const LevelPh1 &, point);
 };
 
-void level_ph2_room_set_add(const char *);
 void level_ph2_norm_init(void);
 void level_ph2_entrances(void);
 void level_ph2_exit_init(void);

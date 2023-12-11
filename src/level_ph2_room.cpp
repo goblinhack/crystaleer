@@ -108,7 +108,7 @@ LevelPh2Roomp room_new(void)
   return r;
 }
 
-void level_ph2_room_set_add(const char *data)
+void level_ph2_room_set_add(RoomType specified_type, const char *data)
 {
   TRACE_NO_INDENT();
   const auto row_len      = (((LEVEL_PH2_ROOM_WIDTH + 1) * LEVEL_PH1_WIDTH) + 1);
@@ -203,6 +203,10 @@ void level_ph2_room_set_add(const char *data)
         }
       }
 
+      if (r->type != specified_type) {
+        DIE("room type does not match expected");
+      }
+
       if (r->type != ROOM_TYPE_SECRET) {
         if (! r->exits_left && ! r->exits_right && ! r->exits_up && ! r->exits_down) {
           DIE("room %u has no exits", r->roomno);
@@ -217,16 +221,6 @@ void level_ph2_room_set_add(const char *data)
         r->exits_down = 0;
       }
 
-      // TODO
-      if (r->type == ROOM_TYPE_SECRET) {
-        // ok
-      } else if (r->type == ROOM_TYPE_ENTRANCE) {
-        // ok
-      } else if (r->type == ROOM_TYPE_EXIT) {
-        // ok
-      } else {
-        r->type = ROOM_TYPE_NORMAL;
-      }
       LevelPh2Room::all_rooms_of_type[ r->type ].push_back(r);
       // r->dump();
 

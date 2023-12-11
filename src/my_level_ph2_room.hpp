@@ -55,6 +55,7 @@ public:
 
 void level_ph2_init(void);
 void level_ph2_fini(void);
+void level_ph2_room_set_add(RoomType, const char *);
 
 LevelPh2Roomp room_new(void);
 

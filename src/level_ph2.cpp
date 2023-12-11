@@ -21,7 +21,6 @@ static LevelPh2Roomp get_fitted_room_type(const Level1Node *node, const LevelPh2
 
   auto required_room_type = ROOM_TYPE_NORMAL;
 
-  // TODO
   if (node->is_entrance) {
     required_room_type = ROOM_TYPE_ENTRANCE;
   }
@@ -30,11 +29,9 @@ static LevelPh2Roomp get_fitted_room_type(const Level1Node *node, const LevelPh2
   }
   if (node->is_key) {
     required_room_type = ROOM_TYPE_KEY;
-    required_room_type = ROOM_TYPE_NORMAL;
   }
   if (node->is_lock) {
     required_room_type = ROOM_TYPE_LOCK;
-    required_room_type = ROOM_TYPE_NORMAL;
   }
   if (node->is_secret) {
     required_room_type = ROOM_TYPE_SECRET;
