@@ -11,9 +11,17 @@
 
 void level_ph4_block_init(void)
 {
-  //
-  // Ground
-  //
+  TRACE_NO_INDENT();
+  level_ph4_block_add(BLOCK_TYPE_NORMAL,
+                      // look for this pattern
+                      "***"
+                      "*R*"
+                      "***",
+                      // replaced with
+                      "RRR"
+                      "RRR"
+                      "RRR");
+
   TRACE_NO_INDENT();
   level_ph4_block_add(BLOCK_TYPE_NORMAL,
                       // look for this pattern

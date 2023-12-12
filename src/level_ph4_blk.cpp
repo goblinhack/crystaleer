@@ -118,11 +118,12 @@ void level_ph4_block_add(BlockType type, const char *pattern, const char *data)
       auto c      = data[ offset ];
 
       switch (c) {
-        case PH4_CHAR_WILDCARD : DIE("block should not have a wildcard"); break;
-        case PH4_CHAR_SPIKE_33_PERCENT : break;
-        case PH4_CHAR_WALL_100_PERCENT : break;
-        case PH4_CHAR_WALL_50_PERCENT : break;
-        case PH4_CHAR_EMPTY : break;
+        case PH2_CHAR_WILDCARD : DIE("block should not have a wildcard"); break;
+        case PH2_CHAR_SPIKE_33_PERCENT : break;
+        case PH2_CHAR_WALL_100_PERCENT : break;
+        case PH2_CHAR_WALL_50_PERCENT : break;
+        case PH2_CHAR_EMPTY : break;
+        case PH2_CHAR_ROCK : break;
         default : DIE("unexpected block char '%c'", c);
       }
 

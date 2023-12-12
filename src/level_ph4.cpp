@@ -41,12 +41,27 @@ bool LevelPh4::expand(const LevelPh3 &ph3)
 {
   TRACE_NO_INDENT();
 
-  const auto w = LEVEL_PH4_WIDTH;
-  const auto h = LEVEL_PH4_HEIGHT;
+  const auto w = LEVEL_PH3_WIDTH;
+  const auto h = LEVEL_PH3_HEIGHT;
 
   for (auto y = 0; y < h; y++) {
     for (auto x = 0; x < w; x++) {
-      set(data, x, y, (char) PH2_CHAR_ROCK);
+      point at(x, y);
+      auto  c = get(ph3.data, x, y);
+
+      auto nx = (x * LEVEL_PH4_BLOCK_WIDTH) + 1;
+      auto ny = (y * LEVEL_PH4_BLOCK_HEIGHT) + 1;
+      set(data, nx, ny, c);
+
+      if (0) {
+        for (auto bx = 0; bx < LEVEL_PH4_BLOCK_WIDTH; bx++) {
+          for (auto by = 0; by < LEVEL_PH4_BLOCK_HEIGHT; by++) {
+            auto nx = (x * LEVEL_PH4_BLOCK_WIDTH) + bx;
+            auto ny = (y * LEVEL_PH4_BLOCK_HEIGHT) + by;
+            set(data, nx, ny, c);
+          }
+        }
+      }
     }
   }
 
