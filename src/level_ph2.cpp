@@ -124,6 +124,7 @@ void LevelPh2::dump(void)
     }
     LOG("Phase2: [%s]", s.c_str());
   }
+  LOG("Phase2: -");
 }
 
 bool LevelPh2::solve(const LevelPh1 &ph1, point at)

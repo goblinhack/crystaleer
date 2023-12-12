@@ -437,6 +437,7 @@ void LevelPh1::dump(void)
       LOG("Phase1: [%s]", s.c_str());
     }
   }
+  LOG("Phase1: -");
 
   for (auto y = 0; y < grid_height; y++) {
     for (auto x = 0; x < grid_width; x++) {

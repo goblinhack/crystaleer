@@ -37,15 +37,16 @@ tidy:
 		echo "Running tidy on $$src..." ; \
 		clang-tidy -fix -checks="-*,\
 ang-tidy --list-checks -checks='*' | grep "modernize"  	modernize-use-auto,\
-  		modernize-use-nullptr,\
-			readability-else-after-return,\
-			readability-simplify-boolean-expr,\
-			readability-redundant-member-init,\
+			bugprone-sizeof-expression, \
+			cppcoreguidelines-no-malloc,\
+			modernize-loop-convert,\
 			modernize-use-default-member-init,\
 			modernize-use-equals-default,\
 			modernize-use-equals-delete,\
-			modernize-loop-convert,\
-			cppcoreguidelines-no-malloc,\
+  		modernize-use-nullptr,\
+			readability-else-after-return,\
+			readability-redundant-member-init,\
+			readability-simplify-boolean-expr,\
 			misc-redundant-expression" \
 			-header-filter=".*" \
 			"$(SRC_DIR)/$$src" -- $(CFLAGS); \

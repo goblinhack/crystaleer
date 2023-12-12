@@ -35,6 +35,7 @@ void LevelPh3::dump(void)
     }
     LOG("Phase3: [%s]", s.c_str());
   }
+  LOG("Phase3: -");
 }
 
 bool LevelPh3::expand(const LevelPh2 &ph2)
@@ -69,21 +70,56 @@ bool LevelPh3::expand(const LevelPh2 &ph2)
   return true;
 }
 
+static bool is_oob(int x, int y)
+{
+  if (x < 0) {
+    return true;
+  }
+  if (y < 0) {
+    return true;
+  }
+  if (x >= LEVEL_PH3_WIDTH) {
+    return true;
+  }
+  if (x >= LEVEL_PH3_HEIGHT) {
+    return true;
+  }
+  return false;
+}
+
 void LevelPh3::add_obstacle_at(const LevelPh2 &ph2, point at, LevelPh3Obstacletp o)
 {
   TRACE_NO_INDENT();
 
   for (auto y = 0; y < LEVEL_PH3_OBSTACLE_HEIGHT; y++) {
     for (auto x = 0; x < LEVEL_PH3_OBSTACLE_WIDTH; x++) {
+      auto c  = get(o->data, x, y);
+      auto rx = at.x + x;
+      auto ry = at.y + y;
+
       //
       // For each obst char, check there is a wildcard char on the level
       //
-      auto c = get(o->data, x, y);
-      switch (get(data, at.x + x, at.y + y)) {
-        default : break;
-        case PH2_CHAR_WILDCARD :
-        case PH2_CHAR_OBSTACLE_AIR :
-        case PH2_CHAR_OBSTACLE_GROUND : set(data, at.x + x, at.y + y, c); break;
+      if (! is_oob(rx, ry)) {
+        switch (get(data, rx, ry)) {
+          default : break;
+          case PH2_CHAR_WILDCARD :
+          case PH2_CHAR_OBSTACLE_AIR :
+          case PH2_CHAR_OBSTACLE_GROUND : set(data, rx, ry, c); break;
+        }
+      }
+
+      //
+      // Cater for flipped rooms
+      //
+      rx = at.x - x;
+      if (! is_oob(rx, ry)) {
+        switch (get(data, rx, ry)) {
+          default : break;
+          case PH2_CHAR_WILDCARD :
+          case PH2_CHAR_OBSTACLE_AIR :
+          case PH2_CHAR_OBSTACLE_GROUND : set(data, rx, ry, c); break;
+        }
       }
     }
   }
@@ -143,15 +179,15 @@ LevelPh3::LevelPh3(const LevelPh2 &ph2)
 {
   TRACE_NO_INDENT();
 
-  LOG("Initial layout:");
+  LOG("Phase3: Initial layout:");
   expand(ph2);
   dump();
 
-  LOG("Add obstacles:");
+  LOG("Phase3: Replace obstacle blocks:");
   add_obstacles(ph2);
   dump();
 
-  LOG("Fix obstacles with a chance of appearing:");
+  LOG("Phase3: Replace random chance tiles:");
   fix_obstacles(ph2);
   dump();
 
