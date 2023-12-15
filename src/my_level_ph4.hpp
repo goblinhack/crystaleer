@@ -22,8 +22,8 @@ public:
 
   void dump(void);
   bool expand(const LevelPh3 &);
-  void add_block_at(const LevelPh3 &, point at, LevelPh4Blockp);
   void add_blocks(const LevelPh3 &);
+  void add_block_at(const LevelPh3 &, point at, LevelPh4Blockp);
   void fix_blocks(const LevelPh3 &);
 };
 

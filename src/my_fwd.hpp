@@ -11,7 +11,7 @@
 class Charmap;
 class Font;
 class LevelPh2Room;
-class LevelPh3Obstaclet;
+class LevelPh3Obstacles;
 class LevelPh4Block;
 class Tex;
 class Tile;
@@ -27,7 +27,7 @@ using Dmapp              = struct Dmap_ *;
 using Fontp              = class Font *;
 using Lightp             = class Light *;
 using LevelPh2Roomp      = class LevelPh2Room *;
-using LevelPh3Obstacletp = class LevelPh3Obstaclet *;
+using LevelPh3Obstaclesp = class LevelPh3Obstacles *;
 using LevelPh4Blockp     = class LevelPh4Block *;
 using Texp               = class Tex *;
 using ThingId            = unsigned int;

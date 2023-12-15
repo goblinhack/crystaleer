@@ -44,8 +44,11 @@ LevelPh4Blockp LevelPh4Block::flip(void)
 
   for (auto x = 0; x < LEVEL_PH4_BLOCK_WIDTH; x++) {
     for (auto y = 0; y < LEVEL_PH4_BLOCK_HEIGHT; y++) {
-      auto c = get(data, x, y);
-      set(f->data, LEVEL_PH4_BLOCK_WIDTH - x - 1, y, c);
+      auto c = get(match_with, x, y);
+      set(f->match_with, LEVEL_PH4_BLOCK_WIDTH - x - 1, y, c);
+
+      c = get(replace_with, x, y);
+      set(f->replace_with, LEVEL_PH4_BLOCK_WIDTH - x - 1, y, c);
     }
   }
 
@@ -62,7 +65,7 @@ void LevelPh4Block::dump(void)
 
   for (auto ry = 0; ry < LEVEL_PH4_BLOCK_HEIGHT; ry++) {
     for (auto rx = 0; rx < LEVEL_PH4_BLOCK_WIDTH; rx++) {
-      auto c = get(data, rx, ry);
+      auto c = get(match_with, rx, ry);
       set(out, rx, ry, c);
     }
   }
@@ -91,19 +94,19 @@ LevelPh4Blockp block_new(void)
   return o;
 }
 
-void level_ph4_block_add(BlockType type, const char *pattern, const char *data)
+void level_ph4_block_add(BlockType type, const char *match_with, const char *replace_with)
 {
   TRACE_NO_INDENT();
 
   const auto row_len      = LEVEL_PH4_BLOCK_WIDTH;
   auto       expected_len = row_len * LEVEL_PH4_BLOCK_HEIGHT;
 
-  if (strlen(data) != expected_len) {
-    DIE("bad match block size, expected %d, got %d", (int) strlen(data), (int) expected_len);
+  if (strlen(match_with) != expected_len) {
+    DIE("bad match with block size, expected %d, got %d", (int) strlen(match_with), (int) expected_len);
   }
 
-  if (strlen(data) != expected_len) {
-    DIE("bad replace block size, expected %d, got %d", (int) strlen(data), (int) expected_len);
+  if (strlen(replace_with) != expected_len) {
+    DIE("bad replace with block size, expected %d, got %d", (int) strlen(replace_with), (int) expected_len);
   }
 
   //
@@ -115,10 +118,20 @@ void level_ph4_block_add(BlockType type, const char *pattern, const char *data)
   for (auto ry = 0; ry < LEVEL_PH4_BLOCK_HEIGHT; ry++) {
     for (auto rx = 0; rx < LEVEL_PH4_BLOCK_WIDTH; rx++) {
       auto offset = (row_len * ry) + rx;
-      auto c      = data[ offset ];
+
+      //
+      // Match with...
+      //
+      auto c                    = match_with[ offset ];
+      o->match_with[ rx ][ ry ] = c;
+
+      //
+      // Replace with...
+      //
+      c = replace_with[ offset ];
 
       switch (c) {
-        case PH2_CHAR_WILDCARD : DIE("block should not have a wildcard"); break;
+        case PH2_CHAR_WILDCARD : DIE("replace block should not have a wildcard"); break;
         case PH2_CHAR_SPIKE_33_PERCENT : break;
         case PH2_CHAR_WALL_100_PERCENT : break;
         case PH2_CHAR_WALL_50_PERCENT : break;
@@ -127,7 +140,7 @@ void level_ph4_block_add(BlockType type, const char *pattern, const char *data)
         default : DIE("unexpected block char '%c'", c);
       }
 
-      o->data[ rx ][ ry ] = c;
+      o->replace_with[ rx ][ ry ] = c;
     }
   }
 

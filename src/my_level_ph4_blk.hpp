@@ -37,7 +37,8 @@ public:
   uint8_t   width {LEVEL_PH4_BLOCK_WIDTH};
   uint8_t   height {LEVEL_PH4_BLOCK_HEIGHT};
 
-  std::array< std::array< char, LEVEL_PH4_BLOCK_HEIGHT >, LEVEL_PH4_BLOCK_WIDTH > data {};
+  std::array< std::array< char, LEVEL_PH4_HEIGHT >, LEVEL_PH4_WIDTH > match_with {};
+  std::array< std::array< char, LEVEL_PH4_HEIGHT >, LEVEL_PH4_WIDTH > replace_with {};
 
   LevelPh4Blockp flip(void);
   void           dump(void);

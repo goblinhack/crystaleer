@@ -37,6 +37,87 @@ void LevelPh4::dump(void)
   }
 }
 
+static bool is_oob(int x, int y)
+{
+  if (x < 0) {
+    return true;
+  }
+  if (y < 0) {
+    return true;
+  }
+  if (x >= LEVEL_PH3_WIDTH) {
+    return true;
+  }
+  if (y >= LEVEL_PH3_HEIGHT) {
+    return true;
+  }
+  return false;
+}
+
+void LevelPh4::add_blocks(const LevelPh3 &ph3)
+{
+  TRACE_NO_INDENT();
+
+  const auto w = LEVEL_PH3_WIDTH;
+  const auto h = LEVEL_PH3_HEIGHT;
+
+  for (auto y = 0; y < h; y++) {
+    for (auto x = 0; x < w; x++) {
+      std::string match_str;
+
+      std::array< std::array< char, LEVEL_PH4_BLOCK_HEIGHT >, LEVEL_PH4_BLOCK_WIDTH > pattern {};
+
+      for (auto bx = 0; bx < LEVEL_PH4_BLOCK_WIDTH; bx++) {
+        for (auto by = 0; by < LEVEL_PH4_BLOCK_HEIGHT; by++) {
+          auto ph3_x = x + bx - 1;
+          auto ph3_y = y + by - 1;
+          if (is_oob(ph3_x, ph3_y)) {
+            set(pattern, bx, by, ' ');
+            match_str += '.';
+          } else {
+            auto c = get(ph3.data, ph3_x, ph3_y);
+            set(pattern, bx, by, c);
+            match_str += c;
+          }
+        }
+      }
+
+      for (auto b : LevelPh4Block::all_blocks_of_type[ BLOCK_TYPE_NORMAL ]) {
+        bool matched = true;
+        for (auto bx = 0; bx < LEVEL_PH4_BLOCK_WIDTH; bx++) {
+          for (auto by = 0; by < LEVEL_PH4_BLOCK_HEIGHT; by++) {
+            auto c = get(b->match_with, bx, by);
+            if (c == '*') {
+              continue;
+            }
+            auto d = get(pattern, bx, by);
+            if (c != d) {
+              matched = false;
+              break;
+            }
+          }
+          if (! matched) {
+            break;
+          }
+        }
+
+        if (matched) {
+          CON("[%s] amtch %d", match_str.c_str(), matched);
+          for (auto bx = 0; bx < LEVEL_PH4_BLOCK_WIDTH; bx++) {
+            for (auto by = 0; by < LEVEL_PH4_BLOCK_HEIGHT; by++) {
+              auto c  = get(b->replace_with, bx, by);
+              auto nx = (x * LEVEL_PH4_BLOCK_WIDTH) + bx;
+              auto ny = (y * LEVEL_PH4_BLOCK_HEIGHT) + by;
+              set(data, nx, ny, c);
+            }
+          }
+          break;
+        }
+      }
+    }
+  }
+}
+
 bool LevelPh4::expand(const LevelPh3 &ph3)
 {
   TRACE_NO_INDENT();
@@ -52,16 +133,6 @@ bool LevelPh4::expand(const LevelPh3 &ph3)
       auto nx = (x * LEVEL_PH4_BLOCK_WIDTH) + 1;
       auto ny = (y * LEVEL_PH4_BLOCK_HEIGHT) + 1;
       set(data, nx, ny, c);
-
-      if (0) {
-        for (auto bx = 0; bx < LEVEL_PH4_BLOCK_WIDTH; bx++) {
-          for (auto by = 0; by < LEVEL_PH4_BLOCK_HEIGHT; by++) {
-            auto nx = (x * LEVEL_PH4_BLOCK_WIDTH) + bx;
-            auto ny = (y * LEVEL_PH4_BLOCK_HEIGHT) + by;
-            set(data, nx, ny, c);
-          }
-        }
-      }
     }
   }
 
@@ -74,6 +145,7 @@ LevelPh4::LevelPh4(const LevelPh3 &ph3)
 
   LOG("Initial layout:");
   expand(ph3);
+  add_blocks(ph3);
   dump();
 
   ok = true;

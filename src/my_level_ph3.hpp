@@ -22,7 +22,7 @@ public:
 
   void dump(void);
   bool expand(const LevelPh2 &);
-  void add_obstacle_at(const LevelPh2 &, point at, LevelPh3Obstacletp);
+  void add_obstacle_at(const LevelPh2 &, point at, LevelPh3Obstaclesp);
   void add_obstacles(const LevelPh2 &);
   void fix_obstacles(const LevelPh2 &);
 };

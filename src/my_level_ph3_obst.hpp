@@ -12,7 +12,7 @@
 #include "my_fwd.hpp"
 #include "my_game_defs.hpp"
 
-using LevelPh3Obstaclets = std::vector< LevelPh3Obstacletp >;
+using LevelPh3Obstacless = std::vector< LevelPh3Obstaclesp >;
 
 using ObstacleType = enum {
   OBSTACLE_TYPE_AIR,
@@ -20,15 +20,15 @@ using ObstacleType = enum {
   OBSTACLE_TYPE_MAX,
 };
 
-class LevelPh3Obstaclet
+class LevelPh3Obstacles
 {
 private:
 public:
-  static LevelPh3Obstaclets all_obsts_of_type[ OBSTACLE_TYPE_MAX ];
-  static LevelPh3Obstaclets all_obsts;
+  static LevelPh3Obstacless all_obsts_of_type[ OBSTACLE_TYPE_MAX ];
+  static LevelPh3Obstacless all_obsts;
 
-  LevelPh3Obstaclet(void);
-  ~LevelPh3Obstaclet(void);
+  LevelPh3Obstacles(void);
+  ~LevelPh3Obstacles(void);
 
   //
   // Unique per obst.
@@ -40,14 +40,14 @@ public:
 
   std::array< std::array< char, LEVEL_PH3_OBSTACLE_HEIGHT >, LEVEL_PH3_OBSTACLE_WIDTH > data {};
 
-  LevelPh3Obstacletp flip(void);
+  LevelPh3Obstaclesp flip(void);
   void               dump(void);
 };
 
 void level_ph3_init(void);
 void level_ph3_fini(void);
 
-LevelPh3Obstacletp obstacle_new(void);
+LevelPh3Obstaclesp obstacle_new(void);
 
 void level_ph3_obstacle_init(void);
 void level_ph3_obstacle_add(ObstacleType, const char *);

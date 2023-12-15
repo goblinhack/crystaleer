@@ -9,36 +9,36 @@
 #include "my_level_ph3_obst.hpp"
 #include "my_ptrcheck.hpp"
 
-LevelPh3Obstaclets LevelPh3Obstaclet::all_obsts_of_type[ OBSTACLE_TYPE_MAX ];
-LevelPh3Obstaclets LevelPh3Obstaclet::all_obsts;
+LevelPh3Obstacless LevelPh3Obstacles::all_obsts_of_type[ OBSTACLE_TYPE_MAX ];
+LevelPh3Obstacless LevelPh3Obstacles::all_obsts;
 
 void level_ph3_init(void) { TRACE_NO_INDENT(); }
 
 void level_ph3_fini(void)
 {
   TRACE_NO_INDENT();
-  for (auto &o : LevelPh3Obstaclet::all_obsts) {
+  for (auto &o : LevelPh3Obstacles::all_obsts) {
     delete o;
   }
 }
 
-LevelPh3Obstaclet::LevelPh3Obstaclet(void)
+LevelPh3Obstacles::LevelPh3Obstacles(void)
 {
   TRACE_NO_INDENT();
   this->obstno = all_obsts.size();
   newptr(MTYPE_OBST, this, "obst");
 }
 
-LevelPh3Obstaclet::~LevelPh3Obstaclet(void)
+LevelPh3Obstacles::~LevelPh3Obstacles(void)
 {
   TRACE_NO_INDENT();
   oldptr(MTYPE_OBST, this);
 }
 
-LevelPh3Obstacletp LevelPh3Obstaclet::flip(void)
+LevelPh3Obstaclesp LevelPh3Obstacles::flip(void)
 {
   TRACE_NO_INDENT();
-  auto f = new LevelPh3Obstaclet();
+  auto f = new LevelPh3Obstacles();
 
   f->type = type;
 
@@ -52,11 +52,11 @@ LevelPh3Obstacletp LevelPh3Obstaclet::flip(void)
   return f;
 }
 
-void LevelPh3Obstaclet::dump(void)
+void LevelPh3Obstacles::dump(void)
 {
   TRACE_NO_INDENT();
 
-  LOG("LevelPh3Obstacletno: %u", obstno);
+  LOG("LevelPh3Obstaclesno: %u", obstno);
 
   std::array< std::array< char, LEVEL_PH3_OBSTACLE_WIDTH >, LEVEL_PH3_OBSTACLE_HEIGHT > out {};
 
@@ -83,11 +83,11 @@ void LevelPh3Obstaclet::dump(void)
   LOG("-");
 }
 
-LevelPh3Obstacletp obstacle_new(void)
+LevelPh3Obstaclesp obstacle_new(void)
 {
   TRACE_NO_INDENT();
-  auto o = new LevelPh3Obstaclet();
-  LevelPh3Obstaclet::all_obsts.push_back(o);
+  auto o = new LevelPh3Obstacles();
+  LevelPh3Obstacles::all_obsts.push_back(o);
   return o;
 }
 
@@ -135,10 +135,10 @@ void level_ph3_obstacle_add(ObstacleType type, const char *data)
     }
   }
 
-  LevelPh3Obstaclet::all_obsts_of_type[ o->type ].push_back(o);
+  LevelPh3Obstacles::all_obsts_of_type[ o->type ].push_back(o);
   // o->dump();
 
   auto f = o->flip();
-  LevelPh3Obstaclet::all_obsts_of_type[ f->type ].push_back(f);
+  LevelPh3Obstacles::all_obsts_of_type[ f->type ].push_back(f);
   // f->dump();
 }

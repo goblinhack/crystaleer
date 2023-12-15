@@ -81,13 +81,13 @@ static bool is_oob(int x, int y)
   if (x >= LEVEL_PH3_WIDTH) {
     return true;
   }
-  if (x >= LEVEL_PH3_HEIGHT) {
+  if (y >= LEVEL_PH3_HEIGHT) {
     return true;
   }
   return false;
 }
 
-void LevelPh3::add_obstacle_at(const LevelPh2 &ph2, point at, LevelPh3Obstacletp o)
+void LevelPh3::add_obstacle_at(const LevelPh2 &ph2, point at, LevelPh3Obstaclesp o)
 {
   TRACE_NO_INDENT();
 
@@ -137,10 +137,10 @@ void LevelPh3::add_obstacles(const LevelPh2 &ph2)
       point at(x, y);
       switch (get(data, x, y)) {
         case PH2_CHAR_OBSTACLE_AIR :
-          add_obstacle_at(ph2, at, pcg_one_of(LevelPh3Obstaclet::all_obsts_of_type[ OBSTACLE_TYPE_AIR ]));
+          add_obstacle_at(ph2, at, pcg_one_of(LevelPh3Obstacles::all_obsts_of_type[ OBSTACLE_TYPE_AIR ]));
           break;
         case PH2_CHAR_OBSTACLE_GROUND :
-          add_obstacle_at(ph2, at, pcg_one_of(LevelPh3Obstaclet::all_obsts_of_type[ OBSTACLE_TYPE_GROUND ]));
+          add_obstacle_at(ph2, at, pcg_one_of(LevelPh3Obstacles::all_obsts_of_type[ OBSTACLE_TYPE_GROUND ]));
           break;
       }
     }
