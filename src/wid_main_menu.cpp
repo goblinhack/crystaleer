@@ -299,7 +299,7 @@ static void wid_main_menu_tick(Widp w)
 
     if (! g_opt_seed_name.empty()) {
       auto seed_name = "Seed: '" + g_opt_seed_name + "'";
-      ascii_putf(1, 3, YELLOW, BLACK, seed_name);
+      ascii_putf(1, 2, YELLOW, BLACK, seed_name);
     }
   }
 }

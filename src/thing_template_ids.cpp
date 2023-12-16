@@ -42,7 +42,7 @@ void tp_get_id(const std::string &tp_name, int *id_out)
   //
   if (tp_preferred_id.find(tp_name) == tp_preferred_id.end()) {
     tp_preferred_id[ tp_name ] = *id_out = ++id;
-    CON("*** Thing template not found [%s] Please edit thing_template_ids.cpp and add it. ***", tp_name.c_str());
+    DIE("*** Thing template not found [%s] Please edit thing_template_ids.cpp and add it. ***", tp_name.c_str());
     return;
   }
 

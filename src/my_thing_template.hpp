@@ -65,13 +65,11 @@ public:
   void chance_d1000_appearing_set(int v);
   void name_set(const std::string &v);
   void rarity_set(int v);
-  void text_long_name_set(const std::string &v);
   void text_real_name_set(const std::string &v);
   void text_short_name_set(const std::string &v);
   void z_depth_set(int v);
 
   std::string name;
-  std::string text_long_name;
   std::string text_real_name;
   std::string text_short_name;
 
@@ -129,7 +127,7 @@ Tpp string2tp(const char **s);
 Tpp string2tp(const std::string &s, int *len);
 Tpp tp_find(const std::string &name);
 Tpp tp_find(uint32_t id);
-Tpp tp_load(int id, const std::string &file, const std::string &long_name, const std::string &sh_name);
+Tpp tp_load(const std::string &name);
 Tpp tp_get_with_rarity_filter(Tpidmap &m);
 Tpp tp_random_rock(void);
 Tpp tp_random_wall(void);

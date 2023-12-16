@@ -29,6 +29,7 @@
 #include "my_random.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
+#include "my_thing_templates.hpp"
 #include "my_wid_console.hpp"
 
 static char **ARGV;
@@ -797,9 +798,8 @@ int main(int argc, char *argv[])
       exit(1);
       continue;
     }
-    CON("ALL GOOD");
 
-    exit(1);
+    break;
   }
 
   {
@@ -959,6 +959,14 @@ int main(int argc, char *argv[])
     LOG("INI: Find resource locations for gfx and music");
     find_file_locations();
     flush_the_console();
+  }
+
+  {
+    TRACE_NO_INDENT();
+    LOG("INI: Load templates");
+    if (! templates_init()) {
+      ERR("Templates init");
+    }
   }
 
   {

@@ -98,17 +98,20 @@ void tp_fini(void)
   }
 }
 
-Tpp tp_load(int id, std::string const &name, const std::string &text_long_name, const std::string &text_short_name)
+Tpp tp_load(std::string const &name)
 {
   TRACE_NO_INDENT();
+
+  int id;
+  tp_get_id(name, &id);
+
   if (tp_find(name)) {
     DIE("Thing template name [%s] already loaded", name.c_str());
   }
 
   auto tp = new Tp();
   tp->name_set(name);
-  tp->text_long_name_set(text_long_name);
-  tp->text_short_name_set(text_short_name);
+  tp->text_short_name_set(name);
 
   auto result = tp_name_map.insert(std::make_pair(name, tp));
   if (! result.second) {
