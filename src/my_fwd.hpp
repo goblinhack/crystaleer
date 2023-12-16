@@ -23,17 +23,19 @@ struct Dmap_;
 struct SDL_Surface;
 
 #define NoThingId 0
+
 using Dmapp              = struct Dmap_ *;
 using Fontp              = class Font *;
-using Lightp             = class Light *;
 using LevelPh2Roomp      = class LevelPh2Room *;
 using LevelPh3Obstaclesp = class LevelPh3Obstacles *;
 using LevelPh4Blockp     = class LevelPh4Block *;
+using Lightp             = class Light *;
 using Texp               = class Tex *;
 using ThingId            = unsigned int;
 using Thingp             = void *;
 using Tilemap            = std::vector< class Tile            *>;
-using Tpp                = void *;
+using TpId               = unsigned short;
+using Tpp                = class Tp *;
 using Widp               = class Wid *;
 
 #endif

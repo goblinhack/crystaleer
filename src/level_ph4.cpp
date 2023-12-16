@@ -102,7 +102,6 @@ void LevelPh4::add_blocks(const LevelPh3 &ph3)
         }
 
         if (matched) {
-          CON("[%s] amtch %d", match_str.c_str(), matched);
           for (auto bx = 0; bx < LEVEL_PH4_BLOCK_WIDTH; bx++) {
             for (auto by = 0; by < LEVEL_PH4_BLOCK_HEIGHT; by++) {
               auto c  = get(b->replace_with, bx, by);

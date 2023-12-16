@@ -6,10 +6,9 @@
 #ifndef _MY_TEMPLATE_HPP_
 #define _MY_TEMPLATE_HPP_
 
-#include <algorithm> // for std::transform()
-// REMOVED #include <map>
-
 #include "my_random.hpp"
+#include <algorithm> // for std::transform()
+#include <map>
 
 template < class T, template < typename ELEM, typename ALLOC = std::allocator< ELEM > > class C >
 
@@ -42,6 +41,20 @@ void push_back_if_unique(C< T > &c, T d)
     so++;
   }
   c.push_back(d);
+}
+
+template < class T, template < typename ELEM, typename ALLOC = std::allocator< ELEM > > class C >
+T non_pcg_one_of(C< T > &c)
+{
+  typename C< T >::iterator so = c.begin();
+  typename C< T >::iterator eo = c.end();
+
+  size_t sz = eo - so;
+  if (! sz) {
+    DIE("no size given");
+  }
+
+  return *(so + (rand() % sz));
 }
 
 template < class T, template < typename ELEM, typename ALLOC = std::allocator< ELEM > > class C >
