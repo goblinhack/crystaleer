@@ -21,8 +21,8 @@ bool Tp::matches(const std::string &what)
 
   // clang-format off
   // begin sort marker1 {
-  if (is_wall && (what == "is_wall")) { return true; }
   if (is_rock && (what == "is_rock")) { return true; }
+  if (is_wall && (what == "is_wall")) { return true; }
   // end sort marker1 }
 
   // clang-format on

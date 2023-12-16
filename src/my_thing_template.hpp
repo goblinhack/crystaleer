@@ -53,8 +53,8 @@ public:
   // end sort marker1 }
 
   // begin sort marker2 {
-  int rarity {};
   int chance_d1000_appearing {};
+  int rarity {};
   // end sort marker2 }
 
   Tp(void);

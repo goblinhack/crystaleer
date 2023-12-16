@@ -9,8 +9,8 @@
 #include "my_vector_bounds_check.hpp"
 
 // begin sort marker1 {
-static Tpidmap tp_wall;
 static Tpidmap tp_rock;
+static Tpidmap tp_wall;
 // end sort marker1 }
 
 void tp_random_init(void)
