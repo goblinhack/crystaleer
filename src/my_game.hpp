@@ -9,6 +9,7 @@
 #include <SDL.h>
 #include <vector>
 
+#include "my_fwd.hpp"
 #include "my_game_defs.hpp"
 #include "my_hiscore.hpp"
 #include "my_main.hpp"
@@ -133,6 +134,11 @@ public:
   // Save file name, contains the date and other useful save slot info
   //
   std::string version = "" MYVER "";
+
+  //
+  // Current level
+  //
+  Levelp level {};
 
   //
   // Used to check for changes in the size of this struct.

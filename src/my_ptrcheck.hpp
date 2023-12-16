@@ -62,7 +62,6 @@ void  ptrcheck_leak_print(void);
 
 enum {
   MTYPE_BLOCK,
-  MTYPE_LEVEL,
   MTYPE_LIGHT,
   MTYPE_MISC,
   MTYPE_OBST,

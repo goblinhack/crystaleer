@@ -10,6 +10,7 @@
 
 class Charmap;
 class Font;
+class Level;
 class LevelPh2Room;
 class LevelPh3Obstacles;
 class LevelPh4Block;
@@ -19,13 +20,17 @@ class Tp;
 class Wid;
 class WidPopup;
 
+struct LevelData_;
 struct Dmap_;
 struct SDL_Surface;
 
 #define NoThingId 0
+#define NoTpId    0
 
 using Dmapp              = struct Dmap_ *;
 using Fontp              = class Font *;
+using Levelp             = class Level *;
+using LevelDatap         = struct LevelData_ *;
 using LevelPh2Roomp      = class LevelPh2Room *;
 using LevelPh3Obstaclesp = class LevelPh3Obstacles *;
 using LevelPh4Blockp     = class LevelPh4Block *;

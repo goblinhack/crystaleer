@@ -3,8 +3,8 @@
 //
 
 #pragma once
-#ifndef _MY_THING_TEMPLATE_H
-#define _MY_THING_TEMPLATE_H
+#ifndef _MY_THING_TEMPLATE_H_
+#define _MY_THING_TEMPLATE_H_
 
 #include "my_main.hpp"
 #include "my_tile.hpp"
@@ -156,4 +156,4 @@ enum {
 extern Tpidmap   tp_id_map;
 extern Tpnamemap tp_name_map;
 
-#endif // THING_TEMPLATE_H
+#endif // THING_TEMPLATE_H_

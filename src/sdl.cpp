@@ -894,4 +894,6 @@ void config_game_gfx_update(void)
   LOG("SDL: - ascii gl size        : %ux%u", game->config.ascii_gl_width, game->config.ascii_gl_height);
   LOG("SDL: - term size            : %dx%d", TERM_WIDTH, TERM_HEIGHT);
   LOG("SDL: - width to height ratio: %f", game->config.video_w_h_ratio);
+  LOG("SDL: Map");
+  LOG("SDL: - size                 : %dx%d", MAP_WIDTH, MAP_HEIGHT);
 }
