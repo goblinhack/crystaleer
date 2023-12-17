@@ -26,6 +26,8 @@ public:
 
   TpId        get_tpid(uint8_t x, uint8_t y, uint8_t z);
   inline TpId get_tpid_nocheck(uint8_t x, uint8_t y, uint8_t z) { return data->tpid[ x ][ y ][ z ]; }
+
+  void display(void);
 };
 
 #endif // _MY_LEVEL_H_

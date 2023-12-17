@@ -265,10 +265,12 @@ LevelDatap level_data_constructor(void)
     // Allocate the level as a flat C structure to allow history rewind
     //
     TRACE_NO_INDENT();
-    LevelDatap level = (LevelDatap) myzalloc(sizeof(Level), "level");
+    LevelDatap level = (LevelDatap) myzalloc(sizeof(*level), "level");
     if (! level) {
       return nullptr;
     }
+
+    *level = ph5.data;
 
     return level;
   }
