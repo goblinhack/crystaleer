@@ -3,11 +3,13 @@
 //
 
 #include "my_color_defs.hpp"
+#include "my_game.hpp"
 #include "my_gl.hpp"
 #include "my_level.hpp"
 #include "my_level_data.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
+#include "my_tile.hpp"
 
 void Level::display(void)
 {
@@ -27,12 +29,31 @@ void Level::display(void)
   glClear(GL_COLOR_BUFFER_BIT);
   blit_init();
 
-  for (auto z = 0; z <= MAP_DEPTH; z++) {
+  const auto dw = game->config.ascii_gl_width;
+  const auto dh = game->config.ascii_gl_height;
+
+  auto tile = tile_find("1.3");
+
+  for (auto z = 0; z < MAP_DEPTH; z++) {
     for (auto y = miny; y < maxy; y++) {
       for (auto x = minx; x < maxx; x++) {
-        // todo
+        point tl;
+        point br;
+
+        tl.x = x * dw;
+        tl.y = y * dh;
+        br.x = tl.x + dw - 1;
+        br.y = tl.y + dh - 1;
+
+        auto tpid = data->tpid[ x ][ y ][ z ];
+        if (tpid) {
+          tile_blit(tile, tl, br);
+        }
       }
     }
   }
   blit_flush();
+
+  glcolor(WHITE);
+  blit_fbo_game_pix(FBO_MAP_VISIBLE);
 }

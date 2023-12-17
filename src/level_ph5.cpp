@@ -24,6 +24,8 @@ void LevelPh5::add_objects(const LevelPh4 &ph4)
   const auto w = LEVEL_PH5_WIDTH;
   const auto h = LEVEL_PH5_HEIGHT;
 
+  memset(data.tpid, 0, sizeof(data.tpid));
+
   for (auto y = 0; y < h; y++) {
     std::string s;
     for (auto x = 0; x < w; x++) {

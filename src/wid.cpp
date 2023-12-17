@@ -1258,8 +1258,6 @@ void wid_set_text_max_len(Widp w, size_t max_len) { w->max_len = max_len; }
 void wid_set_text(Widp w, std::string text)
 {
   TRACE_NO_INDENT();
-  backtrace_dump();
-
   IF_DEBUG3 { verify(MTYPE_WID, w); }
 
   if (text == "") {
