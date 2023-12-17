@@ -15,10 +15,10 @@ void Level::display(void)
 {
   TRACE_NO_INDENT();
 
-  u_int16_t minx = 0;
-  u_int16_t miny = 0;
-  u_int16_t maxx = MAP_WIDTH;
-  u_int16_t maxy = MAP_HEIGHT;
+  auto minx = 0;
+  auto miny = 0;
+  auto maxx = MAP_WIDTH;
+  auto maxy = MAP_HEIGHT;
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glcolor(WHITE);
