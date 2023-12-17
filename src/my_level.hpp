@@ -10,6 +10,7 @@
 
 #include "my_fwd.hpp"
 #include "my_level_data.hpp"
+#include "my_point.hpp"
 
 class Level
 {
@@ -18,6 +19,11 @@ public:
   ~Level();
 
   LevelDatap data {};
+
+  //
+  // Map scroll offset
+  //
+  point pixel_map_at;
 
   TpId is_oob(uint8_t x, uint8_t y);
 

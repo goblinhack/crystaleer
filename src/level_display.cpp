@@ -29,8 +29,8 @@ void Level::display(void)
     glClear(GL_COLOR_BUFFER_BIT);
     blit_init();
 
-    const auto dw = game->config.ascii_gl_width;
-    const auto dh = game->config.ascii_gl_height;
+    const auto dw = game->config.ascii_gl_width / game->config.game_pix_zoom;
+    const auto dh = game->config.ascii_gl_height / game->config.game_pix_zoom;
 
     auto tile = tile_find("1.3");
 
@@ -42,6 +42,8 @@ void Level::display(void)
 
           tl.x = x * dw;
           tl.y = y * dh;
+          tl.x -= pixel_map_at.x;
+          tl.y -= pixel_map_at.y;
           br.x = tl.x + dw;
           br.y = tl.y + dh;
 

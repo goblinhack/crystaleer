@@ -288,6 +288,7 @@ public:
 extern uint8_t game_mouse_down(int x, int y, uint32_t button);
 extern uint8_t game_mouse_up(int x, int y, uint32_t button);
 extern uint8_t game_mouse_motion(int x, int y, int relx, int rely, int wheelx, int wheely);
+extern uint8_t game_input(const SDL_Keysym *key);
 
 extern void wid_main_menu_hide(void);
 extern void wid_main_menu_destroy(void);

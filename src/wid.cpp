@@ -4178,6 +4178,10 @@ static uint8_t wid_receive_unhandled_input(const SDL_Keysym *key)
   TRACE_NO_INDENT();
   Widp w {};
 
+  if (game_input(key)) {
+    return true;
+  }
+
   w = wid_get_top_parent(wid_console_input_line);
 
   if (sdlk_eq(*key, game->config.key_console)) {
@@ -5356,7 +5360,9 @@ void wid_mouse_motion(int x, int y, int relx, int rely, int wheelx, int wheely)
         }
 
         if (w && w->on_mouse_motion) {
-          (w->on_mouse_motion)(w, x, y, relx, rely, wheelx, wheely);
+          if ((w->on_mouse_motion)(w, x, y, relx, rely, wheelx, wheely)) {
+            got_one = true;
+          }
         }
       }
     }
@@ -5364,8 +5370,10 @@ void wid_mouse_motion(int x, int y, int relx, int rely, int wheelx, int wheely)
 
   wid_mouse_motion_recursion = 0;
 
-  if (relx || rely || wheelx || wheely) {
-    game_mouse_motion(x, y, relx, rely, wheelx, wheely);
+  if (! got_one) {
+    if (relx || rely || wheelx || wheely) {
+      game_mouse_motion(x, y, relx, rely, wheelx, wheely);
+    }
   }
 }
 
