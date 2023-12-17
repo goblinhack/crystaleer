@@ -33,22 +33,6 @@ void Game::init(void)
     level_ph3_obstacle_init();
     level_ph4_block_init();
   }
-
-  if (level) {
-    TRACE_NO_INDENT();
-    auto l = level;
-    if (l) {
-      CON("INI: Remove old level");
-      delete l;
-      level = nullptr;
-    }
-  }
-
-  {
-    TRACE_NO_INDENT();
-    CON("INI: Level create");
-    level = new Level();
-  }
 }
 
 void Game::set_seed(void)

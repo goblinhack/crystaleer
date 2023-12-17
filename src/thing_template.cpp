@@ -7,6 +7,7 @@
 #include "my_ptrcheck.hpp"
 #include "my_string.hpp"
 #include "my_thing_template.hpp"
+#include "my_thing_templates.hpp"
 #include "my_vector_bounds_check.hpp"
 
 Tpnamemap tp_name_map;
@@ -81,6 +82,7 @@ uint8_t tp_init(void)
   TRACE_NO_INDENT();
   tp_init_done = true;
 
+  templates_init();
   tp_random_init();
   tp_fixup();
 

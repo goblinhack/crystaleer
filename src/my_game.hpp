@@ -253,6 +253,7 @@ public:
   void display(void);
   void fini(void);
   void init(void);
+  void create_level(void);
   void load(int slot);
   void load_snapshot(void);
   void load(void);

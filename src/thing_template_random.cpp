@@ -123,7 +123,7 @@ Tpp tp_random_rock(void)
 {
   TRACE_NO_INDENT();
   if (unlikely(! tp_rock.size())) {
-    ERR("No rocks found");
+    DIE("No rocks found");
     return nullptr;
   }
   return tp_get_with_no_rarity_filter(tp_rock);
@@ -133,7 +133,7 @@ Tpp tp_random_wall(void)
 {
   TRACE_NO_INDENT();
   if (unlikely(! tp_wall.size())) {
-    ERR("No walls found");
+    DIE("No walls found");
     return nullptr;
   }
   return tp_get_with_no_rarity_filter(tp_wall);

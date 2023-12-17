@@ -25,7 +25,7 @@
 #include "my_random.hpp"
 #include "my_sdl_proto.hpp"
 #include "my_sound.hpp"
-#include "my_thing_templates.hpp"
+#include "my_thing_template.hpp"
 #include "my_wid_console.hpp"
 
 static char **ARGV;
@@ -690,6 +690,8 @@ int main(int argc, char *argv[])
     }
   }
 
+  game->init();
+
   {
     TRACE_NO_INDENT();
     if (! sdl_init()) {
@@ -852,7 +854,7 @@ int main(int argc, char *argv[])
   {
     TRACE_NO_INDENT();
     LOG("INI: Load templates");
-    if (! templates_init()) {
+    if (! tp_init()) {
       ERR("Templates init");
     }
   }
@@ -867,7 +869,7 @@ int main(int argc, char *argv[])
     flush_the_console();
   }
 
-  game->init();
+  game->create_level();
 
   {
     TRACE_NO_INDENT();

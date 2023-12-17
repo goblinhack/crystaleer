@@ -8,6 +8,7 @@
 #include "my_level_ph2.hpp"
 #include "my_level_ph3.hpp"
 #include "my_level_ph4.hpp"
+#include "my_level_ph5.hpp"
 #include "my_ptrcheck.hpp"
 
 LevelDatap level_data_constructor(void)
@@ -248,6 +249,15 @@ LevelDatap level_data_constructor(void)
     auto ph4 = level_ph4(ph3);
     if (! ph4.ok) {
       DIE("COULD NOT SOLVE PH4");
+      continue;
+    }
+
+    /*
+     * Phase 5: replace all chars with objects
+     */
+    auto ph5 = level_ph5(ph4);
+    if (! ph5.ok) {
+      DIE("COULD NOT SOLVE PH5");
       continue;
     }
 
