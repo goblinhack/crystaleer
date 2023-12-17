@@ -7,7 +7,7 @@
 
 void Game::fini(void)
 {
-  CON("Game fini");
+  LOG("Game fini");
   TRACE_AND_INDENT();
 
   if (level) {

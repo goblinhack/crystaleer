@@ -7,14 +7,17 @@
 
 void Game::create_level(void)
 {
-  CON("Game create level");
+  LOG("Game create level");
   TRACE_AND_INDENT();
+
+  set_seed();
 
   if (level) {
     TRACE_NO_INDENT();
+
     auto l = level;
     if (l) {
-      CON("INI: Remove old level");
+      LOG("Remove old level");
       delete l;
       level = nullptr;
     }
@@ -22,7 +25,7 @@ void Game::create_level(void)
 
   {
     TRACE_NO_INDENT();
-    CON("INI: Level create");
+    LOG("Level create");
     level = new Level();
   }
 }
