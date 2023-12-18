@@ -32,7 +32,7 @@ public:
   //
   // Unique per block.
   //
-  uint32_t  blkno {0};
+  uint32_t  unique_id {0};
   BlockType type;
   uint8_t   width {LEVEL_PH4_BLOCK_WIDTH};
   uint8_t   height {LEVEL_PH4_BLOCK_HEIGHT};

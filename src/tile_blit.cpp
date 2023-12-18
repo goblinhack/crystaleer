@@ -113,7 +113,7 @@ uint8_t tile_is_alive_on_end_of_ascii_anim(Tilep t) { return (t->is_alive_on_end
 
 uint8_t tile_is_resurrecting(Tilep t) { return (t->is_resurrecting); }
 
-Tilep tile_first(Tilemap *tmap)
+Tilep tile_first(Tilevec *tmap)
 {
   if (unlikely(! tmap)) {
     return nullptr;
@@ -129,7 +129,7 @@ Tilep tile_first(Tilemap *tmap)
   return tile_index_to_tile(tile->global_index);
 }
 
-Tilep tile_random(Tilemap *tmap)
+Tilep tile_random(Tilevec *tmap)
 {
   if (unlikely(! tmap)) {
     return nullptr;
@@ -163,7 +163,7 @@ Tilep tile_random(Tilemap *tmap)
   DIE("failed to choose a random tile");
 }
 
-Tilep tile_n(Tilemap *tmap, int n)
+Tilep tile_n(Tilevec *tmap, int n)
 {
   if (unlikely(! tmap)) {
     return nullptr;
@@ -184,7 +184,7 @@ Tilep tile_n(Tilemap *tmap, int n)
   return tile_index_to_tile(tile->global_index);
 }
 
-int tile_get_n(Tilemap *tmap, Tile *p)
+int tile_get_n(Tilevec *tmap, Tile *p)
 {
   int n = 0;
   for (const auto t : *tmap) {
@@ -196,7 +196,7 @@ int tile_get_n(Tilemap *tmap, Tile *p)
   return -1;
 }
 
-Tilep tile_get_frame(Tilemap *tmap, uint32_t frame)
+Tilep tile_get_frame(Tilevec *tmap, uint32_t frame)
 {
   for (const auto t : *tmap) {
     if (t->frame == frame) {
@@ -206,7 +206,7 @@ Tilep tile_get_frame(Tilemap *tmap, uint32_t frame)
   return nullptr;
 }
 
-Tilep tile_next(Tilemap *tmap, Tilep in)
+Tilep tile_next(Tilevec *tmap, Tilep in)
 {
   if (unlikely(! tmap)) {
     return nullptr;

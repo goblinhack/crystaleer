@@ -25,7 +25,7 @@ void level_ph4_fini(void)
 LevelPh4Block::LevelPh4Block(void)
 {
   TRACE_NO_INDENT();
-  this->blkno = all_blocks.size();
+  this->unique_id = all_blocks.size();
   newptr(MTYPE_BLOCK, this, "blk");
 }
 
@@ -59,7 +59,7 @@ void LevelPh4Block::dump(void)
 {
   TRACE_NO_INDENT();
 
-  LOG("LevelPh4Blockno: %u", blkno);
+  LOG("LevelPh4Blockno: %u", unique_id);
 
   std::array< std::array< char, LEVEL_PH4_BLOCK_WIDTH >, LEVEL_PH4_BLOCK_HEIGHT > out {};
 

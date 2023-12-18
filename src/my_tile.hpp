@@ -151,7 +151,7 @@ class Tex *tile_get_tex(Tilep);
 
 int tile_get_height(Tilep);
 int tile_get_width(Tilep);
-int tile_get_n(Tilemap *tmap, Tile *p);
+int tile_get_n(Tilevec *tmap, Tile *p);
 
 std::string tile_get_name(Tilep);
 std::string tile_name(Tilep);
@@ -160,14 +160,14 @@ Tilep string2tile(const char **s);
 Tilep string2tile(std::string &s, int *len);
 Tilep string2tile(std::string &s, int *len);
 Tilep tile_find_mand(std::string name);
-Tilep tile_first(Tilemap *root);
+Tilep tile_first(Tilevec *root);
 Tilep tile_from_surface(struct SDL_Surface *surface, std::string optional_file, std::string name);
 Tilep tile_index_to_tile(uint16_t i);
-Tilep tile_next(Tilemap *root, Tilep in);
-Tilep tile_n(Tilemap *root, int n);
-Tilep tile_random(Tilemap *root);
+Tilep tile_next(Tilevec *root, Tilep in);
+Tilep tile_n(Tilevec *root, int n);
+Tilep tile_random(Tilevec *root);
 Tilep tile_find(std::string name);
-Tilep tile_get_frame(Tilemap *tmap, uint32_t frame);
+Tilep tile_get_frame(Tilevec *tmap, uint32_t frame);
 
 uint32_t tile_delay_ms(Tilep);
 uint32_t tile_frame(Tilep);
