@@ -24,8 +24,8 @@
 #define UI_TEXT_COLOR               GRAY // Default text color
 #define UI_TEXT_COLOR_STR           "gray"
 #define UI_TEXT_HIGHLIGHT_COLOR_STR "white"
-#define UI_TILE_PIXELART_HEIGHT     8
-#define UI_TILE_PIXELART_WIDTH      8
+#define UI_TILE_HEIGHT     8
+#define UI_TILE_WIDTH      8
 #define UI_TYPE_PIXELART            0
 #define UI_TYPES_MAX                1
 #define UI_WID_POPUP_WIDTH_NORMAL   18
