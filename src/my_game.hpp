@@ -250,10 +250,10 @@ public:
 
   // begin sort marker2 {
   void change_state(int state, const std::string &);
+  void create_level(void);
   void display(void);
   void fini(void);
   void init(void);
-  void create_level(void);
   void load(int slot);
   void load_snapshot(void);
   void load(void);

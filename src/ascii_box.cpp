@@ -35,8 +35,7 @@ static void ascii_put_box__(int style, const TileLayers tiles_in, int x1, int y1
     for (auto styles = 0; styles < UI_WID_STYLE_MAX; styles++) {
       for (auto x = 0; x < MAX_UI_SIZE; x++) {
         for (auto y = 0; y < MAX_UI_SIZE; y++) {
-          std::string name
-              = "ui." + std::to_string(styles) + "," + std::to_string(x) + "," + std::to_string(y);
+          std::string name = "ui." + std::to_string(styles) + "," + std::to_string(x) + "," + std::to_string(y);
           set(tiles, ui_type, styles, x, y, tile_find_mand(name));
         }
       }
