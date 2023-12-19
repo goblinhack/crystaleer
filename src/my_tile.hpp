@@ -8,6 +8,7 @@
 
 #include "my_fwd.hpp"
 #include "my_gl.hpp"
+#include "my_sys.hpp"
 
 #define TILE_HEIGHT       game->config.tile_height
 #define TILE_HEIGHT_LORES 16
@@ -145,7 +146,14 @@ public:
   void set_gl_binding_mask(int v);
 };
 
-using Tilep = class Tile *;
+static inline Tilep tile_index_to_tile(uint16_t i)
+{
+  extern std::vector< class Tile * > all_tiles_array;
+  if (unlikely(! i)) {
+    return nullptr;
+  }
+  return all_tiles_array[ i - 1 ];
+}
 
 class Tex *tile_get_tex(Tilep);
 

@@ -25,13 +25,17 @@ public:
   //
   point pixel_map_at;
 
-  TpId is_oob(uint8_t x, uint8_t y);
+  bool is_oob(uint8_t x, uint8_t y);
 
-  bool        set_tpid(uint8_t x, uint8_t y, uint8_t z, TpId);
-  inline void set_tpid_nocheck(uint8_t x, uint8_t y, uint8_t z, TpId tpid) { data->tpid[ x ][ y ][ z ] = tpid; }
+  bool set_tp_id(uint8_t x, uint8_t y, uint8_t z, TpId);
+  void set_tp_id_no_check(uint8_t x, uint8_t y, uint8_t z, TpId);
+  TpId get_tp_id(uint8_t x, uint8_t y, uint8_t z);
+  TpId get_tp_id_no_check(uint8_t x, uint8_t y, uint8_t z);
 
-  TpId        get_tpid(uint8_t x, uint8_t y, uint8_t z);
-  inline TpId get_tpid_nocheck(uint8_t x, uint8_t y, uint8_t z) { return data->tpid[ x ][ y ][ z ]; }
+  bool  set_tp_tile(uint8_t x, uint8_t y, uint8_t z, Tilep);
+  void  set_tp_tile_no_check(uint8_t x, uint8_t y, uint8_t z, Tilep);
+  Tilep get_tp_tile(uint8_t x, uint8_t y, uint8_t z);
+  Tilep get_tp_tile_no_check(uint8_t x, uint8_t y, uint8_t z);
 
   void display(void);
 };

@@ -32,8 +32,6 @@ void Level::display(void)
     const auto dw = game->config.ascii_gl_width / game->config.game_pix_zoom;
     const auto dh = game->config.ascii_gl_height / game->config.game_pix_zoom;
 
-    auto tile = tile_find("1.3");
-
     for (auto z = 0; z < MAP_DEPTH; z++) {
       for (auto y = miny; y < maxy; y++) {
         for (auto x = minx; x < maxx; x++) {
@@ -47,9 +45,12 @@ void Level::display(void)
           br.x = tl.x + dw;
           br.y = tl.y + dh;
 
-          auto tpid = data->tpid[ x ][ y ][ z ];
-          if (tpid) {
-            tile_blit(tile, tl, br);
+          auto tile_index = data->tp[ x ][ y ][ z ].tile;
+          if (tile_index) {
+            auto tile = tile_index_to_tile(tile_index);
+            if (tile) {
+              tile_blit(tile, tl, br);
+            }
           }
         }
       }

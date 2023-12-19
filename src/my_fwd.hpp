@@ -39,6 +39,7 @@ using Lightp             = class Light *;
 using Texp               = class Tex *;
 using ThingId            = unsigned int;
 using Thingp             = void *;
+using Tilep              = class Tile *;
 using Tilevec            = std::vector< class Tile            *>;
 using TpId               = unsigned short;
 using Tpp                = class Tp *;

@@ -21,14 +21,6 @@ Tile::Tile(void) { newptr(MTYPE_TILE, this, "Tile"); }
 
 Tile::~Tile(void) { oldptr(MTYPE_TILE, this); }
 
-Tilep tile_index_to_tile(uint16_t i)
-{
-  if (unlikely(! i)) {
-    return nullptr;
-  }
-  return all_tiles_array[ i - 1 ];
-}
-
 uint8_t tile_init(void);
 uint8_t tile_init(void)
 {

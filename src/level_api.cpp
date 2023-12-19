@@ -7,9 +7,9 @@
 #include "my_level_ph2.hpp"
 #include "my_level_ph3.hpp"
 #include "my_level_ph4.hpp"
-#include "my_ptrcheck.hpp"
+#include "my_tile.hpp"
 
-TpId Level::is_oob(uint8_t x, uint8_t y)
+bool Level::is_oob(uint8_t x, uint8_t y)
 {
   TRACE_NO_INDENT();
   if (x < 0) {
@@ -27,21 +27,54 @@ TpId Level::is_oob(uint8_t x, uint8_t y)
   return false;
 }
 
-bool Level::set_tpid(uint8_t x, uint8_t y, uint8_t z, TpId tpid)
+bool Level::set_tp_id(uint8_t x, uint8_t y, uint8_t z, TpId tp_id)
 {
   TRACE_NO_INDENT();
   if (is_oob(x, y)) {
     return false;
   }
-  data->tpid[ x ][ y ][ z ] = tpid;
+  data->tp[ x ][ y ][ z ].id = tp_id;
   return true;
 }
 
-TpId Level::get_tpid(uint8_t x, uint8_t y, uint8_t z)
+void Level::set_tp_id_no_check(uint8_t x, uint8_t y, uint8_t z, TpId tp_id) { data->tp[ x ][ y ][ z ].id = tp_id; }
+
+TpId Level::get_tp_id(uint8_t x, uint8_t y, uint8_t z)
 {
   TRACE_NO_INDENT();
   if (is_oob(x, y)) {
     return NoTpId;
   }
-  return data->tpid[ x ][ y ][ z ];
+  return data->tp[ x ][ y ][ z ].id;
+}
+
+TpId Level::get_tp_id_no_check(uint8_t x, uint8_t y, uint8_t z) { return data->tp[ x ][ y ][ z ].id; }
+
+bool Level::set_tp_tile(uint8_t x, uint8_t y, uint8_t z, Tilep tile)
+{
+  TRACE_NO_INDENT();
+  if (is_oob(x, y)) {
+    return false;
+  }
+  data->tp[ x ][ y ][ z ].tile = tile->global_index;
+  return true;
+}
+
+void Level::set_tp_tile_no_check(uint8_t x, uint8_t y, uint8_t z, Tilep tile)
+{
+  data->tp[ x ][ y ][ z ].tile = tile->global_index;
+}
+
+Tilep Level::get_tp_tile(uint8_t x, uint8_t y, uint8_t z)
+{
+  TRACE_NO_INDENT();
+  if (is_oob(x, y)) {
+    return nullptr;
+  }
+  return tile_index_to_tile(data->tp[ x ][ y ][ z ].tile);
+}
+
+Tilep Level::get_tp_tile_no_check(uint8_t x, uint8_t y, uint8_t z)
+{
+  return tile_index_to_tile(data->tp[ x ][ y ][ z ].tile);
 }

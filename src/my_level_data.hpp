@@ -18,12 +18,20 @@ enum {
   MAP_DEPTH,
 };
 
+//
+// Simple things like walls that do not change much
+//
+struct SimpleThing {
+  uint16_t tile;
+  uint16_t id;
+};
+
 typedef struct LevelData_ {
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //////////////////////////////////////////////////////////////
 
-  TpId tpid[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_DEPTH ];
+  SimpleThing tp[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_DEPTH ];
 
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay

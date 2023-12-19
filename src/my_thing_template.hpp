@@ -28,24 +28,7 @@ public:
 
   TpId id {};
 
-  Tilevec bl1_tiles;
-  Tilevec bl2_tiles;
-  Tilevec bot1_tiles;
-  Tilevec bot2_tiles;
-  Tilevec bot3_tiles;
-  Tilevec br1_tiles;
-  Tilevec br2_tiles;
-  Tilevec left1_tiles;
-  Tilevec left2_tiles;
-  Tilevec right1_tiles;
-  Tilevec right2_tiles;
   Tilevec tiles;
-  Tilevec tl1_tiles;
-  Tilevec tl2_tiles;
-  Tilevec top1_tiles;
-  Tilevec top2_tiles;
-  Tilevec tr1_tiles;
-  Tilevec tr2_tiles;
 
   // begin sort marker1 {
   bool is_rock {};
@@ -82,37 +65,6 @@ public:
   void die_(const char *fmt, va_list args); // compile error without
   void con(const char *fmt, ...) CHECK_FORMAT_STR(printf, 2, 3);
   void con_(const char *fmt, va_list args); // compile error without
-
-  const Tilevec *tp_bl1_tiles(void) const;
-  const Tilevec *tp_bl2_tiles(void) const;
-  const Tilevec *tp_bot1_tiles(void) const;
-  const Tilevec *tp_bot2_tiles(void) const;
-  const Tilevec *tp_bot3_tiles(void) const;
-  const Tilevec *tp_br1_tiles(void) const;
-  const Tilevec *tp_br2_tiles(void) const;
-  const Tilevec *tp_horiz_tiles(void) const;
-  const Tilevec *tp_l180_tiles(void) const;
-  const Tilevec *tp_l270_tiles(void) const;
-  const Tilevec *tp_l90_tiles(void) const;
-  const Tilevec *tp_left1_tiles(void) const;
-  const Tilevec *tp_left2_tiles(void) const;
-  const Tilevec *tp_l_tiles(void) const;
-  const Tilevec *tp_outline_tiles(void) const;
-  const Tilevec *tp_right1_tiles(void) const;
-  const Tilevec *tp_right2_tiles(void) const;
-  const Tilevec *tp_t180_tiles(void) const;
-  const Tilevec *tp_t270_tiles(void) const;
-  const Tilevec *tp_t90_tiles(void) const;
-  const Tilevec *tp_tiles(void) const;
-  const Tilevec *tp_tl1_tiles(void) const;
-  const Tilevec *tp_tl2_tiles(void) const;
-  const Tilevec *tp_top1_tiles(void) const;
-  const Tilevec *tp_top2_tiles(void) const;
-  const Tilevec *tp_tr1_tiles(void) const;
-  const Tilevec *tp_tr2_tiles(void) const;
-  const Tilevec *tp_t_tiles(void) const;
-  const Tilevec *tp_vert_tiles(void) const;
-  const Tilevec *tp_x_tiles(void) const;
 
   std::string text_short_capitalised(void) const;
   std::string text_long_capitalised(void) const;

@@ -24,7 +24,7 @@ void LevelPh5::add_objects(const LevelPh4 &ph4)
   const auto w = LEVEL_PH5_WIDTH;
   const auto h = LEVEL_PH5_HEIGHT;
 
-  memset(data.tpid, 0, sizeof(data.tpid));
+  memset(data.tp, 0, sizeof(data.tp));
 
   for (auto y = 0; y < h; y++) {
     std::string s;
@@ -49,12 +49,12 @@ void LevelPh5::add_objects(const LevelPh4 &ph4)
         case PH2_CHAR_SPIKE_33_PERCENT : break;
         case PH2_CHAR_UP : break;
         case PH2_CHAR_WALL_100_PERCENT :
-        case PH2_CHAR_WALL_50_PERCENT : tp = tp_random_rock(); break;
+        case PH2_CHAR_WALL_50_PERCENT : tp = tp_random_wall(); break;
         case PH2_CHAR_WILDCARD : break;
       }
 
       if (tp) {
-        data.tpid[ x ][ y ][ tp->z_depth ] = tp->id;
+        data.tp[ x ][ y ][ tp->z_depth ].id = tp->id;
       }
     }
   }
