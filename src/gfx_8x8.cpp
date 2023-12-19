@@ -30,147 +30,147 @@ void gfx_init_8x8(void)
   tile_load_arr("data/gfx/tiles_8x8.tga", "tiles_8x8", UI_TILE_WIDTH, UI_TILE_HEIGHT, arr);
 
   // clang-format off
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               "..."
               ".x."
               "...",
               "t1.3.10", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               "..."
               ".xx"
               "...",
               "t1.0.7", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               "..."
               "xx."
               "...",
               "t1.5.7", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               ".x."
               ".x."
               "...",
               "t1.0.13", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               "..."
               ".x."
               ".x.",
               "t1.0.8", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               ".x."
               "xx."
               "...",
               "t1.4.13", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               ".x."
               ".xx"
               "...",
               "t1.3.13", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               "..."
               ".xx"
               ".x.",
               "t1.1.13", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               "..."
               "xx."
               ".x.",
               "t1.2.13", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               "..."
               "xxx"
               ".x.",
               "t1.6.7", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               ".x."
               "xx."
               ".x.",
               "t1.6.10", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               ".x."
               "xxx"
               "...",
               "t1.6.9", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               ".x."
               ".xx"
               ".x.",
               "t1.6.8", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               ".x."
               "xxx"
               ".x.",
               "t1.6.11", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               "..."
               "xxx"
               "...",
               "t1.1.7", "t1.2.7", "t1.3.7", "t1.4.7", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               ".x."
               ".x."
               ".x.",
               "t1.0.9", "t1.0.10", "t1.0.11", "t1.0.12", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               "..."
               ".xx"
               ".xx",
               "t1.0.0", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               "xx."
               "xx."
               "...",
               "t1.6.6", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               ".xx"
               ".xx"
               "...",
               "t1.0.6", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               "..."
               "xx."
               "xx.",
               "t1.6.0", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               "..."
               "xxx"
               "xxx",
               "t1.1.0", "t1.2.0", "t1.3.0", "t1.4.0", "t1.5.0", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               "xx."
               "xx."
               "xx.",
               "t1.6.1", "t1.6.2", "t1.6.3", "t1.6.4", "t1.6.1", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               "xxx"
               "xxx"
               "...",
               "t1.1.6", "t1.2.6", "t1.3.6", "t1.4.6", "t1.5.6", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               ".xx"
               ".xx"
               ".xx",
               "t1.0.1", "t1.0.2", "t1.0.3", "t1.0.4", "t1.0.5", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               "xxx"
               "xxx"
               "xxx",
               "t1.3.3", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               "xxx"
               "xx."
               "xxx",
               "t1.2.10", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               "xxx"
               ".xx"
               "xxx",
               "t1.4.10", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               "x.x"
               "xxx"
               "xxx",
               "t1.3.11", nullptr);
-  tilemap_add(TILEMAP_TYPE_NORMAL,
+  tilemap_add("wall",
               "xxx"
               "xxx"
               "x.x",

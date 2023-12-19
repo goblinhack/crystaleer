@@ -8,6 +8,7 @@
 
 #include <array>
 #include <list>
+#include <map>
 #include <string>
 
 #include "my_fwd.hpp"
@@ -16,41 +17,21 @@
 #define LEVEL_TILEMAP_WIDTH  3 // Max obstacle dimensions
 #define LEVEL_TILEMAP_HEIGHT 3 // Max obstacle dimensions
 
-using Tilemaps = std::vector< Tilemapp >;
-
-using TilemapType = enum {
-  TILEMAP_TYPE_NORMAL,
-  TILEMAP_TYPE_MAX,
-};
+using Tilemaps = std::map< std::string, std::vector< Tilemap > >;
 
 class Tilemap
 {
 private:
 public:
-  static Tilemaps all_tilemaps_of_type[ TILEMAP_TYPE_MAX ];
   static Tilemaps all_tilemaps;
 
-  Tilemap(void);
-  ~Tilemap(void);
-
-  //
-  // Unique per tilemap.
-  //
-  uint32_t    unique_id {0};
-  TilemapType type;
-  uint8_t     width {LEVEL_TILEMAP_WIDTH};
-  uint8_t     height {LEVEL_TILEMAP_HEIGHT};
+  Tilemap(void) {}
+  ~Tilemap(void) {}
 
   std::array< std::array< char, LEVEL_TILEMAP_HEIGHT >, LEVEL_TILEMAP_WIDTH > match_with {};
   std::list< std::string >                                                    replace_with;
 };
 
-void tilemap_init(void);
-void tilemap_fini(void);
-
-Tilemapp tilemap_new(void);
-
-void tilemap_init(void);
-void tilemap_add(TilemapType, const char *, const char *, ...);
+void tilemap_add(const char *, const char *, const char *, ...);
 
 #endif

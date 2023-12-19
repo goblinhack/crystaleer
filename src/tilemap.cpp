@@ -2,6 +2,7 @@
 // Copyright Neil McGill, goblinhack@gmail.com
 //
 
+#include <stdarg.h>
 #include <string.h>
 
 #include "my_array_bounds_check.hpp"
@@ -9,41 +10,9 @@
 #include "my_ptrcheck.hpp"
 #include "my_tilemap.hpp"
 
-Tilemaps Tilemap::all_tilemaps_of_type[ TILEMAP_TYPE_MAX ];
 Tilemaps Tilemap::all_tilemaps;
 
-void tilemap_init(void) { TRACE_NO_INDENT(); }
-
-void tilemap_fini(void)
-{
-  TRACE_NO_INDENT();
-  for (auto &o : Tilemap::all_tilemaps) {
-    delete o;
-  }
-}
-
-Tilemap::Tilemap(void)
-{
-  TRACE_NO_INDENT();
-  this->unique_id = all_tilemaps.size();
-  newptr(MTYPE_TILEMAP, this, "blk");
-}
-
-Tilemap::~Tilemap(void)
-{
-  TRACE_NO_INDENT();
-  oldptr(MTYPE_TILEMAP, this);
-}
-
-Tilemapp tilemap_new(void)
-{
-  TRACE_NO_INDENT();
-  auto o = new Tilemap();
-  Tilemap::all_tilemaps.push_back(o);
-  return o;
-}
-
-void tilemap_add(TilemapType type, const char *match_with, const char *args...)
+void tilemap_add(const char *what, const char *match_with, const char *args...)
 {
   TRACE_NO_INDENT();
 
@@ -69,8 +38,7 @@ void tilemap_add(TilemapType type, const char *match_with, const char *args...)
     replace_with.push_back(std::string(s));
   }
 
-  auto o  = tilemap_new();
-  o->type = type;
+  auto o = Tilemap();
 
   for (auto ry = 0; ry < LEVEL_TILEMAP_HEIGHT; ry++) {
     for (auto rx = 0; rx < LEVEL_TILEMAP_WIDTH; rx++) {
@@ -79,10 +47,10 @@ void tilemap_add(TilemapType type, const char *match_with, const char *args...)
       //
       // Match with...
       //
-      auto c                    = match_with[ offset ];
-      o->match_with[ rx ][ ry ] = c;
+      auto c                   = match_with[ offset ];
+      o.match_with[ rx ][ ry ] = c;
     }
   }
 
-  Tilemap::all_tilemaps_of_type[ o->type ].push_back(o);
+  Tilemap::all_tilemaps[ std::string(what) ].push_back(o);
 }
