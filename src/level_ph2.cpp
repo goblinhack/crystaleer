@@ -41,7 +41,7 @@ static LevelPh2Roomp get_fitted_room_type(const Level1Node *node, const LevelPh2
   auto tries     = max_elems * 4;
 
   while (tries-- > 0) {
-    auto r = pcg_one_of(LevelPh2Room::all_rooms_of_type[ required_room_type ]);
+    auto r = one_of(LevelPh2Room::all_rooms_of_type[ required_room_type ]);
     if (! r) {
       return nullptr;
     }

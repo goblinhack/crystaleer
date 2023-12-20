@@ -8,6 +8,7 @@
 #include "my_array_bounds_check.hpp"
 #include "my_charmap.hpp"
 #include "my_ptrcheck.hpp"
+#include "my_tile.hpp"
 #include "my_tilemap.hpp"
 
 Tilemaps Tilemap::all_tilemaps;
@@ -23,23 +24,33 @@ void tilemap_add(const char *what, const char *match_with, const char *args...)
     DIE("bad match with tilemap size, expected %d, got %d", (int) strlen(match_with), (int) expected_len);
   }
 
-  std::list< std::string > replace_with;
-
   va_list ptr;
   va_start(ptr, args);
 
-  replace_with.push_back(std::string(args));
+  auto tile = tile_find(args);
+  if (! tile) {
+    DIE("tilemap tile [%s] not found", args);
+  }
+
+  auto o = Tilemap();
+
+  o.replace_with.push_back(tile);
 
   for (;;) {
     const char *s = va_arg(ptr, char *);
     if (! s) {
       break;
     }
-    replace_with.push_back(std::string(s));
+
+    auto tile = tile_find(s);
+    if (! tile) {
+      DIE("tilemap tile [%s] not found", s);
+    }
+
+    o.replace_with.push_back(tile);
   }
 
-  auto o = Tilemap();
-
+  auto index = 0;
   for (auto ry = 0; ry < LEVEL_TILEMAP_HEIGHT; ry++) {
     for (auto rx = 0; rx < LEVEL_TILEMAP_WIDTH; rx++) {
       auto offset = (row_len * ry) + rx;
@@ -47,8 +58,13 @@ void tilemap_add(const char *what, const char *match_with, const char *args...)
       //
       // Match with...
       //
-      auto c                   = match_with[ offset ];
-      o.match_with[ rx ][ ry ] = c;
+      auto c = match_with[ offset ];
+      switch (c) {
+        case 'x' : o.pattern_bitmap |= (1U << index); break;
+        case '.' : break;
+        default : DIE("unknown tilemap char [%c]", c); break;
+      }
+      index++;
     }
   }
 

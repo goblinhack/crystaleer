@@ -19,6 +19,8 @@ public:
   LevelPh5(const LevelPh4 &);
 
   void add_objects(const LevelPh4 &);
+  void auto_tile(std::string what);
+  void auto_tile_at(Tpp, int x, int y);
 };
 
 LevelPh5 level_ph5(const LevelPh4 &);

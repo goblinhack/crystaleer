@@ -33,7 +33,7 @@ bool tp_load_wall(void)
   }
 
   tp->z_depth_set(MAP_DEPTH_WALL);
-  tp->is_rock = true;
+  tp->is_wall = true;
 
   return true;
 }
@@ -49,7 +49,7 @@ bool tp_load_rock(void)
   }
 
   tp->z_depth_set(MAP_DEPTH_WALL);
-  tp->is_wall = true;
+  tp->is_rock = true;
 
   return true;
 }

@@ -6,9 +6,8 @@
 #include <string.h>
 
 #include "my_array_bounds_check.hpp"
+#include "my_bits.hpp"
 #include "my_charmap.hpp"
-#include "my_dice.hpp"
-#include "my_level_ph1.hpp"
 #include "my_level_ph4.hpp"
 #include "my_level_ph5.hpp"
 #include "my_main.hpp"
@@ -16,6 +15,112 @@
 #include "my_random.hpp"
 #include "my_template.hpp"
 #include "my_thing_template.hpp"
+#include "my_tilemap.hpp"
+
+static Tilep auto_tile_tmp[ LEVEL_PH5_WIDTH ][ LEVEL_PH5_HEIGHT ];
+
+static bool is_oob(int x, int y)
+{
+  if (x < 0) {
+    return true;
+  }
+  if (y < 0) {
+    return true;
+  }
+  if (x >= LEVEL_PH5_WIDTH) {
+    return true;
+  }
+  if (y >= LEVEL_PH5_HEIGHT) {
+    return true;
+  }
+  return false;
+}
+
+void LevelPh5::auto_tile_at(Tpp tp, int x, int y)
+{
+  uint16_t bitmap = 0;
+
+  auto index = 0;
+  for (auto dy = -1; dy <= 1; dy++) {
+    for (auto dx = -1; dx <= 1; dx++) {
+      auto tx = x + dx;
+      auto ty = y + dy;
+
+      if (is_oob(tx, ty)) {
+        continue;
+      }
+
+      if (data.tp[ tx ][ ty ][ tp->z_depth ].id == tp->id) {
+        bitmap |= 1U << index;
+      }
+      index++;
+    }
+  }
+
+  //
+  // Exact match
+  //
+  for (const auto &tilemap : Tilemap::all_tilemaps[ tp->name ]) {
+    if (tilemap.pattern_bitmap == bitmap) {
+      auto r                  = tilemap.replace_with;
+      auto_tile_tmp[ x ][ y ] = one_of(r);
+      return;
+    }
+  }
+
+  if (0) {
+    Tilemap  best {};
+    uint16_t best_match = 0;
+
+    for (const auto &tilemap : Tilemap::all_tilemaps[ tp->name ]) {
+      auto intersection = tilemap.pattern_bitmap & bitmap;
+      if (intersection) {
+        uint16_t this_match = bitcount(intersection);
+        if (! best_match || (this_match > best_match)) {
+          best       = tilemap;
+          best_match = this_match;
+        }
+      }
+    }
+
+    if (best_match) {
+      auto_tile_tmp[ x ][ y ] = one_of(best.replace_with);
+    }
+  }
+}
+
+void LevelPh5::auto_tile(std::string what)
+{
+  auto tp = tp_find(what);
+  if (! tp) {
+    return;
+  }
+
+  memset(auto_tile_tmp, 0, sizeof(auto_tile_tmp));
+
+  const auto w = LEVEL_PH5_WIDTH;
+  const auto h = LEVEL_PH5_HEIGHT;
+
+  for (auto y = 0; y < h; y++) {
+    for (auto x = 0; x < w; x++) {
+      if (data.tp[ x ][ y ][ tp->z_depth ].id == tp->id) {
+        auto_tile_at(tp, x, y);
+      }
+    }
+  }
+
+  auto bad_tile = tile_find("t1.6.13");
+  for (auto y = 0; y < h; y++) {
+    for (auto x = 0; x < w; x++) {
+      Tilep t = auto_tile_tmp[ x ][ y ];
+      if (t) {
+        data.tp[ x ][ y ][ tp->z_depth ].tile = t->global_index;
+      } else if (data.tp[ x ][ y ][ tp->z_depth ].id == tp->id) {
+        data.tp[ x ][ y ][ tp->z_depth ].tile = bad_tile->global_index;
+      }
+    }
+  }
+}
 
 void LevelPh5::add_objects(const LevelPh4 &ph4)
 {
@@ -65,6 +170,9 @@ LevelPh5::LevelPh5(const LevelPh4 &ph4)
   TRACE_NO_INDENT();
 
   add_objects(ph4);
+
+  // auto_tile("rock");
+  auto_tile("wall");
 
   ok = true;
 }
