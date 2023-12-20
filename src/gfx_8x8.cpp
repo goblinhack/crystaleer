@@ -76,22 +76,22 @@ void gfx_init_8x8(void)
               ".x."
               "xxx"
               "xxx",
-              "t1.3.12", nullptr);
+              "t1.2.8", nullptr);
   tilemap_add("wall",
               "xx."
               "xxx"
               "xx.",
-              "t1.4.12", nullptr);
+              "t1.3.8", nullptr);
   tilemap_add("wall",
               "xxx"
               "xxx"
               ".x.",
-              "t1.1.12", nullptr);
+              "t1.0.8", nullptr);
   tilemap_add("wall",
               ".xx"
               "xxx"
               ".xx",
-              "t1.2.12", nullptr);
+              "t1.1.8", nullptr);
 
   tilemap_add("wall",
               "..x"
@@ -230,44 +230,44 @@ void gfx_init_8x8(void)
               ".x."
               "xxx"
               ".x.",
-              "t1.6.11", nullptr);
+              "t1.4.8", nullptr);
 
   tilemap_add("wall",
               "..."
               "xxx"
               ".x.",
-              "t1.6.7", nullptr);
+              "t1.5.8", nullptr);
+  tilemap_add("wall",
+              ".x."
+              ".xx"
+              ".x.",
+              "t1.5.9", nullptr);
+  tilemap_add("wall",
+              ".x."
+              "xxx"
+              "...",
+              "t1.5.10", nullptr);
   tilemap_add("wall",
               ".x."
               "xx."
               ".x.",
-              "t1.6.10", nullptr);
-  tilemap_add("wall",
-              ".x."
-              "xxx"
-              "...",
-              "t1.6.9", nullptr);
-  tilemap_add("wall",
-              ".x."
-              ".xx"
-              ".x.",
-              "t1.6.8", nullptr);
+              "t1.5.11", nullptr);
 
   tilemap_add("wall",
               "xxx"
               ".x."
               "...",
-              "t1.0.13", nullptr);
+              "t1.1.11", nullptr);
   tilemap_add("wall",
               "..x"
               ".xx"
               "..x",
-              "t1.0.7", nullptr);
+              "t1.6.7", nullptr);
   tilemap_add("wall",
               "..."
               ".x."
               "xxx",
-              "t1.0.8", nullptr);
+              "t1.6.7", nullptr);
   tilemap_add("wall",
               "x.."
               "xx."
@@ -278,22 +278,22 @@ void gfx_init_8x8(void)
               ".x."
               "xx."
               "...",
-              "t1.4.13", nullptr);
+              "t1.1.10", nullptr);
   tilemap_add("wall",
               ".x."
               ".xx"
               "...",
-              "t1.3.13", nullptr);
+              "t1.0.10", nullptr);
   tilemap_add("wall",
               "..."
               ".xx"
               ".x.",
-              "t1.1.13", nullptr);
+              "t1.0.9", nullptr);
   tilemap_add("wall",
               "..."
               "xx."
               ".x.",
-              "t1.2.13", nullptr);
+              "t1.1.9", nullptr);
 
   tilemap_add("wall",
               "..."
@@ -304,13 +304,13 @@ void gfx_init_8x8(void)
               ".x."
               ".x."
               ".x.",
-              "t1.0.9", "t1.0.10", "t1.0.11", "t1.0.12", nullptr);
+              "t1.6.8", "t1.6.9", "t1.6.10", "t1.6.11", nullptr);
 
   tilemap_add("wall",
               "..."
               ".xx"
               "...",
-              "t1.0.7", nullptr);
+              "t1.6.7", nullptr);
   tilemap_add("wall",
               "..."
               "xx."
@@ -320,7 +320,7 @@ void gfx_init_8x8(void)
               ".x."
               ".x."
               "...",
-              "t1.0.13", nullptr);
+              "t1.1.11", nullptr);
   tilemap_add("wall",
               "..."
               ".x."
@@ -331,7 +331,7 @@ void gfx_init_8x8(void)
               "..."
               ".x."
               "...",
-              "t1.3.10", nullptr);
+              "t1.0.11", nullptr);
 
   tilemap_add_filler(FILLER_0, "wall",
                      "t1.1.1", "t1.2.1", "t1.3.1", "t1.4.1", "t1.5.1",
@@ -342,12 +342,7 @@ void gfx_init_8x8(void)
 
   tilemap_add_filler(FILLER_1, "wall",
                      "t1.2.2", "t1.3.2", "t1.4.2", "t1.2.3", "t1.3.3", "t1.4.3", "t1.2.4", "t1.3.4", "t1.4.4",
-                     "t1.3.8", "t1.4.8", "t1.5.8",
-                     "t1.5.9", "t1.5.10", "t1.5.11", "t1.5.12", "t1.5.12", nullptr);
-
-  tilemap_add_filler(FILLER_2, "wall",
-                     "t1.1.8", "t1.2.8",
-                     "t1.1.9", "t1.1.10", "t1.1.11", nullptr);
+                     nullptr);
 
   // clang-format on
 }

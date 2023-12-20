@@ -22,7 +22,6 @@ using Tilemaps = std::map< std::string, std::vector< Tilemap > >;
 enum {
   FILLER_0,
   FILLER_1,
-  FILLER_2,
   FILLER_MAX,
 };
 

@@ -117,9 +117,18 @@ bool LevelPh5::auto_fill_at(Tpp tp, int filler_type, int x, int y)
     tp_H = nullptr;
   }
 
-  if ((tp_A && (tp_A->id == tp->id)) || (tp_B && (tp_B->id == tp->id)) || (tp_C && (tp_C->id == tp->id))
-      || (tp_D && (tp_D->id == tp->id)) || (tp_E && (tp_E->id == tp->id)) || (tp_F && (tp_F->id == tp->id))
-      || (tp_G && (tp_G->id == tp->id)) || (tp_B && (tp_H->id == tp->id))) {
+  if (
+      // clang-format off
+      (tp_A && (tp_A->id == tp->id)) ||
+      (tp_B && (tp_B->id == tp->id)) ||
+      (tp_C && (tp_C->id == tp->id)) ||
+      (tp_D && (tp_D->id == tp->id)) ||
+      (tp_E && (tp_E->id == tp->id)) ||
+      (tp_F && (tp_F->id == tp->id)) ||
+      (tp_G && (tp_G->id == tp->id)) ||
+      (tp_H && (tp_H->id == tp->id))
+      // clang-format on
+  ) {
     for (const auto &tilemap : Tilemap::all_tilemaps[ tp->name ]) {
       if (tilemap.filler[ filler_type ].size()) {
         auto r                  = tilemap.filler[ filler_type ];
