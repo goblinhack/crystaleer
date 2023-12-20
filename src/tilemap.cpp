@@ -70,3 +70,36 @@ void tilemap_add(const char *what, const char *match_with, const char *args...)
 
   Tilemap::all_tilemaps[ std::string(what) ].push_back(o);
 }
+
+void tilemap_add_filler(int filler_type, const char *what, const char *args...)
+{
+  TRACE_NO_INDENT();
+
+  va_list ptr;
+  va_start(ptr, args);
+
+  auto tile = tile_find(args);
+  if (! tile) {
+    DIE("tilemap tile [%s] not found", args);
+  }
+
+  auto o = Tilemap();
+
+  o.filler[ filler_type ].push_back(tile);
+
+  for (;;) {
+    const char *s = va_arg(ptr, char *);
+    if (! s) {
+      break;
+    }
+
+    auto tile = tile_find(s);
+    if (! tile) {
+      DIE("tilemap tile [%s] not found", s);
+    }
+
+    o.filler[ filler_type ].push_back(tile);
+  }
+
+  Tilemap::all_tilemaps[ std::string(what) ].push_back(o);
+}

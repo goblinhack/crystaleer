@@ -19,6 +19,13 @@
 
 using Tilemaps = std::map< std::string, std::vector< Tilemap > >;
 
+enum {
+  FILLER_0,
+  FILLER_1,
+  FILLER_2,
+  FILLER_MAX,
+};
+
 class Tilemap
 {
 private:
@@ -30,8 +37,11 @@ public:
 
   uint16_t             pattern_bitmap {};
   std::vector< Tilep > replace_with;
+  std::vector< Tilep > filler[ FILLER_MAX ];
+  ;
 };
 
 void tilemap_add(const char *, const char *, const char *, ...);
+void tilemap_add_filler(int filler, const char *, const char *, ...);
 
 #endif

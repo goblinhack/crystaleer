@@ -33,6 +33,7 @@ public:
   // begin sort marker1 {
   bool is_rock {};
   bool is_wall {};
+  bool is_tiled {};
   // end sort marker1 }
 
   // begin sort marker2 {

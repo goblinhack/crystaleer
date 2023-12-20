@@ -50,8 +50,14 @@ void LevelPh5::auto_tile_at(Tpp tp, int x, int y)
         continue;
       }
 
-      if (data.tp[ tx ][ ty ][ tp->z_depth ].id == tp->id) {
-        bitmap |= 1U << index;
+      auto it = data.tp[ tx ][ ty ][ tp->z_depth ].id;
+      if (it) {
+        auto tpit = tp_find(it);
+        if (tpit) {
+          if (tpit->is_tiled) {
+            bitmap |= 1U << index;
+          }
+        }
       }
       index++;
     }
@@ -67,26 +73,62 @@ void LevelPh5::auto_tile_at(Tpp tp, int x, int y)
       return;
     }
   }
+}
 
-  if (0) {
-    Tilemap  best {};
-    uint16_t best_match = 0;
+bool LevelPh5::auto_fill_at(Tpp tp, int filler_type, int x, int y)
+{
+  auto tp_A = &data.tp[ x - 1 ][ y ][ tp->z_depth ];
+  if (! tp_A->tile) {
+    tp_A = nullptr;
+  }
 
+  auto tp_B = &data.tp[ x + 1 ][ y ][ tp->z_depth ];
+  if (! tp_B->tile) {
+    tp_B = nullptr;
+  }
+
+  auto tp_C = &data.tp[ x ][ y - 1 ][ tp->z_depth ];
+  if (! tp_C->tile) {
+    tp_C = nullptr;
+  }
+
+  auto tp_D = &data.tp[ x ][ y + 1 ][ tp->z_depth ];
+  if (! tp_D->tile) {
+    tp_D = nullptr;
+  }
+
+  auto tp_E = &data.tp[ x - 1 ][ y - 1 ][ tp->z_depth ];
+  if (! tp_E->tile) {
+    tp_E = nullptr;
+  }
+
+  auto tp_F = &data.tp[ x + 1 ][ y - 1 ][ tp->z_depth ];
+  if (! tp_F->tile) {
+    tp_F = nullptr;
+  }
+
+  auto tp_G = &data.tp[ x - 1 ][ y + 1 ][ tp->z_depth ];
+  if (! tp_G->tile) {
+    tp_G = nullptr;
+  }
+
+  auto tp_H = &data.tp[ x + 1 ][ y + 1 ][ tp->z_depth ];
+  if (! tp_H->tile) {
+    tp_H = nullptr;
+  }
+
+  if ((tp_A && (tp_A->id == tp->id)) || (tp_B && (tp_B->id == tp->id)) || (tp_C && (tp_C->id == tp->id))
+      || (tp_D && (tp_D->id == tp->id)) || (tp_E && (tp_E->id == tp->id)) || (tp_F && (tp_F->id == tp->id))
+      || (tp_G && (tp_G->id == tp->id)) || (tp_B && (tp_H->id == tp->id))) {
     for (const auto &tilemap : Tilemap::all_tilemaps[ tp->name ]) {
-      auto intersection = tilemap.pattern_bitmap & bitmap;
-      if (intersection) {
-        uint16_t this_match = bitcount(intersection);
-        if (! best_match || (this_match > best_match)) {
-          best       = tilemap;
-          best_match = this_match;
-        }
+      if (tilemap.filler[ filler_type ].size()) {
+        auto r                  = tilemap.filler[ filler_type ];
+        auto_tile_tmp[ x ][ y ] = one_of(r);
+        return true;
       }
     }
-
-    if (best_match) {
-      auto_tile_tmp[ x ][ y ] = one_of(best.replace_with);
-    }
   }
+  return false;
 }
 
 void LevelPh5::auto_tile(std::string what)
@@ -109,15 +151,89 @@ void LevelPh5::auto_tile(std::string what)
     }
   }
 
-  auto bad_tile = tile_find("t1.6.13");
   for (auto y = 0; y < h; y++) {
     for (auto x = 0; x < w; x++) {
       Tilep t = auto_tile_tmp[ x ][ y ];
       if (t) {
         data.tp[ x ][ y ][ tp->z_depth ].tile = t->global_index;
-      } else if (data.tp[ x ][ y ][ tp->z_depth ].id == tp->id) {
-        data.tp[ x ][ y ][ tp->z_depth ].tile = bad_tile->global_index;
       }
+    }
+  }
+
+  for (auto filler = 0; filler < FILLER_MAX; filler++) {
+    memset(auto_tile_tmp, 0, sizeof(auto_tile_tmp));
+
+    for (auto y = 1; y < h - 1; y++) {
+      for (auto x = 1; x < w - 1; x++) {
+        auto *otp = &data.tp[ x ][ y ][ tp->z_depth ];
+        if (otp->id != tp->id) {
+          continue;
+        }
+        if (otp->tile) {
+          continue;
+        }
+
+        (void) auto_fill_at(tp, filler, x, y);
+      }
+    }
+
+    for (auto y = 0; y < h; y++) {
+      for (auto x = 0; x < w; x++) {
+        Tilep t = auto_tile_tmp[ x ][ y ];
+        if (t) {
+          data.tp[ x ][ y ][ tp->z_depth ].tile = t->global_index;
+        }
+      }
+    }
+  }
+
+  for (;;) {
+    auto got    = 0;
+    auto filler = FILLER_MAX - 1;
+
+    memset(auto_tile_tmp, 0, sizeof(auto_tile_tmp));
+
+    for (auto y = 1; y < h - 1; y++) {
+      for (auto x = 1; x < w - 1; x++) {
+        auto *otp = &data.tp[ x ][ y ][ tp->z_depth ];
+        if (otp->id != tp->id) {
+          continue;
+        }
+        if (otp->tile) {
+          continue;
+        }
+        got += auto_fill_at(tp, filler, x, y) ? 1 : 0;
+      }
+    }
+
+    for (auto y = 0; y < h; y++) {
+      for (auto x = 0; x < w; x++) {
+        Tilep t = auto_tile_tmp[ x ][ y ];
+        if (t) {
+          data.tp[ x ][ y ][ tp->z_depth ].tile = t->global_index;
+        }
+      }
+    }
+
+    if (! got) {
+      break;
+    }
+  }
+
+  //
+  // Flag the remaining non tiled elements
+  //
+  auto bad_tile = tile_find("t1.6.13");
+  for (auto y = 0; y < h; y++) {
+    for (auto x = 0; x < w; x++) {
+      auto *otp = &data.tp[ x ][ y ][ tp->z_depth ];
+      if (otp->id == NoTpId) {
+        continue;
+      }
+      if (otp->tile) {
+        continue;
+      }
+      data.tp[ x ][ y ][ tp->z_depth ].tile = bad_tile->global_index;
     }
   }
 }
