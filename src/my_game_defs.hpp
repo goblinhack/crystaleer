@@ -142,4 +142,17 @@
 #define GAME_DEFAULT_UI_ZOOM  1
 #define GAME_DEFAULT_PIX_ZOOM GAME_MOST_ZOOMED_OUT
 
+enum {
+  FILLER_0,
+  FILLER_1,
+  FILLER_MAX,
+};
+
+enum {
+  LAYER_0,
+  LAYER_1,
+  LAYER_2,
+  LAYER_MAX,
+};
+
 #endif

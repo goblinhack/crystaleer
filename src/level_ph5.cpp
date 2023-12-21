@@ -17,7 +17,7 @@
 #include "my_thing_template.hpp"
 #include "my_tilemap.hpp"
 
-static Tilep auto_tile_tmp[ LEVEL_PH5_WIDTH ][ LEVEL_PH5_HEIGHT ];
+static Tilep auto_tile_tmp[ LEVEL_PH5_WIDTH ][ LEVEL_PH5_HEIGHT ][ LAYER_MAX ];
 
 static bool is_oob(int x, int y)
 {
@@ -66,54 +66,55 @@ void LevelPh5::auto_tile_at(Tpp tp, int x, int y)
   //
   // Exact match
   //
-  for (const auto &tilemap : Tilemap::all_tilemaps[ tp->name ]) {
-    if (tilemap.pattern_bitmap == bitmap) {
-      auto r                  = tilemap.replace_with;
-      auto_tile_tmp[ x ][ y ] = one_of(r);
-      return;
+  for (auto layer = 0; layer < LAYER_MAX; layer++) {
+    for (const auto &tilemap : Tilemap::all_tilemaps[ tp->name ]) {
+      if (tilemap.pattern_bitmap[ layer ] == bitmap) {
+        auto r                           = tilemap.replace_with;
+        auto_tile_tmp[ x ][ y ][ layer ] = one_of(r);
+      }
     }
   }
 }
 
-bool LevelPh5::auto_fill_at(Tpp tp, int filler_type, int x, int y)
+bool LevelPh5::auto_fill_at(Tpp tp, int layer, int filler_type, int x, int y)
 {
   auto tp_A = &data.tp[ x - 1 ][ y ][ tp->z_depth ];
-  if (! tp_A->tile) {
+  if (! tp_A->tile[ layer ]) {
     tp_A = nullptr;
   }
 
   auto tp_B = &data.tp[ x + 1 ][ y ][ tp->z_depth ];
-  if (! tp_B->tile) {
+  if (! tp_B->tile[ layer ]) {
     tp_B = nullptr;
   }
 
   auto tp_C = &data.tp[ x ][ y - 1 ][ tp->z_depth ];
-  if (! tp_C->tile) {
+  if (! tp_C->tile[ layer ]) {
     tp_C = nullptr;
   }
 
   auto tp_D = &data.tp[ x ][ y + 1 ][ tp->z_depth ];
-  if (! tp_D->tile) {
+  if (! tp_D->tile[ layer ]) {
     tp_D = nullptr;
   }
 
   auto tp_E = &data.tp[ x - 1 ][ y - 1 ][ tp->z_depth ];
-  if (! tp_E->tile) {
+  if (! tp_E->tile[ layer ]) {
     tp_E = nullptr;
   }
 
   auto tp_F = &data.tp[ x + 1 ][ y - 1 ][ tp->z_depth ];
-  if (! tp_F->tile) {
+  if (! tp_F->tile[ layer ]) {
     tp_F = nullptr;
   }
 
   auto tp_G = &data.tp[ x - 1 ][ y + 1 ][ tp->z_depth ];
-  if (! tp_G->tile) {
+  if (! tp_G->tile[ layer ]) {
     tp_G = nullptr;
   }
 
   auto tp_H = &data.tp[ x + 1 ][ y + 1 ][ tp->z_depth ];
-  if (! tp_H->tile) {
+  if (! tp_H->tile[ layer ]) {
     tp_H = nullptr;
   }
 
@@ -130,9 +131,9 @@ bool LevelPh5::auto_fill_at(Tpp tp, int filler_type, int x, int y)
       // clang-format on
   ) {
     for (const auto &tilemap : Tilemap::all_tilemaps[ tp->name ]) {
-      if (tilemap.filler[ filler_type ].size()) {
-        auto r                  = tilemap.filler[ filler_type ];
-        auto_tile_tmp[ x ][ y ] = one_of(r);
+      if (tilemap.filler[ layer ][ filler_type ].size()) {
+        auto r                           = tilemap.filler[ layer ][ filler_type ];
+        auto_tile_tmp[ x ][ y ][ layer ] = one_of(r);
         return true;
       }
     }
@@ -160,89 +161,114 @@ void LevelPh5::auto_tile(std::string what)
     }
   }
 
+  //
+  // Join tiles together
+  //
   for (auto y = 0; y < h; y++) {
     for (auto x = 0; x < w; x++) {
-      Tilep t = auto_tile_tmp[ x ][ y ];
-      if (t) {
-        data.tp[ x ][ y ][ tp->z_depth ].tile = t->global_index;
-      }
-    }
-  }
-
-  for (auto filler = 0; filler < FILLER_MAX; filler++) {
-    memset(auto_tile_tmp, 0, sizeof(auto_tile_tmp));
-
-    for (auto y = 1; y < h - 1; y++) {
-      for (auto x = 1; x < w - 1; x++) {
-        auto *otp = &data.tp[ x ][ y ][ tp->z_depth ];
-        if (otp->id != tp->id) {
-          continue;
-        }
-        if (otp->tile) {
-          continue;
-        }
-
-        (void) auto_fill_at(tp, filler, x, y);
-      }
-    }
-
-    for (auto y = 0; y < h; y++) {
-      for (auto x = 0; x < w; x++) {
-        Tilep t = auto_tile_tmp[ x ][ y ];
+      for (auto layer = 0; layer < LAYER_MAX; layer++) {
+        Tilep t = auto_tile_tmp[ x ][ y ][ layer ];
         if (t) {
-          data.tp[ x ][ y ][ tp->z_depth ].tile = t->global_index;
+          data.tp[ x ][ y ][ tp->z_depth ].tile[ layer ] = t->global_index;
         }
       }
     }
   }
 
-  for (;;) {
-    auto got    = 0;
-    auto filler = FILLER_MAX - 1;
+  //
+  // Fill in empty blocks repeatedly
+  //
+  for (auto layer = 0; layer < LAYER_MAX; layer++) {
+    for (auto filler = 0; filler < FILLER_MAX; filler++) {
+      memset(auto_tile_tmp, 0, sizeof(auto_tile_tmp));
 
-    memset(auto_tile_tmp, 0, sizeof(auto_tile_tmp));
+      for (auto y = 1; y < h - 1; y++) {
+        for (auto x = 1; x < w - 1; x++) {
+          auto *otp = &data.tp[ x ][ y ][ tp->z_depth ];
+          if (otp->id != tp->id) {
+            continue;
+          }
+          if (otp->tile[ layer ]) {
+            continue;
+          }
 
-    for (auto y = 1; y < h - 1; y++) {
-      for (auto x = 1; x < w - 1; x++) {
-        auto *otp = &data.tp[ x ][ y ][ tp->z_depth ];
-        if (otp->id != tp->id) {
-          continue;
-        }
-        if (otp->tile) {
-          continue;
-        }
-        got += auto_fill_at(tp, filler, x, y) ? 1 : 0;
-      }
-    }
-
-    for (auto y = 0; y < h; y++) {
-      for (auto x = 0; x < w; x++) {
-        Tilep t = auto_tile_tmp[ x ][ y ];
-        if (t) {
-          data.tp[ x ][ y ][ tp->z_depth ].tile = t->global_index;
+          (void) auto_fill_at(tp, layer, filler, x, y);
         }
       }
-    }
 
-    if (! got) {
-      break;
+      for (auto y = 0; y < h; y++) {
+        for (auto x = 0; x < w; x++) {
+          Tilep t = auto_tile_tmp[ x ][ y ][ layer ];
+          if (t) {
+            data.tp[ x ][ y ][ tp->z_depth ].tile[ layer ] = t->global_index;
+          }
+        }
+      }
+    }
+  }
+
+  //
+  // Fill in any remaining empty blocks
+  //
+  for (auto layer = 0; layer < LAYER_MAX; layer++) {
+    for (;;) {
+      auto filler = FILLER_MAX - 1;
+      auto got    = 0;
+      memset(auto_tile_tmp, 0, sizeof(auto_tile_tmp));
+
+      for (auto y = 1; y < h - 1; y++) {
+        for (auto x = 1; x < w - 1; x++) {
+          auto *otp = &data.tp[ x ][ y ][ tp->z_depth ];
+          if (otp->id != tp->id) {
+            continue;
+          }
+          if (otp->tile[ layer ]) {
+            continue;
+          }
+          got += auto_fill_at(tp, layer, filler, x, y) ? 1 : 0;
+        }
+      }
+
+      for (auto y = 0; y < h; y++) {
+        for (auto x = 0; x < w; x++) {
+          for (auto layer = 0; layer < LAYER_MAX; layer++) {
+            Tilep t = auto_tile_tmp[ x ][ y ][ layer ];
+            if (t) {
+              data.tp[ x ][ y ][ tp->z_depth ].tile[ layer ] = t->global_index;
+            }
+          }
+        }
+      }
+
+      if (! got) {
+        break;
+      }
     }
   }
 
   //
   // Flag the remaining non tiled elements
   //
-  auto bad_tile = tile_find("t1.6.13");
+  auto bad_tile = tile_find_mand("bad_tile");
   for (auto y = 0; y < h; y++) {
     for (auto x = 0; x < w; x++) {
       auto *otp = &data.tp[ x ][ y ][ tp->z_depth ];
       if (otp->id == NoTpId) {
         continue;
       }
-      if (otp->tile) {
+
+      bool got_one = false;
+      for (auto layer = 0; layer < LAYER_MAX; layer++) {
+        if (otp->tile[ layer ]) {
+          got_one = true;
+        }
+      }
+
+      if (got_one) {
         continue;
       }
-      data.tp[ x ][ y ][ tp->z_depth ].tile = bad_tile->global_index;
+
+      data.tp[ x ][ y ][ tp->z_depth ].tile[ LAYER_0 ] = bad_tile->global_index;
     }
   }
 }

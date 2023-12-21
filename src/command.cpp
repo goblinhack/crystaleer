@@ -135,9 +135,9 @@ void command_add(command_fn_t callback, std::string input, std::string readable)
   //
   // Convert the command into tokens for matching.
   //
-  tokens_tostring(input.c_str(), &command->tokens);
-  tokens_tostring(input.c_str(), &command->input_tokens);
-  tokens_tostring(readable.c_str(), &command->readable_tokens);
+  tokens_to_string(input.c_str(), &command->tokens);
+  tokens_to_string(input.c_str(), &command->input_tokens);
+  tokens_to_string(readable.c_str(), &command->readable_tokens);
 }
 
 static int command_matches(const char *input, char *output, uint8_t show_ambiguous, uint8_t show_complete,
@@ -164,7 +164,7 @@ static int command_matches(const char *input, char *output, uint8_t show_ambiguo
   /*
    * Convert the input into tokens for matching.
    */
-  tokens_tostring(input, &input_tokens);
+  tokens_to_string(input, &input_tokens);
 
   /*
    * Find the command(s) with the most number of matching tokens.

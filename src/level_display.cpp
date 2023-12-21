@@ -45,11 +45,13 @@ void Level::display(void)
           br.x = tl.x + dw;
           br.y = tl.y + dh;
 
-          auto tile_index = data->tp[ x ][ y ][ z ].tile;
-          if (tile_index) {
-            auto tile = tile_index_to_tile(tile_index);
-            if (tile) {
-              tile_blit(tile, tl, br);
+          for (auto layer = 0; layer < LAYER_MAX; layer++) {
+            auto tile_index = data->tp[ x ][ y ][ z ].tile[ layer ];
+            if (tile_index) {
+              auto tile = tile_index_to_tile(tile_index);
+              if (tile) {
+                tile_blit(tile, tl, br);
+              }
             }
           }
         }

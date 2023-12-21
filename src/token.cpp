@@ -181,12 +181,12 @@ void tokens_test(void)
   TRACE_NO_INDENT();
   class Tokens tmp;
 
-  tokens_print(tokens_tostring("s  ", &tmp));
-  tokens_print(tokens_tostring("set god mode on", &tmp));
-  tokens_print(tokens_tostring("set god \"mode on\"", &tmp));
+  tokens_print(tokens_to_string("s  ", &tmp));
+  tokens_print(tokens_to_string("set god mode on", &tmp));
+  tokens_print(tokens_to_string("set god \"mode on\"", &tmp));
 }
 
-class Tokens *tokens_tostring(const char *input, class Tokens *tokens)
+class Tokens *tokens_to_string(const char *input, class Tokens *tokens)
 {
   TRACE_NO_INDENT();
 

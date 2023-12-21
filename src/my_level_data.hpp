@@ -22,8 +22,8 @@ enum {
 // Simple things like walls that do not change much
 //
 struct SimpleThing {
-  uint16_t tile;
   uint16_t id;
+  uint16_t tile[ LAYER_MAX ];
 };
 
 typedef struct LevelData_ {

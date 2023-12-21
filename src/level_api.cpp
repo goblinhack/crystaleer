@@ -50,31 +50,31 @@ TpId Level::get_tp_id(uint8_t x, uint8_t y, uint8_t z)
 
 TpId Level::get_tp_id_no_check(uint8_t x, uint8_t y, uint8_t z) { return data->tp[ x ][ y ][ z ].id; }
 
-bool Level::set_tp_tile(uint8_t x, uint8_t y, uint8_t z, Tilep tile)
+bool Level::set_tp_tile(uint8_t x, uint8_t y, uint8_t z, uint8_t layer, Tilep tile)
 {
   TRACE_NO_INDENT();
   if (is_oob(x, y)) {
     return false;
   }
-  data->tp[ x ][ y ][ z ].tile = tile->global_index;
+  data->tp[ x ][ y ][ z ].tile[ layer ] = tile->global_index;
   return true;
 }
 
-void Level::set_tp_tile_no_check(uint8_t x, uint8_t y, uint8_t z, Tilep tile)
+void Level::set_tp_tile_no_check(uint8_t x, uint8_t y, uint8_t z, uint8_t layer, Tilep tile)
 {
-  data->tp[ x ][ y ][ z ].tile = tile->global_index;
+  data->tp[ x ][ y ][ z ].tile[ layer ] = tile->global_index;
 }
 
-Tilep Level::get_tp_tile(uint8_t x, uint8_t y, uint8_t z)
+Tilep Level::get_tp_tile(uint8_t x, uint8_t y, uint8_t z, uint8_t layer)
 {
   TRACE_NO_INDENT();
   if (is_oob(x, y)) {
     return nullptr;
   }
-  return tile_index_to_tile(data->tp[ x ][ y ][ z ].tile);
+  return tile_index_to_tile(data->tp[ x ][ y ][ z ].tile[ layer ]);
 }
 
-Tilep Level::get_tp_tile_no_check(uint8_t x, uint8_t y, uint8_t z)
+Tilep Level::get_tp_tile_no_check(uint8_t x, uint8_t y, uint8_t z, uint8_t layer)
 {
-  return tile_index_to_tile(data->tp[ x ][ y ][ z ].tile);
+  return tile_index_to_tile(data->tp[ x ][ y ][ z ].tile[ layer ]);
 }
