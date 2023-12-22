@@ -11,6 +11,7 @@
 // begin sort marker1 {
 static Tpidmap tp_rock;
 static Tpidmap tp_wall;
+static Tpidmap tp_spike;
 // end sort marker1 }
 
 void tp_random_init(void)
@@ -22,6 +23,9 @@ void tp_random_init(void)
     }
     if (tp->is_wall) {
       tp_wall.push_back(tp);
+    }
+    if (tp->is_spike) {
+      tp_spike.push_back(tp);
     }
   }
 }

@@ -21,10 +21,10 @@ enum {
 //
 // Simple things like walls that do not change much
 //
-struct SimpleThing {
+typedef struct SimpleThing_ {
   uint16_t id;
   uint16_t tile[ LAYER_MAX ];
-};
+} SimpleThing;
 
 typedef struct LevelData_ {
   //////////////////////////////////////////////////////////////

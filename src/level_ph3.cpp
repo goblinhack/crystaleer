@@ -158,11 +158,7 @@ void LevelPh3::fix_obstacles(const LevelPh2 &ph2)
     for (auto x = 0; x < w; x++) {
       point at(x, y);
       switch (get(data, x, y)) {
-        case PH2_CHAR_SPIKE_33_PERCENT :
-          if (d100() > 33) {
-            set(data, x, y, (char) PH2_CHAR_EMPTY);
-          }
-          break;
+        case PH2_CHAR_SPIKE_33_PERCENT : break;
         case PH2_CHAR_WALL_100_PERCENT : break;
         case PH2_CHAR_WALL_50_PERCENT :
           if (d100() > 50) {

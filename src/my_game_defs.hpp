@@ -155,4 +155,10 @@ enum {
   LAYER_MAX,
 };
 
+enum {
+  VARIANT_0,
+  VARIANT_1,
+  VARIANT_MAX,
+};
+
 #endif

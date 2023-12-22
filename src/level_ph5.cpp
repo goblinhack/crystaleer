@@ -67,17 +67,47 @@ void LevelPh5::auto_tile_at(Tpp tp, int x, int y)
   // Exact match
   //
   for (auto layer = 0; layer < LAYER_MAX; layer++) {
+    std::vector< Tilep > cands;
+
     for (const auto &tilemap : Tilemap::all_tilemaps[ tp->name ]) {
       if (tilemap.pattern_bitmap[ layer ] == bitmap) {
-        auto r                           = tilemap.replace_with;
-        auto_tile_tmp[ x ][ y ][ layer ] = one_of(r);
+        auto r = tilemap.replace_with;
+        for (auto c : r) {
+          cands.push_back(c);
+        }
       }
+    }
+    if (cands.size()) {
+      auto_tile_tmp[ x ][ y ][ layer ] = one_of(cands);
     }
   }
 }
 
+//
+// Returns true if an auto fill tile was placed
+//
 bool LevelPh5::auto_fill_at(Tpp tp, int layer, int filler_type, int x, int y)
 {
+  const auto w = LEVEL_PH5_WIDTH;
+  const auto h = LEVEL_PH5_HEIGHT;
+
+  //
+  // Edge tiles are always filler
+  //
+  if ((x == 0) || (y == 0) || (x == w - 1) || (y == h - 1)) {
+    if (filler_type == FILLER_MAX - 1) {
+      for (const auto &tilemap : Tilemap::all_tilemaps[ tp->name ]) {
+        if (tilemap.filler[ layer ][ filler_type ].size()) {
+          auto r                           = tilemap.filler[ layer ][ filler_type ];
+          auto_tile_tmp[ x ][ y ][ layer ] = one_of(r);
+          return true;
+        }
+      }
+    } else {
+      return false;
+    }
+  }
+
   auto tp_A = &data.tp[ x - 1 ][ y ][ tp->z_depth ];
   if (! tp_A->tile[ layer ]) {
     tp_A = nullptr;
@@ -153,8 +183,8 @@ void LevelPh5::auto_tile(std::string what)
   const auto w = LEVEL_PH5_WIDTH;
   const auto h = LEVEL_PH5_HEIGHT;
 
-  for (auto y = 0; y < h; y++) {
-    for (auto x = 0; x < w; x++) {
+  for (auto y = 1; y < h - 1; y++) {
+    for (auto x = 1; x < w - 1; x++) {
       if (data.tp[ x ][ y ][ tp->z_depth ].id == tp->id) {
         auto_tile_at(tp, x, y);
       }
@@ -164,8 +194,8 @@ void LevelPh5::auto_tile(std::string what)
   //
   // Join tiles together
   //
-  for (auto y = 0; y < h; y++) {
-    for (auto x = 0; x < w; x++) {
+  for (auto y = 1; y < h - 1; y++) {
+    for (auto x = 1; x < w - 1; x++) {
       for (auto layer = 0; layer < LAYER_MAX; layer++) {
         Tilep t = auto_tile_tmp[ x ][ y ][ layer ];
         if (t) {
@@ -182,8 +212,8 @@ void LevelPh5::auto_tile(std::string what)
     for (auto filler = 0; filler < FILLER_MAX; filler++) {
       memset(auto_tile_tmp, 0, sizeof(auto_tile_tmp));
 
-      for (auto y = 1; y < h - 1; y++) {
-        for (auto x = 1; x < w - 1; x++) {
+      for (auto y = 0; y < h; y++) {
+        for (auto x = 0; x < w; x++) {
           auto *otp = &data.tp[ x ][ y ][ tp->z_depth ];
           if (otp->id != tp->id) {
             continue;
@@ -216,8 +246,8 @@ void LevelPh5::auto_tile(std::string what)
       auto got    = 0;
       memset(auto_tile_tmp, 0, sizeof(auto_tile_tmp));
 
-      for (auto y = 1; y < h - 1; y++) {
-        for (auto x = 1; x < w - 1; x++) {
+      for (auto y = 0; y < h; y++) {
+        for (auto x = 0; x < w; x++) {
           auto *otp = &data.tp[ x ][ y ][ tp->z_depth ];
           if (otp->id != tp->id) {
             continue;
@@ -245,30 +275,41 @@ void LevelPh5::auto_tile(std::string what)
       }
     }
   }
+}
 
-  //
-  // Flag the remaining non tiled elements
-  //
-  auto bad_tile = tile_find_mand("bad_tile");
+//
+// Flag the remaining non tiled elements
+//
+void LevelPh5::auto_tile_final(void)
+{
+  const auto w        = LEVEL_PH5_WIDTH;
+  const auto h        = LEVEL_PH5_HEIGHT;
+  auto       bad_tile = tile_find_mand("bad_tile");
+
   for (auto y = 0; y < h; y++) {
     for (auto x = 0; x < w; x++) {
-      auto *otp = &data.tp[ x ][ y ][ tp->z_depth ];
-      if (otp->id == NoTpId) {
-        continue;
-      }
-
-      bool got_one = false;
-      for (auto layer = 0; layer < LAYER_MAX; layer++) {
-        if (otp->tile[ layer ]) {
-          got_one = true;
+      for (auto z = 0; z < MAP_DEPTH; z++) {
+        SimpleThing *otp = &data.tp[ x ][ y ][ z ];
+        if (otp->id == NoTpId) {
+          continue;
         }
-      }
 
-      if (got_one) {
-        continue;
-      }
+        bool tile_exists_here = false;
+        for (auto layer = 0; layer < LAYER_MAX; layer++) {
+          if (otp->tile[ layer ]) {
+            tile_exists_here = true;
+          }
+        }
 
-      data.tp[ x ][ y ][ tp->z_depth ].tile[ LAYER_0 ] = bad_tile->global_index;
+        if (tile_exists_here) {
+          continue;
+        }
+
+        //
+        // Tp and no tile
+        //
+        data.tp[ x ][ y ][ z ].tile[ LAYER_0 ] = bad_tile->global_index;
+      }
     }
   }
 }
@@ -322,8 +363,9 @@ LevelPh5::LevelPh5(const LevelPh4 &ph4)
 
   add_objects(ph4);
 
-  // auto_tile("rock");
+  auto_tile("rock");
   auto_tile("wall");
+  auto_tile_final();
 
   ok = true;
 }

@@ -34,8 +34,8 @@ public:
   ;
 };
 
-void tilemap_add(int layer, const char *, const char *, const char *, ...);
 void tilemap_add_filler(int layer, int filler, const char *, const char *, ...);
-void tilemap_add(int layer, const char *);
+void tilemap_add(int layer, const char *, const char *, const char *, ...);
+void tilemap_add(int layer, int tile_variant, const char *tp_name, const char *tile_name);
 
 #endif

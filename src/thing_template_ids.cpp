@@ -13,6 +13,7 @@ std::initializer_list< std::string > tps = {
     "", // ID 0 means unused
     "rock",
     "wall",
+    "spike",
 };
 
 static std::map< std::string, int > tp_preferred_id;

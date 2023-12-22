@@ -19,6 +19,10 @@ bool templates_init(void)
     return false;
   }
 
+  if (! tp_load_spike()) {
+    return false;
+  }
+
   return true;
 }
 
@@ -52,6 +56,22 @@ bool tp_load_rock(void)
   tp->z_depth_set(MAP_DEPTH_WALL);
   tp->is_rock  = true;
   tp->is_tiled = true;
+
+  return true;
+}
+
+bool tp_load_spike(void)
+{
+  TRACE_NO_INDENT();
+
+  auto tp = tp_load("spike");
+  if (! tp) {
+    ERR("failed to load template rock");
+    return false;
+  }
+
+  tp->z_depth_set(MAP_DEPTH_WALL);
+  tp->is_spike = true;
 
   return true;
 }

@@ -20,6 +20,7 @@ public:
 
   void add_objects(const LevelPh4 &);
   void auto_tile(std::string what);
+  void auto_tile_final(void);
   bool auto_fill_at(Tpp, int layer, int filler_type, int x, int y);
   void auto_tile_at(Tpp, int x, int y);
 };
