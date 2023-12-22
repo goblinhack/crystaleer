@@ -41,6 +41,132 @@ void tilemap_add(int layer, int tile_variant, const char *tp_name, const char *t
               (tile_name_layer_variant + "4.11").c_str(), nullptr);
 
   tilemap_add(layer, tp_name,
+              "xxx"
+              ".xx"
+              "..x",
+              (tile_name_layer_variant + "0.10").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "xxx"
+              "xx."
+              "x..",
+              (tile_name_layer_variant + "1.10").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "x.."
+              "xx."
+              "xxx",
+              (tile_name_layer_variant + "1.9").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "..x"
+              ".xx"
+              "xxx",
+              (tile_name_layer_variant + "0.9").c_str(), nullptr);
+
+  tilemap_add(layer, tp_name,
+              "..x"
+              "xxx"
+              "xx.",
+              (tile_name_layer_variant + "5.8").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "xx."
+              ".xx"
+              ".xx",
+              (tile_name_layer_variant + "5.9").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              ".xx"
+              "xxx"
+              "x..",
+              (tile_name_layer_variant + "5.10").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "..x"
+              "xxx"
+              "xx.",
+              (tile_name_layer_variant + "5.8").c_str(), nullptr);
+
+  tilemap_add(layer, tp_name,
+              "..x"
+              "xxx"
+              "xxx",
+              (tile_name_layer_variant + "5.8").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "xxx"
+              ".xx"
+              ".xx",
+              (tile_name_layer_variant + "5.9").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "xxx"
+              "xxx"
+              "x..",
+              (tile_name_layer_variant + "5.10").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "..x"
+              "xxx"
+              "xxx",
+              (tile_name_layer_variant + "5.8").c_str(), nullptr);
+
+  tilemap_add(layer, tp_name,
+              "xxx"
+              "xx."
+              "..x",
+              (tile_name_layer_variant + "0.10").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "x.x"
+              "xx."
+              "xx.",
+              (tile_name_layer_variant + "1.9").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "xxx"
+              ".xx"
+              "x..",
+              (tile_name_layer_variant + "0.10").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "xx."
+              "xx."
+              "x.x",
+              (tile_name_layer_variant + "1.10").c_str(), nullptr);
+
+  tilemap_add(layer, tp_name,
+              "x.."
+              ".xx"
+              ".xx",
+              (tile_name_layer_variant + "0.9").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              ".xx"
+              ".xx"
+              "x..",
+              (tile_name_layer_variant + "0.10").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "xx."
+              "xx."
+              "..x",
+              (tile_name_layer_variant + "1.10").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "..x"
+              "xx."
+              "xx.",
+              (tile_name_layer_variant + "1.9").c_str(), nullptr);
+
+  tilemap_add(layer, tp_name,
+              "x.x"
+              "xxx"
+              "xx.",
+              (tile_name_layer_variant + "5.8").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "xx."
+              ".xx"
+              "xxx",
+              (tile_name_layer_variant + "5.9").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              ".xx"
+              "xxx"
+              "x.x",
+              (tile_name_layer_variant + "5.10").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "x.x"
+              "xx."
+              "xx.",
+              (tile_name_layer_variant + "5.11").c_str(), nullptr);
+
+  tilemap_add(layer, tp_name,
               "..."
               "xxx"
               "xxx",
@@ -233,7 +359,7 @@ void tilemap_add(int layer, int tile_variant, const char *tp_name, const char *t
               "xxx"
               "xxx"
               "x.x",
-              (tile_name_layer_variant + "4.9").c_str(), nullptr);
+              (tile_name_layer_variant + "3.9").c_str(), nullptr);
 
   tilemap_add(layer, tp_name,
               "..."
@@ -252,6 +378,27 @@ void tilemap_add(int layer, int tile_variant, const char *tp_name, const char *t
               (tile_name_layer_variant + "0.6").c_str(), nullptr);
   tilemap_add(layer, tp_name,
               "..."
+              "xx."
+              "xx.",
+              (tile_name_layer_variant + "6.0").c_str(), nullptr);
+
+  tilemap_add(layer, tp_name,
+              "x.."
+              ".xx"
+              ".xx",
+              (tile_name_layer_variant + "0.0").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "xx."
+              "xx."
+              "..x",
+              (tile_name_layer_variant + "6.6").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              ".xx"
+              ".xx"
+              "x..",
+              (tile_name_layer_variant + "0.6").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "..x"
               "xx."
               "xx.",
               (tile_name_layer_variant + "6.0").c_str(), nullptr);
@@ -285,6 +432,48 @@ void tilemap_add(int layer, int tile_variant, const char *tp_name, const char *t
 
   tilemap_add(layer, tp_name,
               "xxx"
+              "xx."
+              ".x.",
+              (tile_name_layer_variant + "5.11").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "x.."
+              "xxx"
+              "xx.",
+              (tile_name_layer_variant + "5.8").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              ".x."
+              ".xx"
+              "xxx",
+              (tile_name_layer_variant + "5.9").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              ".xx"
+              "xxx"
+              "..x",
+              (tile_name_layer_variant + "5.10").c_str(), nullptr);
+
+  tilemap_add(layer, tp_name,
+              "xxx"
+              ".xx"
+              ".x.",
+              (tile_name_layer_variant + "5.9").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "..x"
+              "xxx"
+              ".xx",
+              (tile_name_layer_variant + "5.8").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              ".x."
+              "xx."
+              "xxx",
+              (tile_name_layer_variant + "5.11").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "xx."
+              "xxx"
+              "x..",
+              (tile_name_layer_variant + "5.10").c_str(), nullptr);
+
+  tilemap_add(layer, tp_name,
+              "xxx"
               ".x."
               "...",
               (tile_name_layer_variant + "1.11").c_str(), nullptr);
@@ -292,7 +481,7 @@ void tilemap_add(int layer, int tile_variant, const char *tp_name, const char *t
               "..x"
               ".xx"
               "..x",
-              (tile_name_layer_variant + "6.7").c_str(), nullptr);
+              (tile_name_layer_variant + "0.7").c_str(), nullptr);
   tilemap_add(layer, tp_name,
               "..."
               ".x."
@@ -303,6 +492,27 @@ void tilemap_add(int layer, int tile_variant, const char *tp_name, const char *t
               "xx."
               "x..",
               (tile_name_layer_variant + "5.7").c_str(), nullptr);
+
+  tilemap_add(layer, tp_name,
+              "xxx"
+              ".x."
+              ".x.",
+              (tile_name_layer_variant + "6.8").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "..x"
+              "xxx"
+              "..x",
+              (tile_name_layer_variant + "1.7").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              ".x."
+              ".x."
+              "xxx",
+              (tile_name_layer_variant + "6.8").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "x.."
+              "xxx"
+              "x..",
+              (tile_name_layer_variant + "1.7").c_str(), nullptr);
 
   tilemap_add(layer, tp_name,
               ".x."
@@ -361,6 +571,48 @@ void tilemap_add(int layer, int tile_variant, const char *tp_name, const char *t
               "..."
               ".x."
               ".x.",
+              (tile_name_layer_variant + "6.7").c_str(), nullptr);
+
+  tilemap_add(layer, tp_name,
+              "..x"
+              ".xx"
+              "...",
+              (tile_name_layer_variant + "0.7").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "x.."
+              "xx."
+              "...",
+              (tile_name_layer_variant + "5.7").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "xx."
+              ".x."
+              "...",
+              (tile_name_layer_variant + "1.11").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "..."
+              ".x."
+              "xx.",
+              (tile_name_layer_variant + "6.7").c_str(), nullptr);
+
+  tilemap_add(layer, tp_name,
+              "..."
+              ".xx"
+              "..x",
+              (tile_name_layer_variant + "6.7").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "..."
+              "xx."
+              "x..",
+              (tile_name_layer_variant + "5.7").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              ".xx"
+              ".x."
+              "...",
+              (tile_name_layer_variant + "1.11").c_str(), nullptr);
+  tilemap_add(layer, tp_name,
+              "..."
+              ".x."
+              ".xx",
               (tile_name_layer_variant + "6.7").c_str(), nullptr);
 
   tilemap_add(layer, tp_name,

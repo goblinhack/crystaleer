@@ -88,7 +88,7 @@ void gfx_init_8x8(void)
       "wall.2.1.0.11",  "wall.2.1.1.11",  "wall.2.1.2.11",  "wall.2.1.3.11",  "wall.2.1.4.11",  "wall.2.1.5.11",  "wall.2.1.6.11",  "",
       "",            "",            "",            "",            "",            "",            "",            "",
       "",            "",            "",            "",            "",            "",            "",            "",
-      "apike",       "",            "",            "",            "",            "",            "",            "",
+      "spike",       "",            "",            "",            "",            "",            "",            "",
       // clang-format on
   };
   const std::vector< std::string > arr(tiles);

@@ -82,6 +82,8 @@ void LevelPh4::add_blocks(const LevelPh3 &ph3)
         }
       }
 
+      std::vector< LevelPh4Block * > cands;
+
       for (auto b : LevelPh4Block::all_blocks_of_type[ BLOCK_TYPE_NORMAL ]) {
         bool matched = true;
         for (auto bx = 0; bx < LEVEL_PH4_BLOCK_WIDTH; bx++) {
@@ -102,15 +104,19 @@ void LevelPh4::add_blocks(const LevelPh3 &ph3)
         }
 
         if (matched) {
-          for (auto bx = 0; bx < LEVEL_PH4_BLOCK_WIDTH; bx++) {
-            for (auto by = 0; by < LEVEL_PH4_BLOCK_HEIGHT; by++) {
-              auto c  = get(b->replace_with, bx, by);
-              auto nx = (x * LEVEL_PH4_BLOCK_WIDTH) + bx;
-              auto ny = (y * LEVEL_PH4_BLOCK_HEIGHT) + by;
-              set(data, nx, ny, c);
-            }
+          cands.push_back(b);
+        }
+      }
+
+      if (cands.size()) {
+        auto cand = one_of(cands);
+        for (auto bx = 0; bx < LEVEL_PH4_BLOCK_WIDTH; bx++) {
+          for (auto by = 0; by < LEVEL_PH4_BLOCK_HEIGHT; by++) {
+            auto c  = get(cand->replace_with, bx, by);
+            auto nx = (x * LEVEL_PH4_BLOCK_WIDTH) + bx;
+            auto ny = (y * LEVEL_PH4_BLOCK_HEIGHT) + by;
+            set(data, nx, ny, c);
           }
-          break;
         }
       }
     }

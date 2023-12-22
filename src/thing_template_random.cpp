@@ -142,3 +142,13 @@ Tpp tp_random_wall(void)
   }
   return tp_get_with_no_rarity_filter(tp_wall);
 }
+
+Tpp tp_random_spike(void)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! tp_spike.size())) {
+    DIE("No spikes found");
+    return nullptr;
+  }
+  return tp_get_with_no_rarity_filter(tp_spike);
+}

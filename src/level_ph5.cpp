@@ -289,14 +289,23 @@ void LevelPh5::auto_tile_final(void)
   for (auto y = 0; y < h; y++) {
     for (auto x = 0; x < w; x++) {
       for (auto z = 0; z < MAP_DEPTH; z++) {
-        SimpleThing *otp = &data.tp[ x ][ y ][ z ];
-        if (otp->id == NoTpId) {
+        SimpleThing *t = &data.tp[ x ][ y ][ z ];
+        if (t->id == NoTpId) {
+          continue;
+        }
+
+        Tpp tp = tp_find(t->id);
+        if (! tp) {
+          continue;
+        }
+
+        if (! tp->is_tiled) {
           continue;
         }
 
         bool tile_exists_here = false;
         for (auto layer = 0; layer < LAYER_MAX; layer++) {
-          if (otp->tile[ layer ]) {
+          if (t->tile[ layer ]) {
             tile_exists_here = true;
           }
         }
@@ -343,7 +352,7 @@ void LevelPh5::add_objects(const LevelPh4 &ph4)
         case PH2_CHAR_RIGHT : break;
         case PH2_CHAR_ROCK : tp = tp_random_rock(); break;
         case PH2_CHAR_SECRET_DOOR : break;
-        case PH2_CHAR_SPIKE_33_PERCENT : break;
+        case PH2_CHAR_SPIKE_33_PERCENT : tp = tp_random_spike(); break;
         case PH2_CHAR_UP : break;
         case PH2_CHAR_WALL_100_PERCENT :
         case PH2_CHAR_WALL_50_PERCENT : tp = tp_random_wall(); break;
@@ -352,6 +361,12 @@ void LevelPh5::add_objects(const LevelPh4 &ph4)
 
       if (tp) {
         data.tp[ x ][ y ][ tp->z_depth ].id = tp->id;
+        if (tp->tiles.size()) {
+          auto tile = one_of(tp->tiles);
+          if (tile) {
+            data.tp[ x ][ y ][ tp->z_depth ].tile[ LAYER_0 ] = tile->global_index;
+          }
+        }
       }
     }
   }
@@ -362,7 +377,6 @@ LevelPh5::LevelPh5(const LevelPh4 &ph4)
   TRACE_NO_INDENT();
 
   add_objects(ph4);
-
   auto_tile("rock");
   auto_tile("wall");
   auto_tile_final();

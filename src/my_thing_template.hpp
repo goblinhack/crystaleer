@@ -85,6 +85,7 @@ Tpp tp_load(const std::string &name);
 Tpp tp_get_with_rarity_filter(Tpidmap &m);
 Tpp tp_random_rock(void);
 Tpp tp_random_wall(void);
+Tpp tp_random_spike(void);
 
 Tilep tp_first_tile(class Tp *);
 

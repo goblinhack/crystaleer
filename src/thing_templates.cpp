@@ -66,12 +66,13 @@ bool tp_load_spike(void)
 
   auto tp = tp_load("spike");
   if (! tp) {
-    ERR("failed to load template rock");
+    ERR("failed to load template spike");
     return false;
   }
 
   tp->z_depth_set(MAP_DEPTH_WALL);
   tp->is_spike = true;
+  tp->tiles.push_back(tile_find("spike"));
 
   return true;
 }
