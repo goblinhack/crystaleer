@@ -25,6 +25,14 @@ public:
   //
   point pixel_map_at;
 
+  //
+  // Level display bounds
+  //
+  int minx = {};
+  int miny = {};
+  int maxx = {};
+  int maxy = {};
+
   bool is_oob(uint8_t x, uint8_t y);
 
   bool set_tp_id(uint8_t x, uint8_t y, uint8_t z, TpId);
@@ -38,6 +46,7 @@ public:
   Tilep get_tp_tile_no_check(uint8_t x, uint8_t y, uint8_t z, uint8_t layer);
 
   void display(void);
+  void display_z_layer(int z, bool shadow);
 };
 
 #endif // _MY_LEVEL_H_
