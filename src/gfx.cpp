@@ -182,6 +182,8 @@ void gfx_init(void)
   gfx_init15();
   gfx_init_background();
   gfx_init_8x8();
+  gfx_init_16x16();
+  gfx_init_24x24();
   gfx_init_32x32();
 }
 

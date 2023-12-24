@@ -32,6 +32,7 @@ public:
 
   // begin sort marker1 {
   bool is_rock {};
+  bool is_ladder {};
   bool is_spike {};
   bool is_tiled {};
   bool is_exit {};
@@ -85,6 +86,7 @@ Tpp tp_get_with_rarity_filter(Tpidmap &m);
 Tpp tp_random_rock(void);
 Tpp tp_random_wall(void);
 Tpp tp_random_spike(void);
+Tpp tp_random_ladder(void);
 Tpp tp_random_key(void);
 Tpp tp_random_entrance(void);
 Tpp tp_random_exit(void);

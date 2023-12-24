@@ -11,6 +11,7 @@
 // begin sort marker1 {
 static Tpidmap tp_rock;
 static Tpidmap tp_spike;
+static Tpidmap tp_ladder;
 static Tpidmap tp_key;
 static Tpidmap tp_wall;
 static Tpidmap tp_entrance;
@@ -29,6 +30,9 @@ void tp_random_init(void)
     }
     if (tp->is_spike) {
       tp_spike.push_back(tp);
+    }
+    if (tp->is_ladder) {
+      tp_ladder.push_back(tp);
     }
     if (tp->is_key) {
       tp_key.push_back(tp);
@@ -163,6 +167,16 @@ Tpp tp_random_spike(void)
     return nullptr;
   }
   return tp_get_with_no_rarity_filter(tp_spike);
+}
+
+Tpp tp_random_ladder(void)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! tp_ladder.size())) {
+    DIE("No ladders found");
+    return nullptr;
+  }
+  return tp_get_with_no_rarity_filter(tp_ladder);
 }
 
 Tpp tp_random_key(void)

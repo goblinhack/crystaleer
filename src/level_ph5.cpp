@@ -344,7 +344,7 @@ void LevelPh5::add_objects(const LevelPh4 &ph4)
         case PH2_CHAR_ENTRANCE : tp = tp_random_entrance(); break;
         case PH2_CHAR_EXIT : tp = tp_random_exit(); break;
         case PH2_CHAR_KEY : tp = tp_random_key(); break;
-        case PH2_CHAR_LADDER : break;
+        case PH2_CHAR_LADDER : tp = tp_random_ladder(); break;
         case PH2_CHAR_LEFT : break;
         case PH2_CHAR_LOCK : break;
         case PH2_CHAR_OBSTACLE_AIR : break;

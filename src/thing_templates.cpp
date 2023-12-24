@@ -23,6 +23,10 @@ bool templates_init(void)
     return false;
   }
 
+  if (! tp_load_ladder()) {
+    return false;
+  }
+
   if (! tp_load_key()) {
     return false;
   }
@@ -146,6 +150,27 @@ bool tp_load_exit(void)
     const auto delay = 100; /* ms */
     auto       tile  = tile_find_mand("exit." + std::to_string(frame));
     tile->delay_ms   = delay;
+    tp->tiles.push_back(tile);
+  }
+
+  return true;
+}
+
+bool tp_load_ladder(void)
+{
+  TRACE_NO_INDENT();
+
+  auto tp = tp_load("ladder");
+  if (! tp) {
+    ERR("failed to load template ladder");
+    return false;
+  }
+
+  tp->z_depth_set(MAP_DEPTH_OBJ);
+  tp->is_ladder = true;
+
+  for (auto frame = 0; frame < 5; frame++) {
+    auto tile = tile_find_mand("ladder." + std::to_string(frame));
     tp->tiles.push_back(tile);
   }
 
