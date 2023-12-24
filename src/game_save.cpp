@@ -109,12 +109,10 @@ std::ostream &operator<<(std::ostream &out, Bits< const Config & > const my)
   out << bits(my.t.one_pixel_width);
   out << bits(my.t.sdl_delay);
   out << bits(my.t.sound_volume);
-  out << bits(my.t.tile_height);
   out << bits(my.t.tile_pixel_height);
   out << bits(my.t.tile_pixel_width);
   out << bits(my.t.tile_pix_height);
   out << bits(my.t.tile_pix_width);
-  out << bits(my.t.tile_width);
   out << bits(my.t.ui_pix_height);
   out << bits(my.t.ui_pix_width);
   out << bits(my.t.ui_pix_zoom);

@@ -115,9 +115,6 @@ public:
   SDL_Keysym key_zoom_out   = {};
   // end sort marker1 }
 
-  uint8_t tile_height = {};
-  uint8_t tile_width  = {};
-
   //
   // Ok, not really config...
   //

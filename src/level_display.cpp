@@ -32,6 +32,13 @@ void Level::display(void)
     const auto dw = game->config.ascii_gl_width / game->config.game_pix_zoom;
     const auto dh = game->config.ascii_gl_height / game->config.game_pix_zoom;
 
+    {
+      Tilep bg1 = tile_find("background1");
+      point tl  = point(-pixel_map_at.x / 4, -pixel_map_at.y / 4);
+      point br  = tl + point(bg1->pix_width, bg1->pix_height);
+      tile_blit(bg1, tl, br);
+    }
+
     for (auto z = 0; z < MAP_DEPTH; z++) {
       for (auto y = miny; y < maxy; y++) {
         for (auto x = minx; x < maxx; x++) {

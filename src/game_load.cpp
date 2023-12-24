@@ -122,12 +122,10 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   in >> bits(my.t.one_pixel_width);
   in >> bits(my.t.sdl_delay);
   in >> bits(my.t.sound_volume);
-  in >> bits(my.t.tile_height);
   in >> bits(my.t.tile_pixel_height);
   in >> bits(my.t.tile_pixel_width);
   in >> bits(my.t.tile_pix_height);
   in >> bits(my.t.tile_pix_width);
-  in >> bits(my.t.tile_width);
   in >> bits(my.t.ui_pix_height);
   in >> bits(my.t.ui_pix_width);
   in >> bits(my.t.ui_pix_zoom);
@@ -160,12 +158,10 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   LOG("Read config: one_pixel_width              = %f", my.t.one_pixel_width);
   LOG("Read config: sdl_delay                    = %d", my.t.sdl_delay);
   LOG("Read config: sound_volume                 = %d", my.t.sound_volume);
-  LOG("Read config: tile_height                  = %d", my.t.tile_height);
   LOG("Read config: tile_pixel_height            = %f", my.t.tile_pixel_height);
   LOG("Read config: tile_pixel_width             = %f", my.t.tile_pixel_width);
   LOG("Read config: tile_pix_height              = %f", my.t.tile_pix_height);
   LOG("Read config: tile_pix_width               = %f", my.t.tile_pix_width);
-  LOG("Read config: tile_width                   = %d", my.t.tile_width);
   LOG("Read config: ui_pix_height                = %d", my.t.ui_pix_height);
   LOG("Read config: ui_pix_width                 = %d", my.t.ui_pix_width);
   LOG("Read config: ui_pix_zoom                  = %f", my.t.ui_pix_zoom);
@@ -246,10 +242,6 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
     game_load_error += "one_pixel_width is invalid";
     return in;
   }
-  if (my.t.tile_height < 0) {
-    game_load_error += "tile_height is invalid";
-    return in;
-  }
   if (my.t.tile_pixel_height < 0) {
     game_load_error += "tile_pixel_height is invalid";
     return in;
@@ -264,10 +256,6 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   }
   if (my.t.tile_pix_width < 0) {
     game_load_error += "tile_pix_width is invalid";
-    return in;
-  }
-  if (my.t.tile_width < 0) {
-    game_load_error += "tile_width is invalid";
     return in;
   }
   if (my.t.ui_pix_height < 0) {

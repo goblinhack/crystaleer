@@ -742,11 +742,8 @@ void sdl_flush_display(bool force)
 
 void config_game_gfx_update(void)
 {
-  LOG("SDL: Pixelart mod undate");
+  LOG("SDL: Update");
   TRACE_AND_INDENT();
-
-  game->config.tile_width  = TILE_WIDTH_LORES;
-  game->config.tile_height = TILE_HEIGHT_LORES;
 
   game->config.one_pixel_width  = 1;
   game->config.one_pixel_height = 1;
@@ -782,8 +779,8 @@ void config_game_gfx_update(void)
     }
   }
 
-  game->config.game_pix_width  = game->config.window_pix_width / game->config.game_pix_scale_width;
-  game->config.game_pix_height = game->config.window_pix_height / game->config.game_pix_scale_height;
+  game->config.game_pix_width  = 320;
+  game->config.game_pix_height = 200;
   if (! game->config.game_pix_width) {
     {
       ERR("game->config.game_pix_width is zero");
@@ -861,13 +858,13 @@ void config_game_gfx_update(void)
   }
 
   if (TERM_WIDTH >= TERM_WIDTH_MAX) {
-    LOG("SDL: - exceeded console max width: %d", TERM_WIDTH);
+    LOG("SDL: - %d exceeded console max width: %d", TERM_WIDTH, TERM_WIDTH_MAX);
     TERM_WIDTH                  = TERM_WIDTH_MAX;
     game->config.ascii_gl_width = ceil(((float) game->config.ui_pix_height) / ((float) TERM_WIDTH));
   }
 
   if (TERM_HEIGHT >= TERM_HEIGHT_MAX) {
-    LOG("SDL: - exceeded console max height: %d", TERM_HEIGHT);
+    LOG("SDL: - %d exceeded console max height: %d", TERM_HEIGHT, TERM_HEIGHT_MAX);
     TERM_HEIGHT                  = TERM_HEIGHT_MAX;
     game->config.ascii_gl_height = ceil(((float) game->config.ui_pix_height) / ((float) TERM_HEIGHT));
   }
@@ -875,8 +872,8 @@ void config_game_gfx_update(void)
   //
   // Account for rounding errors, so the tiles look smoother.
   //
-  game->config.ascii_gl_width  = ceil(((float) game->config.ui_pix_width) / ((float) TERM_WIDTH));
-  game->config.ascii_gl_height = ceil(((float) game->config.ui_pix_height) / ((float) TERM_HEIGHT));
+  game->config.ascii_gl_width  = UI_TILE_WIDTH;
+  game->config.ascii_gl_height = UI_TILE_HEIGHT;
 
   //
   // If we overflow the screen, try to cut a few rows and columns off

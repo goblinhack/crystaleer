@@ -180,6 +180,7 @@ void gfx_init(void)
   gfx_init13();
   gfx_init14();
   gfx_init15();
+  gfx_init_background();
   gfx_init_8x8();
 }
 
