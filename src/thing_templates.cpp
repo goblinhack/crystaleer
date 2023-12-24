@@ -114,14 +114,13 @@ bool tp_load_exit(void)
 
   tp->z_depth_set(MAP_DEPTH_OBJ);
   tp->is_exit = true;
-  tp->tiles.push_back(tile_find("exit.0"));
-  tp->tiles.push_back(tile_find("exit.1"));
-  tp->tiles.push_back(tile_find("exit.2"));
-  tp->tiles.push_back(tile_find("exit.3"));
-  tp->tiles.push_back(tile_find("exit.4"));
-  tp->tiles.push_back(tile_find("exit.5"));
-  tp->tiles.push_back(tile_find("exit.6"));
-  tp->tiles.push_back(tile_find("exit.7"));
+
+  for (auto frame = 0; frame < 8; frame++) {
+    const auto delay = 100; /* ms */
+    auto       tile  = tile_find_mand("exit." + std::to_string(frame));
+    tile->delay_ms   = delay;
+    tp->tiles.push_back(tile);
+  }
 
   return true;
 }

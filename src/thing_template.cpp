@@ -32,40 +32,6 @@ Tpp tp_find(const std::string &name)
   return nullptr;
 }
 
-std::vector< Tpp > tp_find_wildcard(const std::string &name)
-{
-  TRACE_NO_INDENT();
-
-  std::vector< Tpp > out;
-  auto               result = tp_name_map.find(name);
-
-  if (unlikely(result != tp_name_map.end())) {
-    out.push_back(result->second);
-    return out;
-  }
-
-  if (name == "random_wall") {
-    out.push_back(tp_random_wall());
-    return out;
-  }
-
-  if (name == "random_rock") {
-    out.push_back(tp_random_rock());
-    return out;
-  }
-
-  //
-  // Try matching patterns e.g. is_monst_class_B
-  //
-  for (auto &tp : tp_id_map) {
-    if (tp->matches(name)) {
-      out.push_back(tp);
-    }
-  }
-
-  return out;
-}
-
 Tpp tp_find(uint32_t id)
 {
   TRACE_NO_INDENT();

@@ -47,8 +47,6 @@ public:
   Tp(void);
   ~Tp(void);
 
-  bool matches(const std::string &what);
-
   void chance_d1000_appearing_set(int v);
   void name_set(const std::string &v);
   void rarity_set(int v);
@@ -76,8 +74,6 @@ public:
   std::string to_string(void);
   std::string to_short_string(void);
 };
-
-std::vector< class Tp * > tp_find_wildcard(const std::string &name);
 
 Tpp string2tp(const char **s);
 Tpp string2tp(const std::string &s, int *len);

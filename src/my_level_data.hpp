@@ -22,8 +22,22 @@ enum {
 // Simple things like walls that do not change much
 //
 typedef struct SimpleThing_ {
+  //
+  // The thing template index
+  //
   uint16_t id;
+  //
+  // Layers of tiles, used in walls. Only layer 0 is animated.
+  //
   uint16_t tile[ LAYER_MAX ];
+  //
+  // The current tiles[] index for this template
+  //
+  uint16_t anim_index;
+  //
+  // When the next animation frame should start
+  //
+  uint32_t anim_ts;
 } SimpleThing;
 
 typedef struct LevelData_ {
