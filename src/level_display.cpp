@@ -30,9 +30,13 @@ void Level::display_z_layer(int z, bool shadow)
             tl.y = y * dh;
             tl.x -= pixel_map_at.x;
             tl.y -= pixel_map_at.y;
-            tl.y -= tile->pix_height;
-            br.x = tl.x + tile->pix_width;
-            br.y = tl.y + tile->pix_height;
+
+            auto pix_height = tile->pix_height / game->config.game_pix_zoom;
+            auto pix_width  = tile->pix_width / game->config.game_pix_zoom;
+
+            tl.y -= pix_height;
+            br.x = tl.x + pix_width;
+            br.y = tl.y + pix_height;
 
             if (shadow) {
               const point shadow1(2, 2);
