@@ -21,18 +21,18 @@ void Level::display_z_layer(int z, bool shadow)
       point tl;
       point br;
 
-      tl.x = x * dw;
-      tl.y = y * dh;
-      tl.x -= pixel_map_at.x;
-      tl.y -= pixel_map_at.y;
-      br.x = tl.x + dw;
-      br.y = tl.y + dh;
-
       for (auto layer = 0; layer < LAYER_MAX; layer++) {
         auto tile_index = data->tp[ x ][ y ][ z ].tile[ layer ];
         if (tile_index) {
           auto tile = tile_index_to_tile(tile_index);
           if (tile) {
+            tl.x = x * dw;
+            tl.y = y * dh;
+            tl.x -= pixel_map_at.x;
+            tl.y -= pixel_map_at.y;
+            tl.y -= tile->pix_height;
+            br.x = tl.x + tile->pix_width;
+            br.y = tl.y + tile->pix_height;
 
             if (shadow) {
               const point shadow1(2, 2);

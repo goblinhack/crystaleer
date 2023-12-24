@@ -10,8 +10,10 @@
 
 // begin sort marker1 {
 static Tpidmap tp_rock;
-static Tpidmap tp_wall;
 static Tpidmap tp_spike;
+static Tpidmap tp_wall;
+static Tpidmap tp_entrance;
+static Tpidmap tp_exit;
 // end sort marker1 }
 
 void tp_random_init(void)
@@ -26,6 +28,12 @@ void tp_random_init(void)
     }
     if (tp->is_spike) {
       tp_spike.push_back(tp);
+    }
+    if (tp->is_entrance) {
+      tp_entrance.push_back(tp);
+    }
+    if (tp->is_exit) {
+      tp_exit.push_back(tp);
     }
   }
 }
@@ -151,4 +159,24 @@ Tpp tp_random_spike(void)
     return nullptr;
   }
   return tp_get_with_no_rarity_filter(tp_spike);
+}
+
+Tpp tp_random_entrance(void)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! tp_entrance.size())) {
+    DIE("No entrances found");
+    return nullptr;
+  }
+  return tp_get_with_no_rarity_filter(tp_entrance);
+}
+
+Tpp tp_random_exit(void)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! tp_exit.size())) {
+    DIE("No exits found");
+    return nullptr;
+  }
+  return tp_get_with_no_rarity_filter(tp_exit);
 }

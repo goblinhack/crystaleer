@@ -11,9 +11,7 @@
 //
 std::initializer_list< std::string > tps = {
     "", // ID 0 means unused
-    "rock",
-    "wall",
-    "spike",
+    "rock", "wall", "spike", "entrance", "exit",
 };
 
 static std::map< std::string, int > tp_preferred_id;

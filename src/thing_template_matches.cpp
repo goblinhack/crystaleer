@@ -24,6 +24,8 @@ bool Tp::matches(const std::string &what)
   if (is_rock && (what == "is_rock")) { return true; }
   if (is_spike && (what == "is_spike")) { return true; }
   if (is_wall && (what == "is_wall")) { return true; }
+  if (is_entrance && (what == "is_entrance")) { return true; }
+  if (is_exit && (what == "is_exit")) { return true; }
   // end sort marker1 }
 
   // clang-format on
