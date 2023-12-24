@@ -10,8 +10,15 @@
 // to be in this list
 //
 std::initializer_list< std::string > tps = {
+    // clang-format off
     "", // ID 0 means unused
-    "rock", "wall", "spike", "entrance", "exit",
+    "entrance",
+    "exit",
+    "key",
+    "rock",
+    "spike",
+    "wall",
+    // clang-format on
 };
 
 static std::map< std::string, int > tp_preferred_id;

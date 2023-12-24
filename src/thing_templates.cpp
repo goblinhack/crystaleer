@@ -23,6 +23,10 @@ bool templates_init(void)
     return false;
   }
 
+  if (! tp_load_key()) {
+    return false;
+  }
+
   if (! tp_load_entrance()) {
     return false;
   }
@@ -81,6 +85,29 @@ bool tp_load_spike(void)
   tp->z_depth_set(MAP_DEPTH_WALL);
   tp->is_spike = true;
   tp->tiles.push_back(tile_find("spike"));
+
+  return true;
+}
+
+bool tp_load_key(void)
+{
+  TRACE_NO_INDENT();
+
+  auto tp = tp_load("key");
+  if (! tp) {
+    ERR("failed to load template key");
+    return false;
+  }
+
+  tp->z_depth_set(MAP_DEPTH_OBJ);
+  tp->is_key = true;
+
+  for (auto frame = 0; frame < 8; frame++) {
+    const auto delay = 200; /* ms */
+    auto       tile  = tile_find_mand("key." + std::to_string(frame));
+    tile->delay_ms   = delay;
+    tp->tiles.push_back(tile);
+  }
 
   return true;
 }

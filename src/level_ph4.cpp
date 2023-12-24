@@ -135,7 +135,7 @@ bool LevelPh4::expand(const LevelPh3 &ph3)
       point at(x, y);
       auto  c = get(ph3.data, x, y);
 
-      auto nx = (x * LEVEL_PH4_BLOCK_WIDTH) + 1;
+      auto nx = (x * LEVEL_PH4_BLOCK_WIDTH) + 0;
       auto ny = (y * LEVEL_PH4_BLOCK_HEIGHT) + 2;
       set(data, nx, ny, c);
     }
