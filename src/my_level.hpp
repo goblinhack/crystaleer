@@ -46,8 +46,15 @@ public:
   Tilep get_tp_tile_no_check(uint8_t x, uint8_t y, uint8_t z, uint8_t layer);
 
   void display(void);
+  void assign_tiles(void);
   void anim(void);
   void display_z_layer(int z, bool shadow);
+
+  bool is_wall(const uint8_t x, const uint8_t y);
+  bool is_wall(const point p);
+
+  bool is_ladder(const uint8_t x, const uint8_t y);
+  bool is_ladder(const point p);
 };
 
 #endif // _MY_LEVEL_H_

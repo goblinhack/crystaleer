@@ -31,14 +31,14 @@ public:
   Tilevec tiles;
 
   // begin sort marker1 {
-  bool is_rock {};
+  bool is_entrance {};
+  bool is_exit {};
+  bool is_key {};
   bool is_ladder {};
+  bool is_rock {};
   bool is_spike {};
   bool is_tiled {};
-  bool is_exit {};
-  bool is_entrance {};
   bool is_wall {};
-  bool is_key {};
   // end sort marker1 }
 
   // begin sort marker2 {

@@ -14,6 +14,8 @@ Level::Level()
   TRACE_NO_INDENT();
 
   data = level_data_constructor();
+
+  assign_tiles();
 }
 
 Level::~Level()

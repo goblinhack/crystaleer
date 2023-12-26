@@ -18,7 +18,8 @@ public:
 
   LevelPh5(const LevelPh4 &);
 
-  void add_objects(const LevelPh4 &);
+  void add_object_ids(const LevelPh4 &);
+  void add_object_tiles(const LevelPh4 &);
   void auto_tile(std::string what);
   void auto_tile_final(void);
   bool auto_fill_at(Tpp, int layer, int filler_type, int x, int y);

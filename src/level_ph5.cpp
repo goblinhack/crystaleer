@@ -323,7 +323,7 @@ void LevelPh5::auto_tile_final(void)
   }
 }
 
-void LevelPh5::add_objects(const LevelPh4 &ph4)
+void LevelPh5::add_object_ids(const LevelPh4 &ph4)
 {
   TRACE_NO_INDENT();
 
@@ -361,12 +361,6 @@ void LevelPh5::add_objects(const LevelPh4 &ph4)
 
       if (tp) {
         data.tp[ x ][ y ][ tp->z_depth ].id = tp->id;
-        if (tp->tiles.size()) {
-          auto tile = one_of(tp->tiles);
-          if (tile) {
-            data.tp[ x ][ y ][ tp->z_depth ].tile[ LAYER_0 ] = tile->global_index;
-          }
-        }
       }
     }
   }
@@ -376,7 +370,7 @@ LevelPh5::LevelPh5(const LevelPh4 &ph4)
 {
   TRACE_NO_INDENT();
 
-  add_objects(ph4);
+  add_object_ids(ph4);
   auto_tile("rock");
   auto_tile("wall");
   auto_tile_final();
