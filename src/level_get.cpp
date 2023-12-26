@@ -56,3 +56,29 @@ bool Level::is_ladder(const uint8_t x, const uint8_t y)
 }
 
 bool Level::is_ladder(const point p) { return is_ladder(p.x, p.y); }
+
+bool Level::is_pushblock(const uint8_t x, const uint8_t y)
+{
+  TRACE_NO_INDENT();
+  if (is_oob(x, y)) {
+    return false;
+  }
+
+  if (! data) {
+    return false;
+  }
+
+  static const auto pushblock = tp_find("pushblock");
+  if (! pushblock) {
+    return false;
+  }
+
+  auto tp_id = data->tp[ x ][ y ][ pushblock->z_depth ].id;
+  if (! tp_id) {
+    return false;
+  }
+
+  return tp_id == pushblock->id;
+}
+
+bool Level::is_pushblock(const point p) { return is_pushblock(p.x, p.y); }

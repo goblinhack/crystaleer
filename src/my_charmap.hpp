@@ -29,6 +29,7 @@ enum {
   PH2_CHAR_EXIT             = 'E',
   PH2_CHAR_KEY              = 'k',
   PH2_CHAR_LADDER           = 'H',
+  PH2_CHAR_PUSHBLOCK        = 'P',
   PH2_CHAR_LEFT             = '<',
   PH2_CHAR_LOCK             = 'D',
   PH2_CHAR_OBSTACLE_AIR     = '6',

@@ -8,6 +8,7 @@
 #include "my_array_bounds_check.hpp"
 #include "my_bits.hpp"
 #include "my_charmap.hpp"
+#include "my_dice.hpp"
 #include "my_level_ph4.hpp"
 #include "my_level_ph5.hpp"
 #include "my_main.hpp"
@@ -345,6 +346,7 @@ void LevelPh5::add_object_ids(const LevelPh4 &ph4)
         case PH2_CHAR_EXIT : tp = tp_random_exit(); break;
         case PH2_CHAR_KEY : tp = tp_random_key(); break;
         case PH2_CHAR_LADDER : tp = tp_random_ladder(); break;
+        case PH2_CHAR_PUSHBLOCK : tp = tp_random_pushblock(); break;
         case PH2_CHAR_LEFT : break;
         case PH2_CHAR_LOCK : break;
         case PH2_CHAR_OBSTACLE_AIR : break;
@@ -354,7 +356,7 @@ void LevelPh5::add_object_ids(const LevelPh4 &ph4)
         case PH2_CHAR_SECRET_DOOR : break;
         case PH2_CHAR_SPIKE_33_PERCENT : tp = tp_random_spike(); break;
         case PH2_CHAR_UP : break;
-        case PH2_CHAR_WALL_100_PERCENT :
+        case PH2_CHAR_WALL_100_PERCENT : tp = tp_random_wall(); break;
         case PH2_CHAR_WALL_50_PERCENT : tp = tp_random_wall(); break;
         case PH2_CHAR_WILDCARD : break;
       }

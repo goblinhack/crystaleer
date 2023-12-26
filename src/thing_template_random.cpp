@@ -13,6 +13,7 @@ static Tpidmap tp_entrance;
 static Tpidmap tp_exit;
 static Tpidmap tp_key;
 static Tpidmap tp_ladder;
+static Tpidmap tp_pushblock;
 static Tpidmap tp_rock;
 static Tpidmap tp_spike;
 static Tpidmap tp_wall;
@@ -33,6 +34,9 @@ void tp_random_init(void)
     }
     if (tp->is_ladder) {
       tp_ladder.push_back(tp);
+    }
+    if (tp->is_pushblock) {
+      tp_pushblock.push_back(tp);
     }
     if (tp->is_key) {
       tp_key.push_back(tp);
@@ -177,6 +181,16 @@ Tpp tp_random_ladder(void)
     return nullptr;
   }
   return tp_get_with_no_rarity_filter(tp_ladder);
+}
+
+Tpp tp_random_pushblock(void)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! tp_pushblock.size())) {
+    DIE("No pushblocks found");
+    return nullptr;
+  }
+  return tp_get_with_no_rarity_filter(tp_pushblock);
 }
 
 Tpp tp_random_key(void)

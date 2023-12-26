@@ -55,6 +55,9 @@ public:
 
   bool is_ladder(const uint8_t x, const uint8_t y);
   bool is_ladder(const point p);
+
+  bool is_pushblock(const uint8_t x, const uint8_t y);
+  bool is_pushblock(const point p);
 };
 
 #endif // _MY_LEVEL_H_

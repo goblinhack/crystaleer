@@ -122,6 +122,7 @@ void level_ph3_obstacle_add(ObstacleType type, const char *data)
         case PH2_CHAR_OBSTACLE_GROUND : break;
         case PH2_CHAR_OBSTACLE_AIR : break;
         case PH2_CHAR_LADDER : break;
+        case PH2_CHAR_PUSHBLOCK : break;
         case PH2_CHAR_ENTRANCE : DIE("obstacle should not have an entrance"); break;
         case PH2_CHAR_EXIT : DIE("obstacle should not have an exit"); break;
         case PH2_CHAR_LOCK : break;

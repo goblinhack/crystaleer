@@ -27,6 +27,10 @@ bool templates_init(void)
     return false;
   }
 
+  if (! tp_load_pushblock()) {
+    return false;
+  }
+
   if (! tp_load_key()) {
     return false;
   }
@@ -171,6 +175,27 @@ bool tp_load_ladder(void)
 
   for (auto frame = 0; frame < 5; frame++) {
     auto tile = tile_find_mand("ladder." + std::to_string(frame));
+    tp->tiles.push_back(tile);
+  }
+
+  return true;
+}
+
+bool tp_load_pushblock(void)
+{
+  TRACE_NO_INDENT();
+
+  auto tp = tp_load("pushblock");
+  if (! tp) {
+    ERR("failed to load template pushblock");
+    return false;
+  }
+
+  tp->z_depth_set(MAP_DEPTH_OBJ);
+  tp->is_pushblock = true;
+
+  for (auto frame = 0; frame < 5; frame++) {
+    auto tile = tile_find_mand("pushblock." + std::to_string(frame));
     tp->tiles.push_back(tile);
   }
 
