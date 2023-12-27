@@ -29,19 +29,13 @@ void Config::reset(void)
   gfx_vsync_locked       = false;
   mouse_wheel_lr_negated = false;
   mouse_wheel_ud_negated = false;
-  one_pixel_height       = {};
-  one_pixel_width        = {};
-  tile_pixel_height      = {};
-  tile_pixel_width       = {};
-  tile_pix_height        = {};
-  tile_pix_width         = {};
   ui_gfx_term_height     = {TERM_GFX_HEIGHT_DEF};
   ui_gfx_term_width      = {TERM_GFX_WIDTH_DEF};
   ui_pix_height          = {};
   ui_pix_width           = {};
   ui_pix_zoom            = GAME_DEFAULT_UI_ZOOM;
   version                = "" MYVER "";
-  video_w_h_ratio        = {};
+  aspect_ratio        = {};
   window_pix_height      = {};
   window_pix_width       = {};
 

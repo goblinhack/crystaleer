@@ -28,14 +28,8 @@ public:
   float game_pix_scale_height = {};
   float game_pix_scale_width  = {};
   float game_pix_zoom         = GAME_DEFAULT_PIX_ZOOM;
-  float one_pixel_height      = {};
-  float one_pixel_width       = {};
-  float tile_pixel_height     = {};
-  float tile_pixel_width      = {};
-  float tile_pix_height       = {};
-  float tile_pix_width        = {};
   float ui_pix_zoom           = GAME_DEFAULT_UI_ZOOM;
-  float video_w_h_ratio       = {};
+  float aspect_ratio       = {};
 
   uint32_t ui_gfx_term_height = {};
   uint32_t ui_gfx_term_width  = {};

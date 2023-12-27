@@ -118,20 +118,14 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   in >> bits(my.t.key_zoom_in);
   in >> bits(my.t.key_zoom_out);
   in >> bits(my.t.music_volume);
-  in >> bits(my.t.one_pixel_height);
-  in >> bits(my.t.one_pixel_width);
   in >> bits(my.t.sdl_delay);
   in >> bits(my.t.sound_volume);
-  in >> bits(my.t.tile_pixel_height);
-  in >> bits(my.t.tile_pixel_width);
-  in >> bits(my.t.tile_pix_height);
-  in >> bits(my.t.tile_pix_width);
   in >> bits(my.t.ui_pix_height);
   in >> bits(my.t.ui_pix_width);
   in >> bits(my.t.ui_pix_zoom);
   in >> bits(my.t.ui_gfx_term_height);
   in >> bits(my.t.ui_gfx_term_width);
-  in >> bits(my.t.video_w_h_ratio);
+  in >> bits(my.t.aspect_ratio);
   in >> bits(my.t.window_pix_height);
   in >> bits(my.t.window_pix_width);
 
@@ -154,18 +148,12 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
   LOG("Read config: mouse_wheel_lr_negated       = %d", my.t.mouse_wheel_lr_negated);
   LOG("Read config: mouse_wheel_ud_negated       = %d", my.t.mouse_wheel_ud_negated);
   LOG("Read config: music_volume                 = %d", my.t.music_volume);
-  LOG("Read config: one_pixel_height             = %f", my.t.one_pixel_height);
-  LOG("Read config: one_pixel_width              = %f", my.t.one_pixel_width);
   LOG("Read config: sdl_delay                    = %d", my.t.sdl_delay);
   LOG("Read config: sound_volume                 = %d", my.t.sound_volume);
-  LOG("Read config: tile_pixel_height            = %f", my.t.tile_pixel_height);
-  LOG("Read config: tile_pixel_width             = %f", my.t.tile_pixel_width);
-  LOG("Read config: tile_pix_height              = %f", my.t.tile_pix_height);
-  LOG("Read config: tile_pix_width               = %f", my.t.tile_pix_width);
   LOG("Read config: ui_pix_height                = %d", my.t.ui_pix_height);
   LOG("Read config: ui_pix_width                 = %d", my.t.ui_pix_width);
   LOG("Read config: ui_pix_zoom                  = %f", my.t.ui_pix_zoom);
-  LOG("Read config: video_w_h_ratio              = %f", my.t.video_w_h_ratio);
+  LOG("Read config: aspect_ratio              = %f", my.t.aspect_ratio);
   LOG("Read config: window_pix_height            = %d", my.t.window_pix_height);
   LOG("Read config: window_pix_width             = %d", my.t.window_pix_width);
   // seed name handled below
@@ -234,30 +222,6 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
     game_load_error += "game_pix_zoom is invalid";
     return in;
   }
-  if (my.t.one_pixel_height < 0) {
-    game_load_error += "one_pixel_height is invalid";
-    return in;
-  }
-  if (my.t.one_pixel_width < 0) {
-    game_load_error += "one_pixel_width is invalid";
-    return in;
-  }
-  if (my.t.tile_pixel_height < 0) {
-    game_load_error += "tile_pixel_height is invalid";
-    return in;
-  }
-  if (my.t.tile_pixel_width < 0) {
-    game_load_error += "tile_pixel_width is invalid";
-    return in;
-  }
-  if (my.t.tile_pix_height < 0) {
-    game_load_error += "tile_pix_height is invalid";
-    return in;
-  }
-  if (my.t.tile_pix_width < 0) {
-    game_load_error += "tile_pix_width is invalid";
-    return in;
-  }
   if (my.t.ui_pix_height < 0) {
     game_load_error += "ui_pix_height is invalid";
     return in;
@@ -270,8 +234,8 @@ std::istream &operator>>(std::istream &in, Bits< Config & > my)
     game_load_error += "ui_pix_zoom is invalid";
     return in;
   }
-  if (my.t.video_w_h_ratio < 0) {
-    game_load_error += "video_w_h_ratio is invalid";
+  if (my.t.aspect_ratio < 0) {
+    game_load_error += "aspect_ratio is invalid";
     return in;
   }
   if (my.t.window_pix_height < 0) {

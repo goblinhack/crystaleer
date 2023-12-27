@@ -745,53 +745,39 @@ void config_game_gfx_update(void)
   LOG("SDL: Update");
   TRACE_AND_INDENT();
 
-  game->config.one_pixel_width  = 1;
-  game->config.one_pixel_height = 1;
-
   if (! game->config.game_pix_zoom) {
     game->config.game_pix_zoom = GAME_DEFAULT_PIX_ZOOM;
-    {
-      ERR("Game->config.game_pix_zoom is zero");
-    }
+    ERR("Game->config.game_pix_zoom is zero");
   }
 
   if (! game->config.ui_pix_zoom) {
     game->config.ui_pix_zoom = GAME_DEFAULT_UI_ZOOM;
-    {
-      ERR("Game->config.ui_pix_zoom is zero");
-    }
+    ERR("Game->config.ui_pix_zoom is zero");
   }
 
-  game->config.game_pix_scale_width  = game->config.game_pix_zoom;
-  game->config.game_pix_scale_height = game->config.game_pix_zoom;
-
+  game->config.game_pix_scale_width = game->config.game_pix_zoom;
   if (! game->config.game_pix_scale_width) {
-    {
-      ERR("Game->config.game_pix_scale_width is zero");
-      return;
-    }
+    ERR("Game->config.game_pix_scale_width is zero");
+    return;
   }
 
+  game->config.game_pix_scale_height = game->config.game_pix_zoom;
   if (! game->config.game_pix_scale_height) {
-    {
-      ERR("Game->config.game_pix_scale_height is zero");
-      return;
-    }
+    ERR("Game->config.game_pix_scale_height is zero");
+    return;
   }
 
-  game->config.game_pix_width  = 320;
-  game->config.game_pix_height = 200;
+  game->config.aspect_ratio    = (double) game->config.window_pix_width / (double) game->config.window_pix_height;
+  game->config.game_pix_width  = 480;
+  game->config.game_pix_height = (int) (((double) game->config.game_pix_width) / game->config.aspect_ratio);
+
   if (! game->config.game_pix_width) {
-    {
-      ERR("game->config.game_pix_width is zero");
-      return;
-    }
+    ERR("game->config.game_pix_width is zero");
+    return;
   }
   if (! game->config.game_pix_height) {
-    {
-      ERR("game->config.game_pix_height is zero");
-      return;
-    }
+    ERR("game->config.game_pix_height is zero");
+    return;
   }
 
   game->config.ui_pix_width  = game->config.game_pix_width;
@@ -813,11 +799,6 @@ void config_game_gfx_update(void)
   TILES_VISIBLE_ACROSS = (int) tiles_across;
   TILES_VISIBLE_DOWN   = (int) tiles_down;
 
-  game->config.tile_pix_width  = game->config.one_pixel_width * TILE_WIDTH;
-  game->config.tile_pix_height = game->config.one_pixel_height * TILE_HEIGHT;
-
-  game->config.video_w_h_ratio = (double) game->config.game_pix_width / (double) game->config.game_pix_height;
-
   if (! TILES_VISIBLE_ACROSS) {
     {
       ERR("TILES_VISIBLE_ACROSS is zero");
@@ -830,11 +811,6 @@ void config_game_gfx_update(void)
       ERR("TILES_VISIBLE_DOWN is zero");
       return;
     }
-  }
-
-  {
-    game->config.tile_pixel_width  = game->config.game_pix_width / TILES_VISIBLE_ACROSS;
-    game->config.tile_pixel_height = game->config.game_pix_height / TILES_VISIBLE_DOWN;
   }
 
   LOG("SDL: Window:");
@@ -890,7 +866,7 @@ void config_game_gfx_update(void)
   LOG("SDL: Terminal");
   LOG("SDL: - ascii gl size        : %ux%u", game->config.ascii_gl_width, game->config.ascii_gl_height);
   LOG("SDL: - term size            : %dx%d", TERM_WIDTH, TERM_HEIGHT);
-  LOG("SDL: - width to height ratio: %f", game->config.video_w_h_ratio);
+  LOG("SDL: - aspect ratio         : %f", game->config.aspect_ratio);
   LOG("SDL: Map");
   LOG("SDL: - size                 : %dx%d", MAP_WIDTH, MAP_HEIGHT);
 }
