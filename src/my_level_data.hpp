@@ -25,7 +25,7 @@ typedef struct SimpleThing_ {
   //
   // The thing template index
   //
-  uint16_t id;
+  uint16_t tp_id;
   //
   // Layers of tiles, used in walls. Only layer 0 is animated.
   //

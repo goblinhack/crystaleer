@@ -22,6 +22,7 @@ enum {
 
 enum {
   // begin sort marker2 {
+  PH2_CHAR_BLOCK            = 'P',
   PH2_CHAR_CONNECTOR        = '#',
   PH2_CHAR_DOWN             = 'v',
   PH2_CHAR_EMPTY            = '.',
@@ -29,12 +30,12 @@ enum {
   PH2_CHAR_EXIT             = 'E',
   PH2_CHAR_KEY              = 'k',
   PH2_CHAR_LADDER           = 'H',
-  PH2_CHAR_PUSHBLOCK        = 'P',
   PH2_CHAR_LEFT             = '<',
   PH2_CHAR_LOCK             = 'D',
   PH2_CHAR_OBSTACLE_AIR     = '6',
   PH2_CHAR_OBSTACLE_GROUND  = '5',
   PH2_CHAR_RIGHT            = '>',
+  PH2_CHAR_ROCK_GOLD        = 'G',
   PH2_CHAR_ROCK             = 'R',
   PH2_CHAR_SECRET_DOOR      = 's',
   PH2_CHAR_SPIKE_33_PERCENT = '|',

@@ -175,7 +175,7 @@ void LevelPh3::fix_obstacles(const LevelPh2 &ph2)
                 // Push block sitting on stone
                 //
                 if (d100() > 50) {
-                  set(data, x, y, (char) PH2_CHAR_PUSHBLOCK);
+                  set(data, x, y, (char) PH2_CHAR_BLOCK);
                 }
               } else if ((x > 0) && (x < w - 1)) {
                 //
@@ -184,7 +184,7 @@ void LevelPh3::fix_obstacles(const LevelPh2 &ph2)
                 if ((get(data, x + 1, y) == PH2_CHAR_WALL_100_PERCENT)
                     && (get(data, x - 1, y) == PH2_CHAR_WALL_100_PERCENT)) {
                   if (d100() > 50) {
-                    set(data, x, y, (char) PH2_CHAR_PUSHBLOCK);
+                    set(data, x, y, (char) PH2_CHAR_BLOCK);
                   }
                 }
               }

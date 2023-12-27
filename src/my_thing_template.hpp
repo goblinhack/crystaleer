@@ -31,12 +31,15 @@ public:
   Tilevec tiles;
 
   // begin sort marker1 {
+  bool is_blit_on_ground {};
+  bool is_blit_centered {};
+  bool is_block {};
   bool is_entrance {};
   bool is_exit {};
   bool is_key {};
   bool is_ladder {};
-  bool is_pushblock {};
   bool is_rock {};
+  bool is_rock_gold {};
   bool is_spike {};
   bool is_tiled {};
   bool is_wall {};
@@ -88,7 +91,8 @@ Tpp tp_random_rock(void);
 Tpp tp_random_wall(void);
 Tpp tp_random_spike(void);
 Tpp tp_random_ladder(void);
-Tpp tp_random_pushblock(void);
+Tpp tp_random_rock_gold(void);
+Tpp tp_random_block(void);
 Tpp tp_random_key(void);
 Tpp tp_random_entrance(void);
 Tpp tp_random_exit(void);

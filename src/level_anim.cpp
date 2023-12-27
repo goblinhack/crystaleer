@@ -18,11 +18,11 @@ void Level::anim(void)
     for (auto y = miny; y < maxy; y++) {
       for (auto x = minx; x < maxx; x++) {
         auto t = &data->tp[ x ][ y ][ z ];
-        if (! t->id) {
+        if (! t->tp_id) {
           continue;
         }
 
-        auto tp = tp_find(t->id);
+        auto tp = tp_find(t->tp_id);
         if (! tp) {
           continue;
         }

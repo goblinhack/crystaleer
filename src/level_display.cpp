@@ -9,6 +9,7 @@
 #include "my_level_data.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
+#include "my_thing_template.hpp"
 #include "my_tile.hpp"
 
 void Level::display_z_layer(int z, bool shadow)
@@ -22,6 +23,8 @@ void Level::display_z_layer(int z, bool shadow)
       point br;
 
       for (auto layer = 0; layer < LAYER_MAX; layer++) {
+
+        auto tp_id      = data->tp[ x ][ y ][ z ].tp_id;
         auto tile_index = data->tp[ x ][ y ][ z ].tile[ layer ];
         if (tile_index) {
           auto tile = tile_index_to_tile(tile_index);
@@ -34,7 +37,27 @@ void Level::display_z_layer(int z, bool shadow)
             auto pix_height = tile->pix_height / game->config.game_pix_zoom;
             auto pix_width  = tile->pix_width / game->config.game_pix_zoom;
 
-            tl.y -= pix_height;
+            auto tp = tp_find(tp_id);
+            if (tp) {
+              if (tp->is_blit_on_ground) {
+                //
+                // On the ground
+                //
+                tl.y -= pix_height;
+              } else if (tp->is_blit_centered) {
+                //
+                // Centered
+                //
+                tl.x -= pix_width / 2;
+                tl.y -= pix_height / 2;
+              } else {
+                //
+                // Normal rocks
+                //
+                tl.y -= pix_height;
+              }
+            }
+
             br.x = tl.x + pix_width;
             br.y = tl.y + pix_height;
 

@@ -29,7 +29,7 @@ public:
   float game_pix_scale_width  = {};
   float game_pix_zoom         = GAME_DEFAULT_PIX_ZOOM;
   float ui_pix_zoom           = GAME_DEFAULT_UI_ZOOM;
-  float aspect_ratio       = {};
+  float aspect_ratio          = {};
 
   uint32_t ui_gfx_term_height = {};
   uint32_t ui_gfx_term_width  = {};

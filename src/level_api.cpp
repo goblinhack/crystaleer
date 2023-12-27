@@ -33,11 +33,11 @@ bool Level::set_tp_id(uint8_t x, uint8_t y, uint8_t z, TpId tp_id)
   if (is_oob(x, y)) {
     return false;
   }
-  data->tp[ x ][ y ][ z ].id = tp_id;
+  data->tp[ x ][ y ][ z ].tp_id = tp_id;
   return true;
 }
 
-void Level::set_tp_id_no_check(uint8_t x, uint8_t y, uint8_t z, TpId tp_id) { data->tp[ x ][ y ][ z ].id = tp_id; }
+void Level::set_tp_id_no_check(uint8_t x, uint8_t y, uint8_t z, TpId tp_id) { data->tp[ x ][ y ][ z ].tp_id = tp_id; }
 
 TpId Level::get_tp_id(uint8_t x, uint8_t y, uint8_t z)
 {
@@ -45,10 +45,10 @@ TpId Level::get_tp_id(uint8_t x, uint8_t y, uint8_t z)
   if (is_oob(x, y)) {
     return NoTpId;
   }
-  return data->tp[ x ][ y ][ z ].id;
+  return data->tp[ x ][ y ][ z ].tp_id;
 }
 
-TpId Level::get_tp_id_no_check(uint8_t x, uint8_t y, uint8_t z) { return data->tp[ x ][ y ][ z ].id; }
+TpId Level::get_tp_id_no_check(uint8_t x, uint8_t y, uint8_t z) { return data->tp[ x ][ y ][ z ].tp_id; }
 
 bool Level::set_tp_tile(uint8_t x, uint8_t y, uint8_t z, uint8_t layer, Tilep tile)
 {

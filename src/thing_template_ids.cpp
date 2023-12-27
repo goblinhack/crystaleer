@@ -18,7 +18,8 @@ std::initializer_list< std::string > tps = {
     "rock",
     "spike",
     "ladder",
-    "pushblock",
+    "rock_gold",
+    "block",
     "wall",
     // clang-format on
 };

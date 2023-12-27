@@ -9,12 +9,13 @@
 #include "my_vector_bounds_check.hpp"
 
 // begin sort marker1 {
+static Tpidmap tp_block;
 static Tpidmap tp_entrance;
 static Tpidmap tp_exit;
 static Tpidmap tp_key;
 static Tpidmap tp_ladder;
-static Tpidmap tp_pushblock;
 static Tpidmap tp_rock;
+static Tpidmap tp_rock_gold;
 static Tpidmap tp_spike;
 static Tpidmap tp_wall;
 // end sort marker1 }
@@ -35,8 +36,11 @@ void tp_random_init(void)
     if (tp->is_ladder) {
       tp_ladder.push_back(tp);
     }
-    if (tp->is_pushblock) {
-      tp_pushblock.push_back(tp);
+    if (tp->is_rock_gold) {
+      tp_rock_gold.push_back(tp);
+    }
+    if (tp->is_block) {
+      tp_block.push_back(tp);
     }
     if (tp->is_key) {
       tp_key.push_back(tp);
@@ -183,14 +187,24 @@ Tpp tp_random_ladder(void)
   return tp_get_with_no_rarity_filter(tp_ladder);
 }
 
-Tpp tp_random_pushblock(void)
+Tpp tp_random_rock_gold(void)
 {
   TRACE_NO_INDENT();
-  if (unlikely(! tp_pushblock.size())) {
-    DIE("No pushblocks found");
+  if (unlikely(! tp_rock_gold.size())) {
+    DIE("No rock_golds found");
     return nullptr;
   }
-  return tp_get_with_no_rarity_filter(tp_pushblock);
+  return tp_get_with_no_rarity_filter(tp_rock_gold);
+}
+
+Tpp tp_random_block(void)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! tp_block.size())) {
+    DIE("No blocks found");
+    return nullptr;
+  }
+  return tp_get_with_no_rarity_filter(tp_block);
 }
 
 Tpp tp_random_key(void)

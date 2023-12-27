@@ -51,7 +51,7 @@ void LevelPh5::auto_tile_at(Tpp tp, int x, int y)
         continue;
       }
 
-      auto it = data.tp[ tx ][ ty ][ tp->z_depth ].id;
+      auto it = data.tp[ tx ][ ty ][ tp->z_depth ].tp_id;
       if (it) {
         auto tpit = tp_find(it);
         if (tpit) {
@@ -151,14 +151,14 @@ bool LevelPh5::auto_fill_at(Tpp tp, int layer, int filler_type, int x, int y)
 
   if (
       // clang-format off
-      (tp_A && (tp_A->id == tp->id)) ||
-      (tp_B && (tp_B->id == tp->id)) ||
-      (tp_C && (tp_C->id == tp->id)) ||
-      (tp_D && (tp_D->id == tp->id)) ||
-      (tp_E && (tp_E->id == tp->id)) ||
-      (tp_F && (tp_F->id == tp->id)) ||
-      (tp_G && (tp_G->id == tp->id)) ||
-      (tp_H && (tp_H->id == tp->id))
+      (tp_A && (tp_A->tp_id == tp->id)) ||
+      (tp_B && (tp_B->tp_id == tp->id)) ||
+      (tp_C && (tp_C->tp_id == tp->id)) ||
+      (tp_D && (tp_D->tp_id == tp->id)) ||
+      (tp_E && (tp_E->tp_id == tp->id)) ||
+      (tp_F && (tp_F->tp_id == tp->id)) ||
+      (tp_G && (tp_G->tp_id == tp->id)) ||
+      (tp_H && (tp_H->tp_id == tp->id))
       // clang-format on
   ) {
     for (const auto &tilemap : Tilemap::all_tilemaps[ tp->name ]) {
@@ -186,7 +186,7 @@ void LevelPh5::auto_tile(std::string what)
 
   for (auto y = 1; y < h - 1; y++) {
     for (auto x = 1; x < w - 1; x++) {
-      if (data.tp[ x ][ y ][ tp->z_depth ].id == tp->id) {
+      if (data.tp[ x ][ y ][ tp->z_depth ].tp_id == tp->id) {
         auto_tile_at(tp, x, y);
       }
     }
@@ -216,7 +216,7 @@ void LevelPh5::auto_tile(std::string what)
       for (auto y = 0; y < h; y++) {
         for (auto x = 0; x < w; x++) {
           auto *otp = &data.tp[ x ][ y ][ tp->z_depth ];
-          if (otp->id != tp->id) {
+          if (otp->tp_id != tp->id) {
             continue;
           }
           if (otp->tile[ layer ]) {
@@ -250,7 +250,7 @@ void LevelPh5::auto_tile(std::string what)
       for (auto y = 0; y < h; y++) {
         for (auto x = 0; x < w; x++) {
           auto *otp = &data.tp[ x ][ y ][ tp->z_depth ];
-          if (otp->id != tp->id) {
+          if (otp->tp_id != tp->id) {
             continue;
           }
           if (otp->tile[ layer ]) {
@@ -291,11 +291,11 @@ void LevelPh5::auto_tile_final(void)
     for (auto x = 0; x < w; x++) {
       for (auto z = 0; z < MAP_DEPTH; z++) {
         SimpleThing *t = &data.tp[ x ][ y ][ z ];
-        if (t->id == NoTpId) {
+        if (t->tp_id == NoTpId) {
           continue;
         }
 
-        Tpp tp = tp_find(t->id);
+        Tpp tp = tp_find(t->tp_id);
         if (! tp) {
           continue;
         }
@@ -346,7 +346,8 @@ void LevelPh5::add_object_ids(const LevelPh4 &ph4)
         case PH2_CHAR_EXIT : tp = tp_random_exit(); break;
         case PH2_CHAR_KEY : tp = tp_random_key(); break;
         case PH2_CHAR_LADDER : tp = tp_random_ladder(); break;
-        case PH2_CHAR_PUSHBLOCK : tp = tp_random_pushblock(); break;
+        case PH2_CHAR_ROCK_GOLD : tp = tp_random_rock_gold(); break;
+        case PH2_CHAR_BLOCK : tp = tp_random_block(); break;
         case PH2_CHAR_LEFT : break;
         case PH2_CHAR_LOCK : break;
         case PH2_CHAR_OBSTACLE_AIR : break;
@@ -356,13 +357,35 @@ void LevelPh5::add_object_ids(const LevelPh4 &ph4)
         case PH2_CHAR_SECRET_DOOR : break;
         case PH2_CHAR_SPIKE_33_PERCENT : tp = tp_random_spike(); break;
         case PH2_CHAR_UP : break;
-        case PH2_CHAR_WALL_100_PERCENT : tp = tp_random_wall(); break;
+        case PH2_CHAR_WALL_100_PERCENT :
+          tp = tp_random_wall();
+
+          //
+          // Occasional gold
+          //
+          if (((x % LEVEL_PH4_BLOCK_WIDTH) == 1) && ((y % LEVEL_PH4_BLOCK_HEIGHT) == 1)) {
+            //
+            // If surrounded by rock
+            //
+            if ((get(ph4.data, x - LEVEL_PH4_BLOCK_WIDTH, y) == PH2_CHAR_WALL_100_PERCENT)
+                && (get(ph4.data, x + LEVEL_PH4_BLOCK_WIDTH, y) == PH2_CHAR_WALL_100_PERCENT)
+                && (get(ph4.data, x, y - LEVEL_PH4_BLOCK_HEIGHT) == PH2_CHAR_WALL_100_PERCENT)
+                && (get(ph4.data, x, y + LEVEL_PH4_BLOCK_HEIGHT) == PH2_CHAR_WALL_100_PERCENT)) {
+              if (d100() < 20) {
+                auto tp = tp_random_rock_gold();
+                if (tp) {
+                  data.tp[ x ][ y ][ tp->z_depth ].tp_id = tp->id;
+                }
+              }
+            }
+          }
+          break;
         case PH2_CHAR_WALL_50_PERCENT : tp = tp_random_wall(); break;
         case PH2_CHAR_WILDCARD : break;
       }
 
       if (tp) {
-        data.tp[ x ][ y ][ tp->z_depth ].id = tp->id;
+        data.tp[ x ][ y ][ tp->z_depth ].tp_id = tp->id;
       }
     }
   }

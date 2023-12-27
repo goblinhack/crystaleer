@@ -35,7 +35,7 @@ void Config::reset(void)
   ui_pix_width           = {};
   ui_pix_zoom            = GAME_DEFAULT_UI_ZOOM;
   version                = "" MYVER "";
-  aspect_ratio        = {};
+  aspect_ratio           = {};
   window_pix_height      = {};
   window_pix_width       = {};
 
