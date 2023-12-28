@@ -13,6 +13,5 @@ void gfx_init_background(void)
       // clang-format on
   };
   const std::vector< std::string > arr(tiles);
-  tile_load_arr("data/gfx/background1.tga", "background1", (MAP_WIDTH * UI_TILE_WIDTH), (MAP_HEIGHT * UI_TILE_HEIGHT),
-                arr);
+  tile_load_arr("data/gfx/background1.tga", "background1", (MAP_WIDTH * TILE_WIDTH), (MAP_HEIGHT * TILE_HEIGHT), arr);
 }

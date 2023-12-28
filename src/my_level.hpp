@@ -40,18 +40,23 @@ public:
   TpId get_tp_id(uint8_t x, uint8_t y, uint8_t z);
   TpId get_tp_id_no_check(uint8_t x, uint8_t y, uint8_t z);
 
-  bool  set_tp_tile(uint8_t x, uint8_t y, uint8_t z, uint8_t layer, Tilep);
-  void  set_tp_tile_no_check(uint8_t x, uint8_t y, uint8_t z, uint8_t layer, Tilep);
-  Tilep get_tp_tile(uint8_t x, uint8_t y, uint8_t z, uint8_t layer);
-  Tilep get_tp_tile_no_check(uint8_t x, uint8_t y, uint8_t z, uint8_t layer);
+  bool  set_tp_tile(uint8_t x, uint8_t y, uint8_t z, Tilep);
+  void  set_tp_tile_no_check(uint8_t x, uint8_t y, uint8_t z, Tilep);
+  Tilep get_tp_tile(uint8_t x, uint8_t y, uint8_t z);
+  Tilep get_tp_tile_no_check(uint8_t x, uint8_t y, uint8_t z);
 
   void display(void);
   void assign_tiles(void);
+  void display_tile(Tpp, uint16_t, point tl, point br, point offset, bool shadow);
+  void display_tile(Tpp, Tilep, point tl, point br, point offset, bool shadow);
   void anim(void);
-  void display_z_layer(int z, bool shadow);
+  void display_z_layer(int z, bool shadow, bool deco);
 
   bool is_wall(const uint8_t x, const uint8_t y);
   bool is_wall(const point p);
+
+  bool is_rock(const uint8_t x, const uint8_t y);
+  bool is_rock(const point p);
 
   bool is_ladder(const uint8_t x, const uint8_t y);
   bool is_ladder(const point p);

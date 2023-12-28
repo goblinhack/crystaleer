@@ -121,44 +121,17 @@
 #define LEVEL_PH3_OBSTACLE_HEIGHT 3 // Max obstacle dimensions
 
 /*
- * Phase 4: expand each block into an X*X char cell
+ * Phase 4: replace all chars with objects
  */
-#define LEVEL_PH4_BLOCK_WIDTH  3 // Max obstacle dimensions
-#define LEVEL_PH4_BLOCK_HEIGHT 3 // Max obstacle dimensions
-#define LEVEL_PH4_WIDTH        (LEVEL_PH3_WIDTH * LEVEL_PH4_BLOCK_WIDTH)
-#define LEVEL_PH4_HEIGHT       (LEVEL_PH3_HEIGHT * LEVEL_PH4_BLOCK_HEIGHT)
+#define LEVEL_PH4_WIDTH  LEVEL_PH3_WIDTH
+#define LEVEL_PH4_HEIGHT LEVEL_PH3_HEIGHT
 
-/*
- * Phase 5: replace all chars with objects
- */
-#define LEVEL_PH5_WIDTH  LEVEL_PH4_WIDTH
-#define LEVEL_PH5_HEIGHT LEVEL_PH4_HEIGHT
-
-#define MAP_WIDTH  LEVEL_PH5_WIDTH
-#define MAP_HEIGHT LEVEL_PH5_HEIGHT
+#define MAP_WIDTH  LEVEL_PH4_WIDTH
+#define MAP_HEIGHT LEVEL_PH4_HEIGHT
 
 #define GAME_MOST_ZOOMED_IN   5
 #define GAME_MOST_ZOOMED_OUT  1
 #define GAME_DEFAULT_UI_ZOOM  1
 #define GAME_DEFAULT_PIX_ZOOM GAME_MOST_ZOOMED_OUT
-
-enum {
-  FILLER_0,
-  FILLER_1,
-  FILLER_MAX,
-};
-
-enum {
-  LAYER_0,
-  LAYER_1,
-  LAYER_2,
-  LAYER_MAX,
-};
-
-enum {
-  VARIANT_0,
-  VARIANT_1,
-  VARIANT_MAX,
-};
 
 #endif

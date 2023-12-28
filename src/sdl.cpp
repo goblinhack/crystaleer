@@ -835,14 +835,12 @@ void config_game_gfx_update(void)
 
   if (TERM_WIDTH >= TERM_WIDTH_MAX) {
     LOG("SDL: - %d exceeded console max width: %d", TERM_WIDTH, TERM_WIDTH_MAX);
-    TERM_WIDTH                  = TERM_WIDTH_MAX;
-    game->config.ascii_gl_width = ceil(((float) game->config.ui_pix_height) / ((float) TERM_WIDTH));
+    TERM_WIDTH = TERM_WIDTH_MAX;
   }
 
   if (TERM_HEIGHT >= TERM_HEIGHT_MAX) {
     LOG("SDL: - %d exceeded console max height: %d", TERM_HEIGHT, TERM_HEIGHT_MAX);
-    TERM_HEIGHT                  = TERM_HEIGHT_MAX;
-    game->config.ascii_gl_height = ceil(((float) game->config.ui_pix_height) / ((float) TERM_HEIGHT));
+    TERM_HEIGHT = TERM_HEIGHT_MAX;
   }
 
   //

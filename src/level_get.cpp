@@ -31,6 +31,32 @@ bool Level::is_wall(const uint8_t x, const uint8_t y)
 
 bool Level::is_wall(const point p) { return is_wall(p.x, p.y); }
 
+bool Level::is_rock(const uint8_t x, const uint8_t y)
+{
+  TRACE_NO_INDENT();
+  if (is_oob(x, y)) {
+    return false;
+  }
+
+  if (! data) {
+    return false;
+  }
+
+  static const auto rock = tp_find("rock");
+  if (! rock) {
+    return false;
+  }
+
+  auto tp_id = data->tp[ x ][ y ][ rock->z_depth ].tp_id;
+  if (! tp_id) {
+    return false;
+  }
+
+  return tp_id == rock->id;
+}
+
+bool Level::is_rock(const point p) { return is_rock(p.x, p.y); }
+
 bool Level::is_ladder(const uint8_t x, const uint8_t y)
 {
   TRACE_NO_INDENT();

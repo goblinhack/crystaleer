@@ -23,7 +23,6 @@ extern void gfx_init12();
 extern void gfx_init13();
 extern void gfx_init14();
 extern void gfx_init15();
-extern void gfx_init_8x8();
 extern void gfx_init_32x32();
 extern void gfx_init_16x16();
 extern void gfx_init_24x24();

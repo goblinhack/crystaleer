@@ -31,6 +31,5 @@ void Game::init(void)
     level_ph2_lock_init();
     level_ph2_key_init();
     level_ph3_obstacle_init();
-    level_ph4_block_init();
   }
 }

@@ -29,6 +29,14 @@ public:
   TpId id {};
 
   Tilevec tiles;
+  Tilevec tiles_top;
+  Tilevec tiles_bot;
+  Tilevec tiles_left;
+  Tilevec tiles_right;
+  Tilevec tiles_tl;
+  Tilevec tiles_tr;
+  Tilevec tiles_bl;
+  Tilevec tiles_br;
 
   // begin sort marker1 {
   bool is_blit_on_ground {};

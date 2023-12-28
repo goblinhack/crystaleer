@@ -29,7 +29,15 @@ typedef struct SimpleThing_ {
   //
   // Layers of tiles, used in walls. Only layer 0 is animated.
   //
-  uint16_t tile[ LAYER_MAX ];
+  uint16_t tile;
+  uint16_t tile_top;
+  uint16_t tile_bot;
+  uint16_t tile_left;
+  uint16_t tile_right;
+  uint16_t tile_tl;
+  uint16_t tile_tr;
+  uint16_t tile_bl;
+  uint16_t tile_br;
   //
   // The current tiles[] index for this template
   //

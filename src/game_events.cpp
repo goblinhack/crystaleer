@@ -51,8 +51,8 @@ uint8_t game_mouse_motion(int x, int y, int relx, int rely, int wheelx, int whee
       level->pixel_map_at.y = 0;
     }
 
-    const auto dw = game->config.ascii_gl_width / game->config.game_pix_zoom;
-    const auto dh = game->config.ascii_gl_height / game->config.game_pix_zoom;
+    const auto dw = TILE_WIDTH / game->config.game_pix_zoom;
+    const auto dh = TILE_HEIGHT / game->config.game_pix_zoom;
 
     auto maxx = (MAP_WIDTH * dw) - game->config.ui_pix_width;
     auto maxy = (MAP_HEIGHT * dh) - game->config.ui_pix_height;

@@ -27,7 +27,7 @@ void Level::anim(void)
           continue;
         }
 
-        auto tile_index = t->tile[ LAYER_0 ];
+        auto tile_index = t->tile;
         if (! tile_index) {
           continue;
         }
@@ -50,9 +50,9 @@ void Level::anim(void)
           t->anim_index = 0;
         }
 
-        tile               = tp->tiles[ t->anim_index ];
-        t->tile[ LAYER_0 ] = tile->global_index;
-        t->anim_ts         = ts + tile->delay_ms;
+        tile       = tp->tiles[ t->anim_index ];
+        t->tile    = tile->global_index;
+        t->anim_ts = ts + tile->delay_ms;
       }
     }
   }
