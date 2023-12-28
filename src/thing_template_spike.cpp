@@ -20,7 +20,11 @@ bool tp_load_spike(void)
   tp->z_depth_set(MAP_DEPTH_WALL);
   tp->is_spike          = true;
   tp->is_blit_on_ground = true;
-  tp->tiles.push_back(tile_find("spike"));
+
+  for (auto frame = 0; frame < 5; frame++) {
+    auto tile = tile_find_mand("spike." + std::to_string(frame));
+    tp->tiles.push_back(tile);
+  }
 
   return true;
 }
