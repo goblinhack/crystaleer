@@ -53,7 +53,7 @@ typedef struct LevelData_ {
   // No c++ types can be used here, to allow easy level replay
   //////////////////////////////////////////////////////////////
 
-  SimpleThing tp[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_DEPTH ];
+  SimpleThing tp[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_SLOTS ];
 
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay

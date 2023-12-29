@@ -30,6 +30,7 @@ void gfx_init_24x24(void)
       "ladder.2",    "block.2",    "rock_gold.2", "spike.2",    "",           "",           "",           "",             "", "",
       "ladder.3",    "block.3",    "rock_gold.3", "spike.3",    "",           "",           "",           "",             "", "",
       "ladder.4",    "block.4",    "rock_gold.4", "spike.4",    "",           "",           "",           "",             "", "",
+      "player.0",    "",           "",            "",           "",           "",           "",           "",             "", "",
       // clang-format on
   };
   const std::vector< std::string > arr(tiles);

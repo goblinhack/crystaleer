@@ -14,10 +14,10 @@ void Level::anim(void)
 
   auto ts = time_ms();
 
-  for (auto z = 0; z < MAP_DEPTH; z++) {
+  for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     for (auto y = miny; y < maxy; y++) {
       for (auto x = minx; x < maxx; x++) {
-        auto t = &data->tp[ x ][ y ][ z ];
+        auto t = &data->tp[ x ][ y ][ slot ];
         if (! t->tp_id) {
           continue;
         }

@@ -43,32 +43,40 @@ void Level::display_z_layer(int z, bool shadow, bool deco)
   float      dh          = TILE_HEIGHT / game->config.game_pix_zoom;
   const auto deco_offset = (dw / 2);
 
-  for (auto y = miny; y < maxy; y++) {
-    for (auto x = minx; x < maxx; x++) {
-      point tl;
-      point br;
+  for (auto slot = 0; slot < MAP_SLOTS; slot++) {
+    for (auto y = miny; y < maxy; y++) {
+      for (auto x = minx; x < maxx; x++) {
+        point tl;
+        point br;
 
-      auto tp_id      = data->tp[ x ][ y ][ z ].tp_id;
-      auto tile_index = data->tp[ x ][ y ][ z ].tile;
-      if (! tile_index) {
-        continue;
-      }
+        auto tp_id      = data->tp[ x ][ y ][ z ].tp_id;
+        auto tile_index = data->tp[ x ][ y ][ z ].tile;
+        if (! tile_index) {
+          continue;
+        }
 
-      auto tile = tile_index_to_tile(tile_index);
-      if (! tile) {
-        return;
-      }
+        auto tile = tile_index_to_tile(tile_index);
+        if (! tile) {
+          return;
+        }
 
-      auto pix_height = tile->pix_height / game->config.game_pix_zoom;
-      auto pix_width  = tile->pix_width / game->config.game_pix_zoom;
+        auto pix_height = tile->pix_height / game->config.game_pix_zoom;
+        auto pix_width  = tile->pix_width / game->config.game_pix_zoom;
 
-      tl.x = x * dw;
-      tl.y = y * dh;
-      tl.x -= pixel_map_at.x;
-      tl.y -= pixel_map_at.y;
+        tl.x = x * dw;
+        tl.y = y * dh;
+        tl.x -= pixel_map_at.x;
+        tl.y -= pixel_map_at.y;
 
-      auto tp = tp_find(tp_id);
-      if (tp) {
+        auto tp = tp_find(tp_id);
+        if (! tp) {
+          continue;
+        }
+
+        if (tp->z_depth != z) {
+          continue;
+        }
+
         if (tp->is_blit_on_ground) {
           //
           // On the ground
@@ -79,22 +87,22 @@ void Level::display_z_layer(int z, bool shadow, bool deco)
           // Centered
           //
         }
-      }
 
-      br.x = tl.x + pix_width;
-      br.y = tl.y + pix_height;
+        br.x = tl.x + pix_width;
+        br.y = tl.y + pix_height;
 
-      if (deco) {
-        display_tile(tp, data->tp[ x ][ y ][ z ].tile_top, tl, br, point(0, -deco_offset), shadow);
-        display_tile(tp, data->tp[ x ][ y ][ z ].tile_bot, tl, br, point(0, deco_offset), shadow);
-        display_tile(tp, data->tp[ x ][ y ][ z ].tile_left, tl, br, point(-deco_offset, 0), shadow);
-        display_tile(tp, data->tp[ x ][ y ][ z ].tile_right, tl, br, point(deco_offset, 0), shadow);
-        display_tile(tp, data->tp[ x ][ y ][ z ].tile_tl, tl, br, point(-deco_offset, -deco_offset), shadow);
-        display_tile(tp, data->tp[ x ][ y ][ z ].tile_tr, tl, br, point(deco_offset, -deco_offset), shadow);
-        display_tile(tp, data->tp[ x ][ y ][ z ].tile_bl, tl, br, point(-deco_offset, deco_offset), shadow);
-        display_tile(tp, data->tp[ x ][ y ][ z ].tile_br, tl, br, point(deco_offset, deco_offset), shadow);
-      } else {
-        display_tile(tp, tile_index, tl, br, point(0, 0), shadow);
+        if (deco) {
+          display_tile(tp, data->tp[ x ][ y ][ z ].tile_top, tl, br, point(0, -deco_offset), shadow);
+          display_tile(tp, data->tp[ x ][ y ][ z ].tile_bot, tl, br, point(0, deco_offset), shadow);
+          display_tile(tp, data->tp[ x ][ y ][ z ].tile_left, tl, br, point(-deco_offset, 0), shadow);
+          display_tile(tp, data->tp[ x ][ y ][ z ].tile_right, tl, br, point(deco_offset, 0), shadow);
+          display_tile(tp, data->tp[ x ][ y ][ z ].tile_tl, tl, br, point(-deco_offset, -deco_offset), shadow);
+          display_tile(tp, data->tp[ x ][ y ][ z ].tile_tr, tl, br, point(deco_offset, -deco_offset), shadow);
+          display_tile(tp, data->tp[ x ][ y ][ z ].tile_bl, tl, br, point(-deco_offset, deco_offset), shadow);
+          display_tile(tp, data->tp[ x ][ y ][ z ].tile_br, tl, br, point(deco_offset, deco_offset), shadow);
+        } else {
+          display_tile(tp, tile_index, tl, br, point(0, 0), shadow);
+        }
       }
     }
   }
