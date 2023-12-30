@@ -17,7 +17,7 @@ bool tp_load_rock(void)
     return false;
   }
 
-  tp->z_depth_set(MAP_DEPTH_WALL);
+  tp->z_depth_set(MAP_DEPTH_ROCK);
   tp->is_rock  = true;
   tp->is_tiled = true;
 

@@ -13,6 +13,7 @@
 #include "my_game_defs.hpp"
 
 enum {
+  MAP_DEPTH_ROCK,
   MAP_DEPTH_WALL,
   MAP_DEPTH_OBJ,
   MAP_DEPTH,

@@ -768,8 +768,8 @@ void config_game_gfx_update(void)
   }
 
   game->config.aspect_ratio    = (double) game->config.window_pix_width / (double) game->config.window_pix_height;
-  game->config.game_pix_width  = 480;
-  game->config.game_pix_height = (int) (((double) game->config.game_pix_width) / game->config.aspect_ratio);
+  game->config.game_pix_height = 240;
+  game->config.game_pix_width  = (int) (((double) game->config.game_pix_height) * game->config.aspect_ratio);
 
   if (! game->config.game_pix_width) {
     ERR("game->config.game_pix_width is zero");

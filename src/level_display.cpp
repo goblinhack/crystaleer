@@ -18,8 +18,8 @@ void Level::display_tile(Tpp tp, Tilep tile, point tl, point br, point offset, b
   br += offset;
 
   if (shadow) {
-    const point shadow1(3, 3);
-    const point shadow2(6, 6);
+    const point shadow1(2, 2);
+    const point shadow2(4, 4);
     tile_blit(tile, tl + shadow1, br + shadow1);
     tile_blit(tile, tl + shadow2, br + shadow2);
   } else {
@@ -135,20 +135,30 @@ void Level::display(void)
     }
 
     glcolor(BLACK);
-    for (auto z = 0; z <= MAP_DEPTH_WALL; z++) {
+    for (int z = 0; z <= MAP_DEPTH_WALL; z++) {
+      display_z_layer(z, true /* shadow */, false /* deco */);
       display_z_layer(z, true /* shadow */, true /* deco */);
     }
 
     glcolor(WHITE);
-    for (auto z = 0; z < MAP_DEPTH; z++) {
+    for (int z = 0; z <= MAP_DEPTH_WALL; z++) {
+      display_z_layer(z, false /* shadow */, false /* deco */);
+      display_z_layer(z, false /* shadow */, true /* deco */);
+    }
+
+    glcolor(WHITE);
+    for (int z = MAP_DEPTH_WALL; z < MAP_DEPTH; z++) {
       display_z_layer(z, false /* shadow */, false /* deco */);
     }
 
-    for (auto z = 0; z < MAP_DEPTH; z++) {
+    {
+      int z = MAP_DEPTH_WALL;
       display_z_layer(z, false /* shadow */, true /* deco */);
     }
-    blit_flush();
   }
+
+  glcolor(WHITE);
+  blit_flush();
 
   {
     blit_fbo_bind(FBO_MAP);
