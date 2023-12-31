@@ -36,6 +36,7 @@ enum {
   PH2_CHAR_OBSTACLE_GROUND  = '5',
   PH2_CHAR_RIGHT            = '>',
   PH2_CHAR_ROCK_GOLD        = 'G',
+  PH2_CHAR_CRYSTAL          = '+',
   PH2_CHAR_ROCK             = 'R',
   PH2_CHAR_SECRET_DOOR      = 's',
   PH2_CHAR_SPIKE_33_PERCENT = '|',

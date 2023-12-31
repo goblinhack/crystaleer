@@ -8,6 +8,7 @@ bool tp_load_wall(void);
 bool tp_load_spike(void);
 bool tp_load_ladder(void);
 bool tp_load_rock_gold(void);
+bool tp_load_crystal(void);
 bool tp_load_block(void);
 bool tp_load_key(void);
 bool tp_load_entrance(void);

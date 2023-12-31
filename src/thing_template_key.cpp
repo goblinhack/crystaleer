@@ -20,13 +20,7 @@ bool tp_load_key(void)
   tp->z_depth_set(MAP_DEPTH_OBJ);
   tp->is_key            = true;
   tp->is_blit_on_ground = true;
-
-  for (auto frame = 0; frame < 8; frame++) {
-    const auto delay = 200; /* ms */
-    auto       tile  = tile_find_mand("key." + std::to_string(frame));
-    tile->delay_ms   = delay;
-    tp->tiles.push_back(tile);
-  }
+  tp->tiles.push_back(tile_find_mand("key0"));
 
   return true;
 }

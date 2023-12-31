@@ -31,6 +31,10 @@ bool templates_init(void)
     return false;
   }
 
+  if (! tp_load_crystal()) {
+    return false;
+  }
+
   if (! tp_load_block()) {
     return false;
   }
