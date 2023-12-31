@@ -17,7 +17,7 @@ bool tp_load_exit(void)
     return false;
   }
 
-  tp->z_depth_set(MAP_DEPTH_OBJ);
+  tp->z_depth_set(MAP_DEPTH_EXIT);
   tp->is_exit           = true;
   tp->is_blit_on_ground = true;
 

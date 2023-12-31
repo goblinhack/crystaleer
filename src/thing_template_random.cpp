@@ -17,6 +17,7 @@ static Tpidmap tp_ladder;
 static Tpidmap tp_rock;
 static Tpidmap tp_rock_gold;
 static Tpidmap tp_crystal;
+static Tpidmap tp_monst1;
 static Tpidmap tp_spike;
 static Tpidmap tp_wall;
 // end sort marker1 }
@@ -42,6 +43,9 @@ void tp_random_init(void)
     }
     if (tp->is_crystal) {
       tp_crystal.push_back(tp);
+    }
+    if (tp->is_monst1) {
+      tp_monst1.push_back(tp);
     }
     if (tp->is_block) {
       tp_block.push_back(tp);
@@ -209,6 +213,16 @@ Tpp tp_random_crystal(void)
     return nullptr;
   }
   return tp_get_with_no_rarity_filter(tp_crystal);
+}
+
+Tpp tp_random_monst1(void)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! tp_monst1.size())) {
+    DIE("No monst1 found");
+    return nullptr;
+  }
+  return tp_get_with_no_rarity_filter(tp_monst1);
 }
 
 Tpp tp_random_block(void)

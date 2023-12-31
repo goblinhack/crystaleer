@@ -25,7 +25,7 @@ void gfx_init_16x16(void)
       "rock.left.4", "rock.0.4",   "rock.1.4",    "rock.2.4",   "rock.3.4",   "rock.4.4",   "rock.5.4",   "rock.right.4", "", "",
       "rock.left.5", "rock.0.5",   "rock.1.5",    "rock.2.5",   "rock.3.5",   "rock.4.5",   "rock.5.5",   "rock.right.5", "", "",
       "rock.bl.0",   "rock.bot.0", "rock.bot.1",  "rock.bot.2", "rock.bot.3", "rock.bot.4", "rock.bot.5", "rock.br.0",    "", "",
-      "ladder.0",    "block.0",    "rock_gold.0", "spike.0",    "",           "",           "",           "",             "", "",
+      "ladder.0",    "block.0",    "rock_gold.0", "spike.0",    "snake.0",    "snake.1",    "snake.2",    "snake.3",      "", "",
       "ladder.1",    "block.1",    "rock_gold.1", "spike.1",    "",           "",           "",           "",             "", "",
       "ladder.2",    "block.2",    "rock_gold.2", "spike.2",    "",           "",           "",           "",             "", "",
       "ladder.3",    "block.3",    "rock_gold.3", "spike.3",    "",           "",           "",           "",             "", "",

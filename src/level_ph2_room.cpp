@@ -144,6 +144,7 @@ void level_ph2_room_set_add(RoomType specified_type, const char *data)
             case PH2_CHAR_ROCK_GOLD : break;
             case PH2_CHAR_BLOCK : break;
             case PH2_CHAR_CRYSTAL : break;
+            case PH2_CHAR_MONST1 : break;
             case PH2_CHAR_ENTRANCE :
               if (r->type != ROOM_TYPE_NORMAL) {
                 DIE("room type already set when trying to set entrance");

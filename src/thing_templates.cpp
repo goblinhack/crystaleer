@@ -35,6 +35,10 @@ bool templates_init(void)
     return false;
   }
 
+  if (! tp_load_snake()) {
+    return false;
+  }
+
   if (! tp_load_block()) {
     return false;
   }

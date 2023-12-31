@@ -82,10 +82,16 @@ void Level::display_z_layer(int z, bool shadow, bool deco)
           // On the ground
           //
           tl.y -= (pix_height - dh);
+          //
+          // Center x
+          //
+          tl.x -= (pix_width - dw) / 2;
         } else if (tp->is_blit_centered) {
           //
           // Centered
           //
+          tl.x -= (pix_width - dw) / 2;
+          tl.y -= (pix_height - dh) / 2;
         }
 
         br.x = tl.x + pix_width;
@@ -134,27 +140,27 @@ void Level::display(void)
       tile_blit(bg1, tl, br);
     }
 
+    const bool no_shadow = false;
+    const bool shadow    = true;
+    const bool no_deco   = false;
+    const bool deco      = true;
+
     glcolor(BLACK);
-    for (int z = 0; z <= MAP_DEPTH_WALL; z++) {
-      display_z_layer(z, true /* shadow */, false /* deco */);
-      display_z_layer(z, true /* shadow */, true /* deco */);
-    }
+    display_z_layer(MAP_DEPTH_ROCK, shadow, no_deco);
+    display_z_layer(MAP_DEPTH_ROCK, shadow, deco);
+    display_z_layer(MAP_DEPTH_WALL, shadow, no_deco);
+    display_z_layer(MAP_DEPTH_WALL, shadow, deco);
 
     glcolor(WHITE);
-    for (int z = 0; z <= MAP_DEPTH_WALL; z++) {
-      display_z_layer(z, false /* shadow */, false /* deco */);
-      display_z_layer(z, false /* shadow */, true /* deco */);
-    }
+    display_z_layer(MAP_DEPTH_ROCK, no_shadow, no_deco);
+    display_z_layer(MAP_DEPTH_ROCK, no_shadow, deco);
 
-    glcolor(WHITE);
-    for (int z = MAP_DEPTH_WALL; z < MAP_DEPTH; z++) {
-      display_z_layer(z, false /* shadow */, false /* deco */);
-    }
+    display_z_layer(MAP_DEPTH_WALL, no_shadow, no_deco);
+    display_z_layer(MAP_DEPTH_WALL, no_shadow, deco);
 
-    {
-      int z = MAP_DEPTH_WALL;
-      display_z_layer(z, false /* shadow */, true /* deco */);
-    }
+    display_z_layer(MAP_DEPTH_OBJ, no_shadow, no_deco);
+    display_z_layer(MAP_DEPTH_WALL, no_shadow, deco);
+    display_z_layer(MAP_DEPTH_EXIT, no_shadow, no_deco);
   }
 
   glcolor(WHITE);
