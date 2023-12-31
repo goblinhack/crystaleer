@@ -81,7 +81,7 @@ void Level::display_z_layer(int z, bool shadow, bool deco)
           //
           // On the ground
           //
-          tl.y -= (pix_height - TILE_HEIGHT);
+          tl.y -= (pix_height - dh);
         } else if (tp->is_blit_centered) {
           //
           // Centered
