@@ -18,6 +18,7 @@ static Tpidmap tp_rock;
 static Tpidmap tp_rock_gold;
 static Tpidmap tp_crystal;
 static Tpidmap tp_monst1;
+static Tpidmap tp_player;
 static Tpidmap tp_spike;
 static Tpidmap tp_wall;
 // end sort marker1 }
@@ -46,6 +47,9 @@ void tp_random_init(void)
     }
     if (tp->is_monst1) {
       tp_monst1.push_back(tp);
+    }
+    if (tp->is_player) {
+      tp_player.push_back(tp);
     }
     if (tp->is_block) {
       tp_block.push_back(tp);
@@ -223,6 +227,16 @@ Tpp tp_random_monst1(void)
     return nullptr;
   }
   return tp_get_with_no_rarity_filter(tp_monst1);
+}
+
+Tpp tp_random_player(void)
+{
+  TRACE_NO_INDENT();
+  if (unlikely(! tp_player.size())) {
+    DIE("No player found");
+    return nullptr;
+  }
+  return tp_get_with_no_rarity_filter(tp_player);
 }
 
 Tpp tp_random_block(void)

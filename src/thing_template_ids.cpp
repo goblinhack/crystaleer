@@ -21,6 +21,7 @@ std::initializer_list< std::string > tps = {
     "rock_gold",
     "crystal0",
     "snake",
+    "player",
     "crystal1",
     "crystal2",
     "crystal3",

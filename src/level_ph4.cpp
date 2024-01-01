@@ -33,7 +33,15 @@ void LevelPH4::add_object_ids(const LevelPh3 &ph3)
         case PH2_CHAR_CONNECTOR : break;
         case PH2_CHAR_DOWN : break;
         case PH2_CHAR_EMPTY : break;
-        case PH2_CHAR_ENTRANCE : tp = tp_random_entrance(); break;
+        case PH2_CHAR_ENTRANCE :
+          tp = tp_random_entrance();
+          {
+            auto tp = tp_random_player();
+            if (tp) {
+              data.tp[ x + 1 ][ y + 3 ][ tp->z_depth ].tp_id = tp->id;
+            }
+          }
+          break;
         case PH2_CHAR_EXIT : tp = tp_random_exit(); break;
         case PH2_CHAR_KEY : tp = tp_random_key(); break;
         case PH2_CHAR_LADDER : tp = tp_random_ladder(); break;
