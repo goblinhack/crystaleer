@@ -46,7 +46,7 @@ TpId Level::get_tp_id(uint8_t x, uint8_t y, uint8_t slot)
 {
   TRACE_NO_INDENT();
   if (is_oob(x, y)) {
-    return NoTpId;
+    return 0;
   }
   return data->tp[ x ][ y ][ slot ].tp_id;
 }

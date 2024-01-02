@@ -433,90 +433,6 @@ void *wid_get_void_context(Widp w)
   return (w->void_context);
 }
 
-void wid_unset_thing_id_context(Widp w, int which)
-{
-  TRACE_NO_INDENT();
-  if (! w) {
-    ERR("NULL pointer");
-    return;
-  }
-
-#if 0
-  auto id = w->thing_id_context[ which ];
-  if (id != NoThingId) {
-    w->thing_id_context[ which ] = NoThingId;
-    auto t                       = game->thing_find(id);
-    if (t) {
-      auto items = t->maybe_itemsp();
-      if (items) {
-        WID_DBG(w, "unset thing reference %" PRIX32, id.id);
-        IF_DEBUG2 { t->log("unset thing reference %s", wid_get_name(w).c_str()); }
-        items->thing_wid.erase(w);
-      }
-    }
-  }
-#endif
-}
-
-void wid_clear_thing_id_context(Widp w, int which)
-{
-  TRACE_NO_INDENT();
-  if (! w) {
-    ERR("NULL pointer");
-    return;
-  }
-
-#if 0
-  auto id = w->thing_id_context[ which ];
-  if (id != NoThingId) {
-    WID_DBG(w, "clear thing reference wid[%d] %p -> %" PRIX32, which, w, id.id);
-    w->thing_id_context[ which ] = NoThingId;
-  }
-#endif
-}
-
-void wid_set_thing_context(Widp w, Thingp t, int which)
-{
-  TRACE_NO_INDENT();
-  if (! w) {
-    ERR("NULL pointer");
-    return;
-  }
-
-#if 0
-  wid_unset_thing_id_context(w, which);
-  w->thing_id_context[ which ] = t->id;
-
-  t->new_itemsp();
-  auto items = t->maybe_itemsp();
-  if (items) {
-    WID_DBG(w, "set thing reference wid %" PRIX32, t->id.id);
-    IF_DEBUG2 { t->log("set thing reference %s", wid_get_name(w).c_str()); }
-    items->thing_wid.insert(w);
-  }
-#endif
-}
-
-ThingId wid_get_thing_id_context(Widp w, int which)
-{
-  TRACE_NO_INDENT();
-  if (! w) {
-    ERR("NULL pointer");
-    return NoThingId;
-  }
-
-#if 0
-  auto id = w->thing_id_context[ which ];
-  if (id != NoThingId) {
-    WID_DBG(w, "get thing reference wid[%d] %p -> %" PRIX32, which, w, id.id);
-  }
-
-  return id;
-#else
-  return 0;
-#endif
-}
-
 void wid_set_prev(Widp w, Widp prev)
 {
   TRACE_NO_INDENT();
@@ -2374,11 +2290,6 @@ static void wid_destroy_immediate(Widp w)
 
   if (w == wid_moving) {
     wid_moving = nullptr;
-  }
-
-  for (auto which = 0; which < WID_THING_ID_MAX_CONTEXT; which++) {
-    WID_DBG(w, "destroy thing reference");
-    wid_unset_thing_id_context(w, which);
   }
 
   for (auto x = 0; x < TERM_WIDTH; x++) {

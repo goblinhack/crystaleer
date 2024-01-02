@@ -110,12 +110,6 @@ int         wid_count(Widp w, int depth);
 int         wid_get_int_context(Widp);
 std::string wid_get_string_context(Widp);
 
-#define WID_THING_ID_MAX_CONTEXT 2
-ThingId wid_get_thing_id_context(Widp, int which);
-void    wid_unset_thing_id_context(Widp, int which);
-void    wid_clear_thing_id_context(Widp, int which);
-void    wid_set_thing_context(Widp w, Thingp, int which);
-
 uint8_t wid_get_do_not_lower(Widp);
 uint8_t wid_get_do_not_raise(Widp);
 uint8_t wid_get_focusable(Widp);
@@ -261,7 +255,6 @@ void wid_set_text_top(Widp, uint8_t val);
 void wid_set_text(Widp, int);
 void wid_set_text(Widp, std::string);
 void wid_set_text(Widp, std::string);
-void wid_set_tile(int depth, Widp w, class Thing_ *t);
 void wid_set_tile(int depth, Widp w, Tilep tile);
 void wid_set_tilename(int depth, Widp, std::string name);
 void wid_set_top(Widp, uint8_t val);
@@ -499,10 +492,9 @@ public:
   //
   // Client context
   //
-  std::string                                     string_context;
-  int                                             int_context {-1};
-  void                                           *void_context {};
-  std::array< ThingId, WID_THING_ID_MAX_CONTEXT > thing_id_context {NoThingId};
+  std::string string_context;
+  int         int_context {-1};
+  void       *void_context {};
 
   //
   // Text placement.

@@ -37,6 +37,7 @@ void LevelPH4::add_object_ids(const LevelPh3 &ph3)
           tp = tp_random_entrance();
           {
             auto tp = tp_random_player();
+            thing_new(&data, tp, x, y);
             if (tp) {
               data.tp[ x + 1 ][ y + 3 ][ tp->z_depth ].tp_id = tp->id;
             }

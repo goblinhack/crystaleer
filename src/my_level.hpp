@@ -63,6 +63,11 @@ public:
 
   bool is_block(const uint8_t x, const uint8_t y);
   bool is_block(const point p);
+
+  Thingp thing_find_optional(ThingId id);
+  Thingp thing_find(ThingId id);
+  Thingp thing_new(Tpp, uint8_t x, uint8_t y);
+  void   thing_free(Thingp);
 };
 
 #endif // _MY_LEVEL_H_

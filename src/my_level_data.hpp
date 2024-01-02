@@ -11,6 +11,8 @@
 
 #include "my_fwd.hpp"
 #include "my_game_defs.hpp"
+#include "my_thing.hpp"
+#include "my_thing_id.hpp"
 
 enum {
   MAP_DEPTH_ROCK,
@@ -28,6 +30,10 @@ typedef struct SimpleThing_ {
   // The thing template index
   //
   uint16_t tp_id;
+  //
+  // Optional thing ID
+  //
+  ThingId thing_id;
   //
   // Layers of tiles, used in walls. Only layer 0 is animated.
   //
@@ -57,6 +63,8 @@ typedef struct LevelData_ {
 
   SimpleThing tp[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_SLOTS ];
 
+  Thing things[ 1 << THING_ID_X_BITS ][ 1 << THING_ID_Y_BITS ];
+
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //////////////////////////////////////////////////////////////
@@ -64,5 +72,10 @@ typedef struct LevelData_ {
 
 LevelDatap level_data_constructor(void);
 void       level_data_destructor(LevelDatap);
+
+Thingp thing_find_optional(LevelData *, ThingId);
+Thingp thing_find(LevelData *, ThingId);
+Thingp thing_new(LevelData *, Tpp, uint8_t, uint8_t);
+void   thing_free(LevelData *, Thingp);
 
 #endif // _MY_LEVEL_DATA_H_

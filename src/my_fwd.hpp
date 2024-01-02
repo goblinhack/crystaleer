@@ -25,9 +25,6 @@ struct LevelData_;
 struct Dmap_;
 struct SDL_Surface;
 
-#define NoThingId 0
-#define NoTpId    0
-
 using Dmapp              = struct Dmap_ *;
 using Fontp              = class Font *;
 using LevelDatap         = struct LevelData_ *;
@@ -37,8 +34,6 @@ using LevelPh3Obstaclesp = class LevelPh3Obstacles *;
 using LevelPh4Blockp     = class LevelPh4Block *;
 using Lightp             = class Light *;
 using Texp               = class Tex *;
-using ThingId            = unsigned int;
-using Thingp             = void *;
 using Tilemapp           = class Tilemap *;
 using Tilep              = class Tile *;
 using Tilevec            = std::vector< class Tile            *>;
