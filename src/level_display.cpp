@@ -49,8 +49,8 @@ void Level::display_z_layer(int z, bool shadow, bool deco)
         point tl;
         point br;
 
-        auto tp_id      = data->tp[ x ][ y ][ z ].tp_id;
-        auto tile_index = data->tp[ x ][ y ][ z ].tile;
+        auto tp_id      = data->thing_or_tp[ x ][ y ][ z ].tp_id;
+        auto tile_index = data->thing_or_tp[ x ][ y ][ z ].tile;
         if (! tile_index) {
           continue;
         }
@@ -98,14 +98,14 @@ void Level::display_z_layer(int z, bool shadow, bool deco)
         br.y = tl.y + pix_height;
 
         if (deco) {
-          display_tile(tp, data->tp[ x ][ y ][ z ].tile_top, tl, br, point(0, -deco_offset), shadow);
-          display_tile(tp, data->tp[ x ][ y ][ z ].tile_bot, tl, br, point(0, deco_offset), shadow);
-          display_tile(tp, data->tp[ x ][ y ][ z ].tile_left, tl, br, point(-deco_offset, 0), shadow);
-          display_tile(tp, data->tp[ x ][ y ][ z ].tile_right, tl, br, point(deco_offset, 0), shadow);
-          display_tile(tp, data->tp[ x ][ y ][ z ].tile_tl, tl, br, point(-deco_offset, -deco_offset), shadow);
-          display_tile(tp, data->tp[ x ][ y ][ z ].tile_tr, tl, br, point(deco_offset, -deco_offset), shadow);
-          display_tile(tp, data->tp[ x ][ y ][ z ].tile_bl, tl, br, point(-deco_offset, deco_offset), shadow);
-          display_tile(tp, data->tp[ x ][ y ][ z ].tile_br, tl, br, point(deco_offset, deco_offset), shadow);
+          display_tile(tp, data->thing_or_tp[ x ][ y ][ z ].tile_top, tl, br, point(0, -deco_offset), shadow);
+          display_tile(tp, data->thing_or_tp[ x ][ y ][ z ].tile_bot, tl, br, point(0, deco_offset), shadow);
+          display_tile(tp, data->thing_or_tp[ x ][ y ][ z ].tile_left, tl, br, point(-deco_offset, 0), shadow);
+          display_tile(tp, data->thing_or_tp[ x ][ y ][ z ].tile_right, tl, br, point(deco_offset, 0), shadow);
+          display_tile(tp, data->thing_or_tp[ x ][ y ][ z ].tile_tl, tl, br, point(-deco_offset, -deco_offset), shadow);
+          display_tile(tp, data->thing_or_tp[ x ][ y ][ z ].tile_tr, tl, br, point(deco_offset, -deco_offset), shadow);
+          display_tile(tp, data->thing_or_tp[ x ][ y ][ z ].tile_bl, tl, br, point(-deco_offset, deco_offset), shadow);
+          display_tile(tp, data->thing_or_tp[ x ][ y ][ z ].tile_br, tl, br, point(deco_offset, deco_offset), shadow);
         } else {
           display_tile(tp, tile_index, tl, br, point(0, 0), shadow);
         }

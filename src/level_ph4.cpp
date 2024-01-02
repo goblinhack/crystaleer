@@ -23,7 +23,7 @@ void LevelPH4::add_object_ids(const LevelPh3 &ph3)
   const auto w = LEVEL_PH4_WIDTH;
   const auto h = LEVEL_PH4_HEIGHT;
 
-  memset(data.tp, 0, sizeof(data.tp));
+  memset(data.thing_or_tp, 0, sizeof(data.thing_or_tp));
 
   for (auto y = 0; y < h; y++) {
     for (auto x = 0; x < w; x++) {
@@ -37,10 +37,8 @@ void LevelPH4::add_object_ids(const LevelPh3 &ph3)
           tp = tp_random_entrance();
           {
             auto tp = tp_random_player();
-            thing_new(&data, tp, x, y);
-            if (tp) {
-              data.tp[ x + 1 ][ y + 3 ][ tp->z_depth ].tp_id = tp->id;
-            }
+            auto t  = thing_new(&data, tp, x, y);
+            thing_push(&data, t);
           }
           break;
         case PH2_CHAR_EXIT : tp = tp_random_exit(); break;
@@ -68,7 +66,7 @@ void LevelPH4::add_object_ids(const LevelPh3 &ph3)
           if (d100() < 10) {
             auto tp = tp_random_rock_gold();
             if (tp) {
-              data.tp[ x ][ y ][ tp->z_depth ].tp_id = tp->id;
+              data.thing_or_tp[ x ][ y ][ tp->z_depth ].tp_id = tp->id;
             }
           }
           break;
@@ -77,7 +75,7 @@ void LevelPH4::add_object_ids(const LevelPh3 &ph3)
       }
 
       if (tp) {
-        data.tp[ x ][ y ][ tp->z_depth ].tp_id = tp->id;
+        data.thing_or_tp[ x ][ y ][ tp->z_depth ].tp_id = tp->id;
       }
     }
   }

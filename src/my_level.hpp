@@ -68,6 +68,8 @@ public:
   Thingp thing_find(ThingId id);
   Thingp thing_new(Tpp, uint8_t x, uint8_t y);
   void   thing_free(Thingp);
+  void   thing_push(Thingp);
+  void   thing_pop(Thingp);
 };
 
 #endif // _MY_LEVEL_H_

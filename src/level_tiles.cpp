@@ -63,7 +63,7 @@ void Level::assign_tiles(void)
             if (tp->tiles_top.size()) {
               auto tile = one_of(tp->tiles_top);
               if (tile) {
-                data->tp[ x ][ y ][ slot ].tile_top = tile->global_index;
+                data->thing_or_tp[ x ][ y ][ slot ].tile_top = tile->global_index;
               }
             }
           }
@@ -72,7 +72,7 @@ void Level::assign_tiles(void)
             if (tp->tiles_bot.size()) {
               auto tile = one_of(tp->tiles_bot);
               if (tile) {
-                data->tp[ x ][ y ][ slot ].tile_bot = tile->global_index;
+                data->thing_or_tp[ x ][ y ][ slot ].tile_bot = tile->global_index;
               }
             }
           }
@@ -81,7 +81,7 @@ void Level::assign_tiles(void)
             if (tp->tiles_left.size()) {
               auto tile = one_of(tp->tiles_left);
               if (tile) {
-                data->tp[ x ][ y ][ slot ].tile_left = tile->global_index;
+                data->thing_or_tp[ x ][ y ][ slot ].tile_left = tile->global_index;
               }
             }
           }
@@ -90,7 +90,7 @@ void Level::assign_tiles(void)
             if (tp->tiles_right.size()) {
               auto tile = one_of(tp->tiles_right);
               if (tile) {
-                data->tp[ x ][ y ][ slot ].tile_right = tile->global_index;
+                data->thing_or_tp[ x ][ y ][ slot ].tile_right = tile->global_index;
               }
             }
           }
@@ -99,7 +99,7 @@ void Level::assign_tiles(void)
             if (tp->tiles_tl.size()) {
               auto tile = one_of(tp->tiles_tl);
               if (tile) {
-                data->tp[ x ][ y ][ slot ].tile_tl = tile->global_index;
+                data->thing_or_tp[ x ][ y ][ slot ].tile_tl = tile->global_index;
               }
             }
           }
@@ -108,7 +108,7 @@ void Level::assign_tiles(void)
             if (tp->tiles_tr.size()) {
               auto tile = one_of(tp->tiles_tr);
               if (tile) {
-                data->tp[ x ][ y ][ slot ].tile_tr = tile->global_index;
+                data->thing_or_tp[ x ][ y ][ slot ].tile_tr = tile->global_index;
               }
             }
           }
@@ -117,7 +117,7 @@ void Level::assign_tiles(void)
             if (tp->tiles_bl.size()) {
               auto tile = one_of(tp->tiles_bl);
               if (tile) {
-                data->tp[ x ][ y ][ slot ].tile_bl = tile->global_index;
+                data->thing_or_tp[ x ][ y ][ slot ].tile_bl = tile->global_index;
               }
             }
           }
@@ -126,7 +126,7 @@ void Level::assign_tiles(void)
             if (tp->tiles_br.size()) {
               auto tile = one_of(tp->tiles_br);
               if (tile) {
-                data->tp[ x ][ y ][ slot ].tile_br = tile->global_index;
+                data->thing_or_tp[ x ][ y ][ slot ].tile_br = tile->global_index;
               }
             }
           }
@@ -142,7 +142,7 @@ void Level::assign_tiles(void)
               if (tp->tiles_top.size()) {
                 auto tile = one_of(tp->tiles_top);
                 if (tile) {
-                  data->tp[ x ][ y ][ slot ].tile_top = tile->global_index;
+                  data->thing_or_tp[ x ][ y ][ slot ].tile_top = tile->global_index;
                 }
               }
             }
@@ -153,7 +153,7 @@ void Level::assign_tiles(void)
               if (tp->tiles_bot.size()) {
                 auto tile = one_of(tp->tiles_bot);
                 if (tile) {
-                  data->tp[ x ][ y ][ slot ].tile_bot = tile->global_index;
+                  data->thing_or_tp[ x ][ y ][ slot ].tile_bot = tile->global_index;
                 }
               }
             }
@@ -164,7 +164,7 @@ void Level::assign_tiles(void)
               if (tp->tiles_left.size()) {
                 auto tile = one_of(tp->tiles_left);
                 if (tile) {
-                  data->tp[ x ][ y ][ slot ].tile_left = tile->global_index;
+                  data->thing_or_tp[ x ][ y ][ slot ].tile_left = tile->global_index;
                 }
               }
             }
@@ -175,7 +175,7 @@ void Level::assign_tiles(void)
               if (tp->tiles_right.size()) {
                 auto tile = one_of(tp->tiles_right);
                 if (tile) {
-                  data->tp[ x ][ y ][ slot ].tile_right = tile->global_index;
+                  data->thing_or_tp[ x ][ y ][ slot ].tile_right = tile->global_index;
                 }
               }
             }
@@ -185,7 +185,7 @@ void Level::assign_tiles(void)
             if (tp->tiles_br.size()) {
               auto tile = one_of(tp->tiles_br);
               if (tile) {
-                data->tp[ x ][ y ][ slot ].tile_br = tile->global_index;
+                data->thing_or_tp[ x ][ y ][ slot ].tile_br = tile->global_index;
               }
             }
           }
@@ -194,7 +194,7 @@ void Level::assign_tiles(void)
             if (tp->tiles_bl.size()) {
               auto tile = one_of(tp->tiles_bl);
               if (tile) {
-                data->tp[ x ][ y ][ slot ].tile_bl = tile->global_index;
+                data->thing_or_tp[ x ][ y ][ slot ].tile_bl = tile->global_index;
               }
             }
           }
@@ -203,7 +203,7 @@ void Level::assign_tiles(void)
             if (tp->tiles_tr.size()) {
               auto tile = one_of(tp->tiles_tr);
               if (tile) {
-                data->tp[ x ][ y ][ slot ].tile_tr = tile->global_index;
+                data->thing_or_tp[ x ][ y ][ slot ].tile_tr = tile->global_index;
               }
             }
           }
@@ -212,7 +212,7 @@ void Level::assign_tiles(void)
             if (tp->tiles_tl.size()) {
               auto tile = one_of(tp->tiles_tl);
               if (tile) {
-                data->tp[ x ][ y ][ slot ].tile_tl = tile->global_index;
+                data->thing_or_tp[ x ][ y ][ slot ].tile_tl = tile->global_index;
               }
             }
           }

@@ -19,13 +19,12 @@ enum {
   MAP_DEPTH_WALL,
   MAP_DEPTH_OBJ,
   MAP_DEPTH_EXIT,
-  MAP_DEPTH,
 };
 
 //
 // Simple things like walls that do not change much
 //
-typedef struct SimpleThing_ {
+typedef struct ThingOrTp_ {
   //
   // The thing template index
   //
@@ -54,14 +53,14 @@ typedef struct SimpleThing_ {
   // When the next animation frame should start
   //
   uint32_t anim_ts;
-} SimpleThing;
+} ThingOrTp;
 
 typedef struct LevelData_ {
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //////////////////////////////////////////////////////////////
 
-  SimpleThing tp[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_SLOTS ];
+  ThingOrTp thing_or_tp[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_SLOTS ];
 
   Thing things[ 1 << THING_ID_X_BITS ][ 1 << THING_ID_Y_BITS ];
 
@@ -77,5 +76,7 @@ Thingp thing_find_optional(LevelData *, ThingId);
 Thingp thing_find(LevelData *, ThingId);
 Thingp thing_new(LevelData *, Tpp, uint8_t, uint8_t);
 void   thing_free(LevelData *, Thingp);
+void   thing_push(LevelData *, Thingp);
+void   thing_pop(LevelData *, Thingp);
 
 #endif // _MY_LEVEL_DATA_H_

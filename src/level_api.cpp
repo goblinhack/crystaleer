@@ -33,13 +33,13 @@ bool Level::set_tp_id(uint8_t x, uint8_t y, uint8_t slot, TpId tp_id)
   if (is_oob(x, y)) {
     return false;
   }
-  data->tp[ x ][ y ][ slot ].tp_id = tp_id;
+  data->thing_or_tp[ x ][ y ][ slot ].tp_id = tp_id;
   return true;
 }
 
 void Level::set_tp_id_no_check(uint8_t x, uint8_t y, uint8_t slot, TpId tp_id)
 {
-  data->tp[ x ][ y ][ slot ].tp_id = tp_id;
+  data->thing_or_tp[ x ][ y ][ slot ].tp_id = tp_id;
 }
 
 TpId Level::get_tp_id(uint8_t x, uint8_t y, uint8_t slot)
@@ -48,10 +48,13 @@ TpId Level::get_tp_id(uint8_t x, uint8_t y, uint8_t slot)
   if (is_oob(x, y)) {
     return 0;
   }
-  return data->tp[ x ][ y ][ slot ].tp_id;
+  return data->thing_or_tp[ x ][ y ][ slot ].tp_id;
 }
 
-TpId Level::get_tp_id_no_check(uint8_t x, uint8_t y, uint8_t slot) { return data->tp[ x ][ y ][ slot ].tp_id; }
+TpId Level::get_tp_id_no_check(uint8_t x, uint8_t y, uint8_t slot)
+{
+  return data->thing_or_tp[ x ][ y ][ slot ].tp_id;
+}
 
 bool Level::set_tp_tile(uint8_t x, uint8_t y, uint8_t slot, Tilep tile)
 {
@@ -60,16 +63,16 @@ bool Level::set_tp_tile(uint8_t x, uint8_t y, uint8_t slot, Tilep tile)
     return false;
   }
   if (tile) {
-    data->tp[ x ][ y ][ slot ].tile = tile->global_index;
+    data->thing_or_tp[ x ][ y ][ slot ].tile = tile->global_index;
   } else {
-    data->tp[ x ][ y ][ slot ].tile = 0;
+    data->thing_or_tp[ x ][ y ][ slot ].tile = 0;
   }
   return true;
 }
 
 void Level::set_tp_tile_no_check(uint8_t x, uint8_t y, uint8_t slot, Tilep tile)
 {
-  data->tp[ x ][ y ][ slot ].tile = tile->global_index;
+  data->thing_or_tp[ x ][ y ][ slot ].tile = tile->global_index;
 }
 
 Tilep Level::get_tp_tile(uint8_t x, uint8_t y, uint8_t slot)
@@ -78,10 +81,10 @@ Tilep Level::get_tp_tile(uint8_t x, uint8_t y, uint8_t slot)
   if (is_oob(x, y)) {
     return nullptr;
   }
-  return tile_index_to_tile(data->tp[ x ][ y ][ slot ].tile);
+  return tile_index_to_tile(data->thing_or_tp[ x ][ y ][ slot ].tile);
 }
 
 Tilep Level::get_tp_tile_no_check(uint8_t x, uint8_t y, uint8_t slot)
 {
-  return tile_index_to_tile(data->tp[ x ][ y ][ slot ].tile);
+  return tile_index_to_tile(data->thing_or_tp[ x ][ y ][ slot ].tile);
 }

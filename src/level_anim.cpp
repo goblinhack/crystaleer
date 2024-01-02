@@ -17,7 +17,7 @@ void Level::anim(void)
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     for (auto y = miny; y < maxy; y++) {
       for (auto x = minx; x < maxx; x++) {
-        auto t = &data->tp[ x ][ y ][ slot ];
+        auto t = &data->thing_or_tp[ x ][ y ][ slot ];
         if (! t->tp_id) {
           continue;
         }
