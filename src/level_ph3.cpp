@@ -195,6 +195,33 @@ void LevelPh3::fix_obstacles(const LevelPh2 &ph2)
   }
 }
 
+void LevelPh3::fix_floating_objs(const LevelPh2 &ph2)
+{
+  TRACE_NO_INDENT();
+
+  const auto w = LEVEL_PH3_WIDTH;
+  const auto h = LEVEL_PH3_HEIGHT;
+
+  for (auto y = 0; y < h - 1; y++) {
+    for (auto x = 0; x < w; x++) {
+      point at(x, y);
+      switch (get(data, x, y)) {
+        case PH2_CHAR_SPIKE_33_PERCENT :
+        case PH2_CHAR_MONST1 :
+        case PH2_CHAR_CRYSTAL :
+        case PH2_CHAR_TREASURE :
+        case PH2_CHAR_BLOCK :
+          switch (get(data, x, y + 1)) {
+            case PH2_CHAR_EMPTY : set(data, x, y + 1, (char) PH2_CHAR_WALL_100_PERCENT); break;
+            case PH2_CHAR_WALL_100_PERCENT : break;
+            case PH2_CHAR_WALL_50_PERCENT : break;
+            default : set(data, x, y, (char) PH2_CHAR_EMPTY); break;
+          }
+      }
+    }
+  }
+}
+
 LevelPh3::LevelPh3(const LevelPh2 &ph2)
 {
   TRACE_NO_INDENT();
@@ -209,6 +236,10 @@ LevelPh3::LevelPh3(const LevelPh2 &ph2)
 
   LOG("Phase3: Replace random chance tiles:");
   fix_obstacles(ph2);
+  dump();
+
+  LOG("Phase3: Ensure spikes have something under them:");
+  fix_floating_objs(ph2);
   dump();
 
   ok = true;

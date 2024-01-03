@@ -41,7 +41,6 @@ LevelDatap level_data_constructor(void)
     auto ph1 = level_ph1();
     if (! ph1.ok) {
       CON("COULD NOT SOLVE PH1");
-      exit(1);
       continue;
     }
     ph1.dump();
@@ -87,7 +86,7 @@ LevelDatap level_data_constructor(void)
      */
     auto ph2 = level_ph2(ph1);
     if (! ph2.ok) {
-      DIE("COULD NOT SOLVE PH2");
+      CON("COULD NOT SOLVE PH2");
       continue;
     }
     ph2.dump();
@@ -132,7 +131,7 @@ LevelDatap level_data_constructor(void)
      */
     auto ph3 = level_ph3(ph2);
     if (! ph3.ok) {
-      DIE("COULD NOT SOLVE PH3");
+      CON("COULD NOT SOLVE PH3");
       continue;
     }
 
@@ -141,7 +140,7 @@ LevelDatap level_data_constructor(void)
      */
     auto ph4 = level_ph4(ph3);
     if (! ph4.ok) {
-      DIE("COULD NOT SOLVE PH4");
+      CON("COULD NOT SOLVE PH4");
       continue;
     }
 

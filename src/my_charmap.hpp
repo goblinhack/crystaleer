@@ -38,6 +38,7 @@ enum {
   PH2_CHAR_ROCK_GOLD        = 'G',
   PH2_CHAR_MONST1           = 'm',
   PH2_CHAR_CRYSTAL          = '+',
+  PH2_CHAR_TREASURE         = '$',
   PH2_CHAR_ROCK             = 'R',
   PH2_CHAR_SECRET_DOOR      = 's',
   PH2_CHAR_SPIKE_33_PERCENT = '|',

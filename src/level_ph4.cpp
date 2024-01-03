@@ -47,6 +47,7 @@ void LevelPH4::add_object_ids(const LevelPh3 &ph3)
         case PH2_CHAR_ROCK_GOLD : tp = tp_random_rock_gold(); break;
         case PH2_CHAR_BLOCK : tp = tp_random_block(); break;
         case PH2_CHAR_CRYSTAL : tp = tp_random_crystal(); break;
+        case PH2_CHAR_TREASURE : tp = tp_random_crystal(); break;
         case PH2_CHAR_MONST1 : tp = tp_random_monst1(); break;
         case PH2_CHAR_LEFT : break;
         case PH2_CHAR_LOCK : break;
