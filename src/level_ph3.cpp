@@ -210,11 +210,49 @@ void LevelPh3::fix_floating_objs(const LevelPh2 &ph2)
         case PH2_CHAR_MONST1 :
         case PH2_CHAR_CRYSTAL :
         case PH2_CHAR_TREASURE :
-        case PH2_CHAR_BLOCK :
           switch (get(data, x, y + 1)) {
             case PH2_CHAR_EMPTY : set(data, x, y + 1, (char) PH2_CHAR_WALL_100_PERCENT); break;
             case PH2_CHAR_WALL_100_PERCENT : break;
             case PH2_CHAR_WALL_50_PERCENT : break;
+            case PH2_CHAR_ROCK : break;
+            default : set(data, x, y, (char) PH2_CHAR_EMPTY); break;
+          }
+      }
+    }
+  }
+
+  for (auto y = 0; y < h - 1; y++) {
+    for (auto x = 1; x < w - 1; x++) {
+      point at(x, y);
+      switch (get(data, x, y)) {
+        case PH2_CHAR_BLOCK :
+          //
+          // Push blocks are ok if there is some rock either side.
+          //
+          bool ok = false;
+
+          switch (get(data, x - 1, y)) {
+            case PH2_CHAR_WALL_100_PERCENT :
+            case PH2_CHAR_WALL_50_PERCENT :
+            case PH2_CHAR_ROCK :
+            case PH2_CHAR_BLOCK : ok = true; break;
+          }
+          switch (get(data, x + 1, y)) {
+            case PH2_CHAR_WALL_100_PERCENT :
+            case PH2_CHAR_WALL_50_PERCENT :
+            case PH2_CHAR_ROCK :
+            case PH2_CHAR_BLOCK : ok = true; break;
+          }
+
+          if (ok) {
+            continue;
+          }
+
+          switch (get(data, x, y + 1)) {
+            case PH2_CHAR_EMPTY : set(data, x, y + 1, (char) PH2_CHAR_WALL_100_PERCENT); break;
+            case PH2_CHAR_WALL_100_PERCENT : break;
+            case PH2_CHAR_WALL_50_PERCENT : break;
+            case PH2_CHAR_ROCK : break;
             default : set(data, x, y, (char) PH2_CHAR_EMPTY); break;
           }
       }
