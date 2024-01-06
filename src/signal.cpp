@@ -86,12 +86,12 @@ static void debug_crash_handler(int sig)
 #elif defined __linux__
   int ret = readlink("/proc/self/exe", prog_name, max_path - 1);
   if (ret == -1) {
-    ERR("Debug_crash_handler: Read process name failed");
+    ERR("debug_crash_handler: Read process name failed");
     return;
   }
 
   if ((size_t) ret >= max_path) {
-    ERR("Debug_crash_handler: Symlink too long");
+    ERR("debug_crash_handler: Symlink too long");
     return;
   }
 #else
@@ -153,7 +153,6 @@ void common_error_handler(std::string &tech_support)
 void segv_handler(int sig)
 {
   std::string tech_support = "Sorry, a crash has occurred!";
-  common_error_handler(tech_support);
 
 #if defined __linux__
   //

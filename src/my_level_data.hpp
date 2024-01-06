@@ -17,8 +17,10 @@
 enum {
   MAP_DEPTH_ROCK,
   MAP_DEPTH_WALL,
-  MAP_DEPTH_OBJ,
-  MAP_DEPTH_EXIT,
+  MAP_DEPTH_OBJ1,
+  MAP_DEPTH_OBJ2,
+  MAP_DEPTH_OBJ3,
+  MAP_DEPTH_PLAYER,
 };
 
 //
@@ -28,11 +30,7 @@ typedef struct ThingOrTp_ {
   //
   // The thing template index
   //
-  uint16_t tp_id;
-  //
-  // Optional thing ID
-  //
-  ThingId thing_id;
+  Id id;
   //
   // Layers of tiles, used in walls. Only layer 0 is animated.
   //
@@ -60,7 +58,7 @@ typedef struct LevelData_ {
   // No c++ types can be used here, to allow easy level replay
   //////////////////////////////////////////////////////////////
 
-  ThingOrTp thing_or_tp[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_SLOTS ];
+  ThingOrTp obj[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_SLOTS ];
 
   Thing things[ 1 << THING_ID_X_BITS ][ 1 << THING_ID_Y_BITS ];
 
@@ -75,8 +73,12 @@ void       level_data_destructor(LevelDatap);
 Thingp thing_find_optional(LevelData *, ThingId);
 Thingp thing_find(LevelData *, ThingId);
 Thingp thing_new(LevelData *, Tpp, uint8_t, uint8_t);
-void   thing_free(LevelData *, Thingp);
-void   thing_push(LevelData *, Thingp);
-void   thing_pop(LevelData *, Thingp);
+Thingp thing_get(LevelData *, uint8_t x, uint8_t y, uint8_t slot, Tpp * = nullptr);
+
+void thing_free(LevelData *, Thingp);
+void thing_push(LevelData *, Thingp);
+void thing_pop(LevelData *, Thingp);
+
+Tpp tp_get(LevelData *, uint8_t x, uint8_t y, uint8_t slot);
 
 #endif // _MY_LEVEL_DATA_H_

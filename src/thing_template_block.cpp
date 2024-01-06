@@ -17,7 +17,7 @@ bool tp_load_block(void)
     return false;
   }
 
-  tp->z_depth_set(MAP_DEPTH_OBJ);
+  tp->z_depth_set(MAP_DEPTH_OBJ1);
   tp->is_block = true;
 
   for (auto frame = 0; frame < 5; frame++) {

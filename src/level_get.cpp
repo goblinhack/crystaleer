@@ -21,12 +21,12 @@ bool Level::is_wall(const uint8_t x, const uint8_t y)
     return false;
   }
 
-  auto tp_id = data->thing_or_tp[ x ][ y ][ wall->z_depth ].tp_id;
-  if (! tp_id) {
+  auto id = data->obj[ x ][ y ][ wall->z_depth ].id;
+  if (! id) {
     return false;
   }
 
-  return tp_id == wall->id;
+  return id == wall->id;
 }
 
 bool Level::is_wall(const point p) { return is_wall(p.x, p.y); }
@@ -47,12 +47,12 @@ bool Level::is_rock(const uint8_t x, const uint8_t y)
     return false;
   }
 
-  auto tp_id = data->thing_or_tp[ x ][ y ][ rock->z_depth ].tp_id;
-  if (! tp_id) {
+  auto id = data->obj[ x ][ y ][ rock->z_depth ].id;
+  if (! id) {
     return false;
   }
 
-  return tp_id == rock->id;
+  return id == rock->id;
 }
 
 bool Level::is_rock(const point p) { return is_rock(p.x, p.y); }
@@ -73,12 +73,12 @@ bool Level::is_ladder(const uint8_t x, const uint8_t y)
     return false;
   }
 
-  auto tp_id = data->thing_or_tp[ x ][ y ][ ladder->z_depth ].tp_id;
-  if (! tp_id) {
+  auto id = data->obj[ x ][ y ][ ladder->z_depth ].id;
+  if (! id) {
     return false;
   }
 
-  return tp_id == ladder->id;
+  return id == ladder->id;
 }
 
 bool Level::is_ladder(const point p) { return is_ladder(p.x, p.y); }
@@ -99,12 +99,12 @@ bool Level::is_block(const uint8_t x, const uint8_t y)
     return false;
   }
 
-  auto tp_id = data->thing_or_tp[ x ][ y ][ block->z_depth ].tp_id;
-  if (! tp_id) {
+  auto id = data->obj[ x ][ y ][ block->z_depth ].id;
+  if (! id) {
     return false;
   }
 
-  return tp_id == block->id;
+  return id == block->id;
 }
 
 bool Level::is_block(const point p) { return is_block(p.x, p.y); }

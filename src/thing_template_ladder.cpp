@@ -17,7 +17,7 @@ bool tp_load_ladder(void)
     return false;
   }
 
-  tp->z_depth_set(MAP_DEPTH_OBJ);
+  tp->z_depth_set(MAP_DEPTH_OBJ1);
   tp->is_ladder         = true;
   tp->is_blit_on_ground = true;
 

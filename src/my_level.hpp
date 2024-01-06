@@ -35,15 +35,18 @@ public:
 
   bool is_oob(uint8_t x, uint8_t y);
 
-  bool set_tp_id(uint8_t x, uint8_t y, uint8_t z, TpId);
-  void set_tp_id_no_check(uint8_t x, uint8_t y, uint8_t z, TpId);
-  TpId get_tp_id(uint8_t x, uint8_t y, uint8_t z);
-  TpId get_tp_id_no_check(uint8_t x, uint8_t y, uint8_t z);
+  bool set_id(uint8_t x, uint8_t y, uint8_t z, Id);
+  void set_id_no_check(uint8_t x, uint8_t y, uint8_t z, Id);
+  Id   get_id(uint8_t x, uint8_t y, uint8_t z);
+  Id   get_id_no_check(uint8_t x, uint8_t y, uint8_t z);
 
-  bool  set_tp_tile(uint8_t x, uint8_t y, uint8_t z, Tilep);
-  void  set_tp_tile_no_check(uint8_t x, uint8_t y, uint8_t z, Tilep);
-  Tilep get_tp_tile(uint8_t x, uint8_t y, uint8_t z);
-  Tilep get_tp_tile_no_check(uint8_t x, uint8_t y, uint8_t z);
+  bool  set_tile(uint8_t x, uint8_t y, uint8_t z, Tilep);
+  void  set_tile_no_check(uint8_t x, uint8_t y, uint8_t z, Tilep);
+  Tilep get_tile(uint8_t x, uint8_t y, uint8_t z);
+  Tilep get_tile_no_check(uint8_t x, uint8_t y, uint8_t z);
+
+  Tpp    tp_get(uint8_t x, uint8_t y, uint8_t slot);
+  Thingp thing_get(uint8_t x, uint8_t y, uint8_t slot, Tpp * = nullptr);
 
   void display(void);
   void assign_tiles(void);

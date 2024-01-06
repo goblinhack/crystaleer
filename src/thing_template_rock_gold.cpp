@@ -17,7 +17,7 @@ bool tp_load_rock_gold(void)
     return false;
   }
 
-  tp->z_depth_set(MAP_DEPTH_OBJ);
+  tp->z_depth_set(MAP_DEPTH_OBJ1);
   tp->is_rock_gold     = true;
   tp->is_blit_centered = true;
 

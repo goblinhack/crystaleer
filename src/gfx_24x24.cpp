@@ -12,5 +12,5 @@ void gfx_init_24x24(void)
       // clang-format on
   };
   const std::vector< std::string > arr(tiles);
-  tile_load_arr("data/gfx/tiles_24x24.tga", "tiles_24x24", 24, 24, arr);
+  tile_load_arr_sprites("data/gfx/tiles_24x24.tga", "tiles_24x24", 24, 24, arr);
 }

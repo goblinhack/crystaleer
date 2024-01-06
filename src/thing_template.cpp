@@ -32,12 +32,17 @@ Tpp tp_find(const std::string &name)
   return nullptr;
 }
 
-Tpp tp_find(uint32_t id)
+Tpp tp_find(TpId id)
 {
   TRACE_NO_INDENT();
+
+  if (id - 1 >= tp_id_map.size()) {
+    DIE("tp_find: thing template %" PRIX16 " bad id", id);
+  }
+
   auto result = get(tp_id_map, id - 1);
   if (! result) {
-    ERR("Thing template %" PRIX32 " not found", id);
+    DIE("tp_find: thing template %" PRIX16 " not found", id);
   }
 
   return result;
@@ -74,7 +79,7 @@ Tpp tp_load(std::string const &name)
   tp_get_id(name, &id);
 
   if (tp_find(name)) {
-    DIE("Thing template name [%s] already loaded", name.c_str());
+    DIE("tp_load: thing template name [%s] already loaded", name.c_str());
   }
 
   auto tp = new Tp();
@@ -108,5 +113,5 @@ Tilep tp_first_tile(Tpp tp)
   //
   // Get the first anim tile.
   //
-  return (tile_first(tiles));
+  return tile_first(tiles);
 }

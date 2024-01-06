@@ -20,9 +20,11 @@ bool tp_load_crystal(void)
       return false;
     }
 
-    tp->z_depth_set(MAP_DEPTH_OBJ);
-    tp->is_crystal        = true;
-    tp->is_blit_on_ground = true;
+    tp->z_depth_set(MAP_DEPTH_OBJ2);
+    tp->is_crystal              = true;
+    tp->is_blit_on_ground       = true;
+    tp->is_blit_outlined        = true;
+    tp->is_blit_square_outlined = true;
 
     tp->tiles.push_back(tile_find_mand(name));
   }

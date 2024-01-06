@@ -18,10 +18,14 @@ void Level::display_tile(Tpp tp, Tilep tile, point tl, point br, point offset, b
   br += offset;
 
   if (shadow) {
-    const point shadow1(2, 2);
-    const point shadow2(4, 4);
+    const point shadow1(1, 1);
+    const point shadow2(2, 2);
     tile_blit(tile, tl + shadow1, br + shadow1);
     tile_blit(tile, tl + shadow2, br + shadow2);
+  } else if (tp->is_blit_outlined) {
+    tile_blit_outline(tile, tl, br, WHITE, BLACK, true);
+  } else if (tp->is_blit_square_outlined) {
+    tile_blit_outline(tile, tl, br, WHITE, BLACK, false);
   } else {
     tile_blit(tile, tl, br);
   }
@@ -49,8 +53,17 @@ void Level::display_z_layer(int z, bool shadow, bool deco)
         point tl;
         point br;
 
-        auto tp_id      = data->thing_or_tp[ x ][ y ][ z ].tp_id;
-        auto tile_index = data->thing_or_tp[ x ][ y ][ z ].tile;
+        Tpp tp;
+        thing_get(x, y, slot, &tp);
+        if (! tp) {
+          continue;
+        }
+
+        if (tp->z_depth != z) {
+          continue;
+        }
+
+        auto tile_index = data->obj[ x ][ y ][ slot ].tile;
         if (! tile_index) {
           continue;
         }
@@ -67,15 +80,6 @@ void Level::display_z_layer(int z, bool shadow, bool deco)
         tl.y = y * dh;
         tl.x -= pixel_map_at.x;
         tl.y -= pixel_map_at.y;
-
-        auto tp = tp_find(tp_id);
-        if (! tp) {
-          continue;
-        }
-
-        if (tp->z_depth != z) {
-          continue;
-        }
 
         if (tp->is_blit_on_ground) {
           //
@@ -98,14 +102,14 @@ void Level::display_z_layer(int z, bool shadow, bool deco)
         br.y = tl.y + pix_height;
 
         if (deco) {
-          display_tile(tp, data->thing_or_tp[ x ][ y ][ z ].tile_top, tl, br, point(0, -deco_offset), shadow);
-          display_tile(tp, data->thing_or_tp[ x ][ y ][ z ].tile_bot, tl, br, point(0, deco_offset), shadow);
-          display_tile(tp, data->thing_or_tp[ x ][ y ][ z ].tile_left, tl, br, point(-deco_offset, 0), shadow);
-          display_tile(tp, data->thing_or_tp[ x ][ y ][ z ].tile_right, tl, br, point(deco_offset, 0), shadow);
-          display_tile(tp, data->thing_or_tp[ x ][ y ][ z ].tile_tl, tl, br, point(-deco_offset, -deco_offset), shadow);
-          display_tile(tp, data->thing_or_tp[ x ][ y ][ z ].tile_tr, tl, br, point(deco_offset, -deco_offset), shadow);
-          display_tile(tp, data->thing_or_tp[ x ][ y ][ z ].tile_bl, tl, br, point(-deco_offset, deco_offset), shadow);
-          display_tile(tp, data->thing_or_tp[ x ][ y ][ z ].tile_br, tl, br, point(deco_offset, deco_offset), shadow);
+          display_tile(tp, data->obj[ x ][ y ][ z ].tile_top, tl, br, point(0, -deco_offset), shadow);
+          display_tile(tp, data->obj[ x ][ y ][ z ].tile_bot, tl, br, point(0, deco_offset), shadow);
+          display_tile(tp, data->obj[ x ][ y ][ z ].tile_left, tl, br, point(-deco_offset, 0), shadow);
+          display_tile(tp, data->obj[ x ][ y ][ z ].tile_right, tl, br, point(deco_offset, 0), shadow);
+          display_tile(tp, data->obj[ x ][ y ][ z ].tile_tl, tl, br, point(-deco_offset, -deco_offset), shadow);
+          display_tile(tp, data->obj[ x ][ y ][ z ].tile_tr, tl, br, point(deco_offset, -deco_offset), shadow);
+          display_tile(tp, data->obj[ x ][ y ][ z ].tile_bl, tl, br, point(-deco_offset, deco_offset), shadow);
+          display_tile(tp, data->obj[ x ][ y ][ z ].tile_br, tl, br, point(deco_offset, deco_offset), shadow);
         } else {
           display_tile(tp, tile_index, tl, br, point(0, 0), shadow);
         }
@@ -140,27 +144,28 @@ void Level::display(void)
       tile_blit(bg1, tl, br);
     }
 
-    const bool no_shadow = false;
-    const bool shadow    = true;
-    const bool no_deco   = false;
-    const bool deco      = true;
+    const bool no_shadow   = false;
+    const bool shadow_only = true;
+    const bool no_deco     = false;
+    const bool deco        = true;
 
     glcolor(BLACK);
-    display_z_layer(MAP_DEPTH_ROCK, shadow, no_deco);
-    display_z_layer(MAP_DEPTH_ROCK, shadow, deco);
-    display_z_layer(MAP_DEPTH_WALL, shadow, no_deco);
-    display_z_layer(MAP_DEPTH_WALL, shadow, deco);
+    display_z_layer(MAP_DEPTH_WALL, shadow_only, no_deco);
+    display_z_layer(MAP_DEPTH_WALL, shadow_only, deco);
+
+    display_z_layer(MAP_DEPTH_OBJ1, no_shadow, no_deco);
+    display_z_layer(MAP_DEPTH_OBJ2, no_shadow, no_deco);
+    display_z_layer(MAP_DEPTH_OBJ3, no_shadow, no_deco);
+
+    glcolor(WHITE);
+    display_z_layer(MAP_DEPTH_WALL, no_shadow, no_deco);
+    display_z_layer(MAP_DEPTH_WALL, no_shadow, deco);
+
+    display_z_layer(MAP_DEPTH_WALL, no_shadow, deco);
 
     glcolor(WHITE);
     display_z_layer(MAP_DEPTH_ROCK, no_shadow, no_deco);
     display_z_layer(MAP_DEPTH_ROCK, no_shadow, deco);
-
-    display_z_layer(MAP_DEPTH_WALL, no_shadow, no_deco);
-    display_z_layer(MAP_DEPTH_WALL, no_shadow, deco);
-
-    display_z_layer(MAP_DEPTH_OBJ, no_shadow, no_deco);
-    display_z_layer(MAP_DEPTH_WALL, no_shadow, deco);
-    display_z_layer(MAP_DEPTH_EXIT, no_shadow, no_deco);
   }
 
   glcolor(WHITE);

@@ -17,17 +17,14 @@ void Level::anim(void)
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     for (auto y = miny; y < maxy; y++) {
       for (auto x = minx; x < maxx; x++) {
-        auto t = &data->thing_or_tp[ x ][ y ][ slot ];
-        if (! t->tp_id) {
-          continue;
-        }
-
-        auto tp = tp_find(t->tp_id);
+        Tpp  tp;
+        auto t = thing_get(x, y, slot, &tp);
         if (! tp) {
           continue;
         }
 
-        auto tile_index = t->tile;
+        auto obj        = &data->obj[ x ][ y ][ slot ];
+        auto tile_index = obj->tile;
         if (! tile_index) {
           continue;
         }
@@ -41,18 +38,18 @@ void Level::anim(void)
           continue;
         }
 
-        if (ts < t->anim_ts) {
+        if (ts < obj->anim_ts) {
           continue;
         }
 
-        t->anim_index++;
-        if (t->anim_index >= tp->tiles.size()) {
-          t->anim_index = 0;
+        obj->anim_index++;
+        if (obj->anim_index >= tp->tiles.size()) {
+          obj->anim_index = 0;
         }
 
-        tile       = tp->tiles[ t->anim_index ];
-        t->tile    = tile->global_index;
-        t->anim_ts = ts + tile->delay_ms;
+        tile         = tp->tiles[ obj->anim_index ];
+        obj->tile    = tile->global_index;
+        obj->anim_ts = ts + tile->delay_ms;
       }
     }
   }

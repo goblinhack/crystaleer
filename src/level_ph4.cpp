@@ -23,7 +23,7 @@ void LevelPH4::add_object_ids(const LevelPh3 &ph3)
   const auto w = LEVEL_PH4_WIDTH;
   const auto h = LEVEL_PH4_HEIGHT;
 
-  memset(data.thing_or_tp, 0, sizeof(data.thing_or_tp));
+  memset(data.obj, 0, sizeof(data.obj));
 
   for (auto y = 0; y < h; y++) {
     for (auto x = 0; x < w; x++) {
@@ -67,7 +67,7 @@ void LevelPH4::add_object_ids(const LevelPh3 &ph3)
           if (d100() < 10) {
             auto tp = tp_random_rock_gold();
             if (tp) {
-              data.thing_or_tp[ x ][ y ][ tp->z_depth ].tp_id = tp->id;
+              data.obj[ x ][ y ][ tp->z_depth ].id = tp->id;
             }
           }
           break;
@@ -76,7 +76,7 @@ void LevelPH4::add_object_ids(const LevelPh3 &ph3)
       }
 
       if (tp) {
-        data.thing_or_tp[ x ][ y ][ tp->z_depth ].tp_id = tp->id;
+        data.obj[ x ][ y ][ tp->z_depth ].id = tp->id;
       }
     }
   }

@@ -41,6 +41,8 @@ public:
   // begin sort marker1 {
   bool is_blit_on_ground {};
   bool is_blit_centered {};
+  bool is_blit_square_outlined {};
+  bool is_blit_outlined {};
   bool is_block {};
   bool is_entrance {};
   bool is_exit {};
@@ -95,7 +97,7 @@ public:
 Tpp string2tp(const char **s);
 Tpp string2tp(const std::string &s, int *len);
 Tpp tp_find(const std::string &name);
-Tpp tp_find(uint32_t id);
+Tpp tp_find(TpId id);
 Tpp tp_load(const std::string &name);
 Tpp tp_get_with_rarity_filter(Tpidmap &m);
 Tpp tp_random_rock(void);

@@ -17,9 +17,11 @@ bool tp_load_exit(void)
     return false;
   }
 
-  tp->z_depth_set(MAP_DEPTH_EXIT);
-  tp->is_exit           = true;
-  tp->is_blit_on_ground = true;
+  tp->z_depth_set(MAP_DEPTH_OBJ1);
+  tp->is_exit                 = true;
+  tp->is_blit_on_ground       = true;
+  tp->is_blit_outlined        = true;
+  tp->is_blit_square_outlined = true;
 
   for (auto frame = 0; frame < 8; frame++) {
     const auto delay = 100; /* ms */

@@ -17,9 +17,12 @@ bool tp_load_key(void)
     return false;
   }
 
-  tp->z_depth_set(MAP_DEPTH_OBJ);
-  tp->is_key            = true;
-  tp->is_blit_on_ground = true;
+  tp->z_depth_set(MAP_DEPTH_OBJ2);
+  tp->is_key                  = true;
+  tp->is_blit_on_ground       = true;
+  tp->is_blit_outlined        = true;
+  tp->is_blit_square_outlined = true;
+
   tp->tiles.push_back(tile_find_mand("key0"));
 
   return true;

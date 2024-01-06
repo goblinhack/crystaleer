@@ -37,7 +37,9 @@ using Texp               = class Tex *;
 using Tilemapp           = class Tilemap *;
 using Tilep              = class Tile *;
 using Tilevec            = std::vector< class Tile            *>;
-using TpId               = unsigned short;
+using Id                 = unsigned short;
+using TpId               = Id;
+using ThingId            = Id;
 using Tpp                = class Tp *;
 using Widp               = class Wid *;
 

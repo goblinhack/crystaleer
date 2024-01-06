@@ -27,64 +27,58 @@ bool Level::is_oob(uint8_t x, uint8_t y)
   return false;
 }
 
-bool Level::set_tp_id(uint8_t x, uint8_t y, uint8_t slot, TpId tp_id)
+bool Level::set_id(uint8_t x, uint8_t y, uint8_t slot, Id id)
 {
   TRACE_NO_INDENT();
   if (is_oob(x, y)) {
     return false;
   }
-  data->thing_or_tp[ x ][ y ][ slot ].tp_id = tp_id;
+  data->obj[ x ][ y ][ slot ].id = id;
   return true;
 }
 
-void Level::set_tp_id_no_check(uint8_t x, uint8_t y, uint8_t slot, TpId tp_id)
-{
-  data->thing_or_tp[ x ][ y ][ slot ].tp_id = tp_id;
-}
+void Level::set_id_no_check(uint8_t x, uint8_t y, uint8_t slot, Id id) { data->obj[ x ][ y ][ slot ].id = id; }
 
-TpId Level::get_tp_id(uint8_t x, uint8_t y, uint8_t slot)
+Id Level::get_id(uint8_t x, uint8_t y, uint8_t slot)
 {
   TRACE_NO_INDENT();
   if (is_oob(x, y)) {
     return 0;
   }
-  return data->thing_or_tp[ x ][ y ][ slot ].tp_id;
+  return data->obj[ x ][ y ][ slot ].id;
 }
 
-TpId Level::get_tp_id_no_check(uint8_t x, uint8_t y, uint8_t slot)
-{
-  return data->thing_or_tp[ x ][ y ][ slot ].tp_id;
-}
+Id Level::get_id_no_check(uint8_t x, uint8_t y, uint8_t slot) { return data->obj[ x ][ y ][ slot ].id; }
 
-bool Level::set_tp_tile(uint8_t x, uint8_t y, uint8_t slot, Tilep tile)
+bool Level::set_tile(uint8_t x, uint8_t y, uint8_t slot, Tilep tile)
 {
   TRACE_NO_INDENT();
   if (is_oob(x, y)) {
     return false;
   }
   if (tile) {
-    data->thing_or_tp[ x ][ y ][ slot ].tile = tile->global_index;
+    data->obj[ x ][ y ][ slot ].tile = tile->global_index;
   } else {
-    data->thing_or_tp[ x ][ y ][ slot ].tile = 0;
+    data->obj[ x ][ y ][ slot ].tile = 0;
   }
   return true;
 }
 
-void Level::set_tp_tile_no_check(uint8_t x, uint8_t y, uint8_t slot, Tilep tile)
+void Level::set_tile_no_check(uint8_t x, uint8_t y, uint8_t slot, Tilep tile)
 {
-  data->thing_or_tp[ x ][ y ][ slot ].tile = tile->global_index;
+  data->obj[ x ][ y ][ slot ].tile = tile->global_index;
 }
 
-Tilep Level::get_tp_tile(uint8_t x, uint8_t y, uint8_t slot)
+Tilep Level::get_tile(uint8_t x, uint8_t y, uint8_t slot)
 {
   TRACE_NO_INDENT();
   if (is_oob(x, y)) {
     return nullptr;
   }
-  return tile_index_to_tile(data->thing_or_tp[ x ][ y ][ slot ].tile);
+  return tile_index_to_tile(data->obj[ x ][ y ][ slot ].tile);
 }
 
-Tilep Level::get_tp_tile_no_check(uint8_t x, uint8_t y, uint8_t slot)
+Tilep Level::get_tile_no_check(uint8_t x, uint8_t y, uint8_t slot)
 {
-  return tile_index_to_tile(data->thing_or_tp[ x ][ y ][ slot ].tile);
+  return tile_index_to_tile(data->obj[ x ][ y ][ slot ].tile);
 }
