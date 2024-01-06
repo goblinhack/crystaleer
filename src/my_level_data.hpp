@@ -48,9 +48,9 @@ typedef struct ThingOrTp_ {
   //
   uint16_t anim_index;
   //
-  // When the next animation frame should start
+  // Count down until the next animation frame should start
   //
-  uint32_t anim_ts;
+  int16_t anim_ms_remaining;
 } ThingOrTp;
 
 typedef struct LevelData_ {
