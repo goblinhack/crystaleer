@@ -9,6 +9,7 @@
 #include "my_level_data.hpp"
 #include "my_main.hpp"
 #include "my_ptrcheck.hpp"
+#include "my_tex.hpp"
 #include "my_thing_template.hpp"
 #include "my_tile.hpp"
 
@@ -41,11 +42,42 @@ void Level::display_tile(Tpp tp, uint16_t tile_index, point tl, point br, point 
   display_tile(tp, tile, tl, br, offset, shadow);
 }
 
+#define BLIT_UP_TILE                                                                                                 \
+  tile = tile_index_to_tile(tile_index - offset);                                                                    \
+  display_tile(tp, tile, tl, br, point(0, -dh), shadow);
+
+#define BLIT_DOWN_TILE                                                                                               \
+  tile = tile_index_to_tile(tile_index + offset);                                                                    \
+  display_tile(tp, tile, tl, br, point(0, dh), shadow);
+
+#define BLIT_LEFT_TILE                                                                                               \
+  tile = tile_index_to_tile(tile_index - 1);                                                                         \
+  display_tile(tp, tile, tl, br, point(-dw, 0), shadow);
+
+#define BLIT_RIGHT_TILE                                                                                              \
+  tile = tile_index_to_tile(tile_index + 1);                                                                         \
+  display_tile(tp, tile, tl, br, point(dw, 0), shadow);
+
+#define BLIT_TL_TILE                                                                                                 \
+  tile = tile_index_to_tile(tile_index - offset - 1);                                                                \
+  display_tile(tp, tile, tl, br, point(-dw, -dh), shadow);
+
+#define BLIT_TR_TILE                                                                                                 \
+  tile = tile_index_to_tile(tile_index - offset + 1);                                                                \
+  display_tile(tp, tile, tl, br, point(dw, -dh), shadow);
+
+#define BLIT_BL_TILE                                                                                                 \
+  tile = tile_index_to_tile(tile_index + offset - 1);                                                                \
+  display_tile(tp, tile, tl, br, point(-dw, dh), shadow);
+
+#define BLIT_BR_TILE                                                                                                 \
+  tile = tile_index_to_tile(tile_index + offset + 1);                                                                \
+  display_tile(tp, tile, tl, br, point(dw, dh), shadow);
+
 void Level::display_z_layer(int z, bool shadow, bool deco)
 {
-  float      dw          = TILE_WIDTH / game->config.game_pix_zoom;
-  float      dh          = TILE_HEIGHT / game->config.game_pix_zoom;
-  const auto deco_offset = (dw / 2);
+  int dw = TILE_WIDTH / game->config.game_pix_zoom;
+  int dh = TILE_HEIGHT / game->config.game_pix_zoom;
 
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     for (auto y = miny; y < maxy; y++) {
@@ -63,7 +95,8 @@ void Level::display_z_layer(int z, bool shadow, bool deco)
           continue;
         }
 
-        auto tile_index = data->obj[ x ][ y ][ slot ].tile;
+        auto obj        = &data->obj[ x ][ y ][ slot ];
+        auto tile_index = obj->tile;
         if (! tile_index) {
           continue;
         }
@@ -102,14 +135,32 @@ void Level::display_z_layer(int z, bool shadow, bool deco)
         br.y = tl.y + pix_height;
 
         if (deco) {
-          display_tile(tp, data->obj[ x ][ y ][ z ].tile_top, tl, br, point(0, -deco_offset), shadow);
-          display_tile(tp, data->obj[ x ][ y ][ z ].tile_bot, tl, br, point(0, deco_offset), shadow);
-          display_tile(tp, data->obj[ x ][ y ][ z ].tile_left, tl, br, point(-deco_offset, 0), shadow);
-          display_tile(tp, data->obj[ x ][ y ][ z ].tile_right, tl, br, point(deco_offset, 0), shadow);
-          display_tile(tp, data->obj[ x ][ y ][ z ].tile_tl, tl, br, point(-deco_offset, -deco_offset), shadow);
-          display_tile(tp, data->obj[ x ][ y ][ z ].tile_tr, tl, br, point(deco_offset, -deco_offset), shadow);
-          display_tile(tp, data->obj[ x ][ y ][ z ].tile_bl, tl, br, point(-deco_offset, deco_offset), shadow);
-          display_tile(tp, data->obj[ x ][ y ][ z ].tile_br, tl, br, point(deco_offset, deco_offset), shadow);
+          auto offset = tex_get_width(tile_get_tex(tile)) / TILE_WIDTH;
+
+          if (obj->deco_up) {
+            BLIT_UP_TILE
+          }
+          if (obj->deco_down) {
+            BLIT_DOWN_TILE
+          }
+          if (obj->deco_left) {
+            BLIT_LEFT_TILE
+          }
+          if (obj->deco_right) {
+            BLIT_RIGHT_TILE
+          }
+          if (obj->deco_tl) {
+            BLIT_TL_TILE
+          }
+          if (obj->deco_bl) {
+            BLIT_BL_TILE
+          }
+          if (obj->deco_tr) {
+            BLIT_TR_TILE
+          }
+          if (obj->deco_br) {
+            BLIT_BR_TILE
+          }
         } else {
           display_tile(tp, tile_index, tl, br, point(0, 0), shadow);
         }

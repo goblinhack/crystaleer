@@ -35,22 +35,25 @@ typedef struct ThingOrTp_ {
   // Layers of tiles, used in walls. Only layer 0 is animated.
   //
   uint16_t tile;
-  uint16_t tile_top;
-  uint16_t tile_bot;
-  uint16_t tile_left;
-  uint16_t tile_right;
-  uint16_t tile_tl;
-  uint16_t tile_tr;
-  uint16_t tile_bl;
-  uint16_t tile_br;
   //
-  // The current tiles[] index for this template
+  // The current tiles[] index for this object
   //
   uint16_t anim_index;
   //
   // Count down until the next animation frame should start
   //
-  int16_t anim_ms_remaining;
+  int anim_ms_remaining : 12;
+  //
+  // Direction of tile decorations
+  //
+  uint8_t deco_up    : 1;
+  uint8_t deco_down  : 1;
+  uint8_t deco_left  : 1;
+  uint8_t deco_right : 1;
+  uint8_t deco_tl    : 1;
+  uint8_t deco_tr    : 1;
+  uint8_t deco_bl    : 1;
+  uint8_t deco_br    : 1;
 } ThingOrTp;
 
 typedef struct LevelData_ {

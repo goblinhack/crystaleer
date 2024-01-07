@@ -55,75 +55,35 @@ void Level::assign_tiles(void)
           }
 
           if (! is_wall(x, y - 1)) {
-            if (tp->tiles_top.size()) {
-              auto tile = one_of(tp->tiles_top);
-              if (tile) {
-                data->obj[ x ][ y ][ slot ].tile_top = tile->global_index;
-              }
-            }
+            data->obj[ x ][ y ][ slot ].deco_up = 1;
           }
 
           if (! is_wall(x, y + 1)) {
-            if (tp->tiles_bot.size()) {
-              auto tile = one_of(tp->tiles_bot);
-              if (tile) {
-                data->obj[ x ][ y ][ slot ].tile_bot = tile->global_index;
-              }
-            }
+            data->obj[ x ][ y ][ slot ].deco_down = 1;
           }
 
           if (! is_wall(x - 1, y)) {
-            if (tp->tiles_left.size()) {
-              auto tile = one_of(tp->tiles_left);
-              if (tile) {
-                data->obj[ x ][ y ][ slot ].tile_left = tile->global_index;
-              }
-            }
+            data->obj[ x ][ y ][ slot ].deco_left = 1;
           }
 
           if (! is_wall(x + 1, y)) {
-            if (tp->tiles_right.size()) {
-              auto tile = one_of(tp->tiles_right);
-              if (tile) {
-                data->obj[ x ][ y ][ slot ].tile_right = tile->global_index;
-              }
-            }
+            data->obj[ x ][ y ][ slot ].deco_right = 1;
           }
 
           if (! is_wall(x - 1, y - 1) && ! is_wall(x - 1, y) && ! is_wall(x, y - 1)) {
-            if (tp->tiles_tl.size()) {
-              auto tile = one_of(tp->tiles_tl);
-              if (tile) {
-                data->obj[ x ][ y ][ slot ].tile_tl = tile->global_index;
-              }
-            }
+            data->obj[ x ][ y ][ slot ].deco_tl = 1;
           }
 
           if (! is_wall(x + 1, y - 1) && ! is_wall(x + 1, y) && ! is_wall(x, y - 1)) {
-            if (tp->tiles_tr.size()) {
-              auto tile = one_of(tp->tiles_tr);
-              if (tile) {
-                data->obj[ x ][ y ][ slot ].tile_tr = tile->global_index;
-              }
-            }
+            data->obj[ x ][ y ][ slot ].deco_tr = 1;
           }
 
           if (! is_wall(x - 1, y + 1) && ! is_wall(x - 1, y) && ! is_wall(x, y + 1)) {
-            if (tp->tiles_bl.size()) {
-              auto tile = one_of(tp->tiles_bl);
-              if (tile) {
-                data->obj[ x ][ y ][ slot ].tile_bl = tile->global_index;
-              }
-            }
+            data->obj[ x ][ y ][ slot ].deco_bl = 1;
           }
 
           if (! is_wall(x + 1, y + 1) && ! is_wall(x + 1, y) && ! is_wall(x, y + 1)) {
-            if (tp->tiles_br.size()) {
-              auto tile = one_of(tp->tiles_br);
-              if (tile) {
-                data->obj[ x ][ y ][ slot ].tile_br = tile->global_index;
-              }
-            }
+            data->obj[ x ][ y ][ slot ].deco_br = 1;
           }
 
         } else if (tp->is_rock) {
@@ -134,82 +94,42 @@ void Level::assign_tiles(void)
 
           if (y > 0) {
             if (! is_rock(x, y - 1)) {
-              if (tp->tiles_top.size()) {
-                auto tile = one_of(tp->tiles_top);
-                if (tile) {
-                  data->obj[ x ][ y ][ slot ].tile_top = tile->global_index;
-                }
-              }
+              data->obj[ x ][ y ][ slot ].deco_up = 1;
             }
           }
 
           if (y < MAP_HEIGHT - 1) {
             if (! is_rock(x, y + 1)) {
-              if (tp->tiles_bot.size()) {
-                auto tile = one_of(tp->tiles_bot);
-                if (tile) {
-                  data->obj[ x ][ y ][ slot ].tile_bot = tile->global_index;
-                }
-              }
+              data->obj[ x ][ y ][ slot ].deco_down = 1;
             }
           }
 
           if (x > 0) {
             if (! is_rock(x - 1, y)) {
-              if (tp->tiles_left.size()) {
-                auto tile = one_of(tp->tiles_left);
-                if (tile) {
-                  data->obj[ x ][ y ][ slot ].tile_left = tile->global_index;
-                }
-              }
+              data->obj[ x ][ y ][ slot ].deco_left = 1;
             }
           }
 
           if (x < MAP_WIDTH - 1) {
             if (! is_rock(x + 1, y)) {
-              if (tp->tiles_right.size()) {
-                auto tile = one_of(tp->tiles_right);
-                if (tile) {
-                  data->obj[ x ][ y ][ slot ].tile_right = tile->global_index;
-                }
-              }
+              data->obj[ x ][ y ][ slot ].deco_right = 1;
             }
           }
 
           if ((x == 0) && (y == 0)) {
-            if (tp->tiles_br.size()) {
-              auto tile = one_of(tp->tiles_br);
-              if (tile) {
-                data->obj[ x ][ y ][ slot ].tile_br = tile->global_index;
-              }
-            }
+            data->obj[ x ][ y ][ slot ].deco_br = 1;
           }
 
           if ((x == MAP_WIDTH - 1) && (y == 0)) {
-            if (tp->tiles_bl.size()) {
-              auto tile = one_of(tp->tiles_bl);
-              if (tile) {
-                data->obj[ x ][ y ][ slot ].tile_bl = tile->global_index;
-              }
-            }
+            data->obj[ x ][ y ][ slot ].deco_bl = 1;
           }
 
           if ((x == 0) && (y == MAP_HEIGHT - 1)) {
-            if (tp->tiles_tr.size()) {
-              auto tile = one_of(tp->tiles_tr);
-              if (tile) {
-                data->obj[ x ][ y ][ slot ].tile_tr = tile->global_index;
-              }
-            }
+            data->obj[ x ][ y ][ slot ].deco_tr = 1;
           }
 
           if ((x == MAP_WIDTH - 1) && (y == MAP_HEIGHT - 1)) {
-            if (tp->tiles_tl.size()) {
-              auto tile = one_of(tp->tiles_tl);
-              if (tile) {
-                data->obj[ x ][ y ][ slot ].tile_tl = tile->global_index;
-              }
-            }
+            data->obj[ x ][ y ][ slot ].deco_tl = 1;
           }
 
         } else {

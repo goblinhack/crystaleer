@@ -28,36 +28,5 @@ bool tp_load_wall(void)
     }
   }
 
-  for (auto x = 0; x < 6; x++) {
-    auto tile = tile_find_mand("wall.top." + std::to_string(x));
-    tp->tiles_top.push_back(tile);
-  }
-
-  for (auto x = 0; x < 6; x++) {
-    auto tile = tile_find_mand("wall.bot." + std::to_string(x));
-    tp->tiles_bot.push_back(tile);
-  }
-
-  for (auto y = 0; y < 6; y++) {
-    auto tile = tile_find_mand("wall.left." + std::to_string(y));
-    tp->tiles_left.push_back(tile);
-  }
-
-  for (auto y = 0; y < 6; y++) {
-    auto tile = tile_find_mand("wall.right." + std::to_string(y));
-    tp->tiles_right.push_back(tile);
-  }
-
-  for (auto i = 0; i < 1; i++) {
-    auto tile = tile_find_mand("wall.tl." + std::to_string(i));
-    tp->tiles_tl.push_back(tile);
-    tile = tile_find_mand("wall.tr." + std::to_string(i));
-    tp->tiles_tr.push_back(tile);
-    tile = tile_find_mand("wall.bl." + std::to_string(i));
-    tp->tiles_bl.push_back(tile);
-    tile = tile_find_mand("wall.br." + std::to_string(i));
-    tp->tiles_br.push_back(tile);
-  }
-
   return true;
 }
