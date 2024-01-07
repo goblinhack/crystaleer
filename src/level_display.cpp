@@ -169,14 +169,48 @@ void Level::display_z_layer(int z, bool shadow, bool deco)
   }
 }
 
+void Level::set_display_bounds(void)
+{
+  TRACE_NO_INDENT();
+
+  auto border = 2;
+
+  int level_minx = pixel_map_at.x / TILE_WIDTH;
+  int level_miny = pixel_map_at.y / TILE_HEIGHT;
+  level_minx -= border;
+  level_minx -= border;
+
+  if (level_minx < 0) {
+    level_minx = 0;
+  }
+  if (level_miny < 0) {
+    level_miny = 0;
+  }
+
+  int level_maxx = (pixel_map_at.x + game->config.game_pix_width) / TILE_WIDTH;
+  int level_maxy = (pixel_map_at.y + game->config.game_pix_height) / TILE_HEIGHT;
+
+  level_maxx += border;
+  level_maxy += border;
+
+  if (level_maxx >= MAP_WIDTH) {
+    level_maxx = MAP_WIDTH;
+  }
+  if (level_maxy >= MAP_HEIGHT) {
+    level_maxy = MAP_HEIGHT;
+  }
+
+  minx = level_minx;
+  miny = level_miny;
+  maxx = level_maxx;
+  maxy = level_maxy;
+}
+
 void Level::display(void)
 {
   TRACE_NO_INDENT();
 
-  minx = 0;
-  miny = 0;
-  maxx = MAP_WIDTH;
-  maxy = MAP_HEIGHT;
+  set_display_bounds();
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glcolor(WHITE);

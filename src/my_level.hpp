@@ -28,10 +28,10 @@ public:
   //
   // Level display bounds
   //
-  int minx = {};
-  int miny = {};
-  int maxx = {};
-  int maxy = {};
+  uint8_t minx = {};
+  uint8_t miny = {};
+  uint8_t maxx = {};
+  uint8_t maxy = {};
 
   bool is_oob(uint8_t x, uint8_t y);
 
@@ -49,6 +49,7 @@ public:
   Thingp thing_get(uint8_t x, uint8_t y, uint8_t slot, Tpp * = nullptr);
 
   void display(void);
+  void set_display_bounds(void);
   void assign_tiles(void);
   void display_tile(Tpp, uint16_t, point tl, point br, point offset, bool shadow);
   void display_tile(Tpp, Tilep, point tl, point br, point offset, bool shadow);
