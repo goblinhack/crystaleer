@@ -20,7 +20,6 @@ bool tp_load_player(void)
   tp->z_depth_set(MAP_DEPTH_OBJ3);
   tp->is_player               = true;
   tp->is_blit_on_ground       = true;
-  tp->is_blit_outlined        = true;
   tp->is_blit_square_outlined = true;
 
   auto delay = 100;
