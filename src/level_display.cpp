@@ -238,6 +238,7 @@ void Level::display(void)
     display_z_layer(MAP_DEPTH_WALL, shadow_only, no_deco);
     display_z_layer(MAP_DEPTH_WALL, shadow_only, deco);
 
+    glcolor(WHITE);
     display_z_layer(MAP_DEPTH_OBJ1, no_shadow, no_deco);
     display_z_layer(MAP_DEPTH_OBJ2, no_shadow, no_deco);
     display_z_layer(MAP_DEPTH_OBJ3, no_shadow, no_deco);
