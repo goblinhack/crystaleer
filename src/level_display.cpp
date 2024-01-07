@@ -79,6 +79,12 @@ void Level::display_z_layer(int z, bool shadow, bool deco)
   int dw = TILE_WIDTH / game->config.game_pix_zoom;
   int dh = TILE_HEIGHT / game->config.game_pix_zoom;
 
+  if (shadow) {
+    glcolor(BLACK);
+  } else {
+    glcolor(WHITE);
+  }
+
   for (auto slot = 0; slot < MAP_SLOTS; slot++) {
     for (auto y = miny; y < maxy; y++) {
       for (auto x = minx; x < maxx; x++) {
@@ -234,24 +240,15 @@ void Level::display(void)
     const bool no_deco     = false;
     const bool deco        = true;
 
-    glcolor(BLACK);
     display_z_layer(MAP_DEPTH_WALL, shadow_only, no_deco);
     display_z_layer(MAP_DEPTH_WALL, shadow_only, deco);
-
-    glcolor(WHITE);
     display_z_layer(MAP_DEPTH_OBJ1, no_shadow, no_deco);
     display_z_layer(MAP_DEPTH_OBJ2, no_shadow, no_deco);
     display_z_layer(MAP_DEPTH_OBJ3, no_shadow, no_deco);
-
-    glcolor(WHITE);
-    display_z_layer(MAP_DEPTH_WALL, no_shadow, no_deco);
-    display_z_layer(MAP_DEPTH_WALL, no_shadow, deco);
-
-    display_z_layer(MAP_DEPTH_WALL, no_shadow, deco);
-
-    glcolor(WHITE);
     display_z_layer(MAP_DEPTH_ROCK, no_shadow, no_deco);
     display_z_layer(MAP_DEPTH_ROCK, no_shadow, deco);
+    display_z_layer(MAP_DEPTH_WALL, no_shadow, no_deco);
+    display_z_layer(MAP_DEPTH_WALL, no_shadow, deco);
   }
 
   glcolor(WHITE);

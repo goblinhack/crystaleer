@@ -12,8 +12,8 @@ void Level::anim(void)
 {
   TRACE_NO_INDENT();
 
-  auto             ts = time_ms();
-  static u_int32_t last_ts;
+  auto            ts = time_ms();
+  static uint32_t last_ts;
 
   if (! last_ts) {
     last_ts = ts;
