@@ -61,6 +61,12 @@ typedef struct LevelData_ {
   // No c++ types can be used here, to allow easy level replay
   //////////////////////////////////////////////////////////////
 
+  //
+  // Map scroll offset
+  //
+  int16_t pixel_map_at_x;
+  int16_t pixel_map_at_y;
+
   ThingOrTp obj[ MAP_WIDTH ][ MAP_HEIGHT ][ MAP_SLOTS ];
 
   Thing things[ 1 << THING_ID_X_BITS ][ 1 << THING_ID_Y_BITS ];

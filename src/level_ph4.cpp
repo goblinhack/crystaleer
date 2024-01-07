@@ -9,6 +9,7 @@
 #include "my_bits.hpp"
 #include "my_charmap.hpp"
 #include "my_dice.hpp"
+#include "my_game.hpp"
 #include "my_level_ph4.hpp"
 #include "my_main.hpp"
 #include "my_point.hpp"
@@ -39,6 +40,12 @@ void LevelPH4::add_object_ids(const LevelPh3 &ph3)
             auto tp = tp_random_player();
             auto t  = thing_new(&data, tp, x, y);
             thing_push(&data, t);
+
+            data.pixel_map_at_x = x * TILE_WIDTH;
+            data.pixel_map_at_y = y * TILE_HEIGHT;
+
+            data.pixel_map_at_x -= game->config.game_pix_width / 2;
+            data.pixel_map_at_y -= game->config.game_pix_height / 2;
           }
           break;
         case PH2_CHAR_EXIT : tp = tp_random_exit(); break;

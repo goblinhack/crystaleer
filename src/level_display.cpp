@@ -117,8 +117,8 @@ void Level::display_z_layer(int z, bool shadow, bool deco)
 
         tl.x = x * dw;
         tl.y = y * dh;
-        tl.x -= pixel_map_at.x;
-        tl.y -= pixel_map_at.y;
+        tl.x -= data->pixel_map_at_x;
+        tl.y -= data->pixel_map_at_y;
 
         if (tp->is_blit_on_ground) {
           //
@@ -180,9 +180,34 @@ void Level::set_display_bounds(void)
   TRACE_NO_INDENT();
 
   auto border = 2;
+  int  dw     = TILE_WIDTH / game->config.game_pix_zoom;
+  int  dh     = TILE_HEIGHT / game->config.game_pix_zoom;
 
-  int level_minx = pixel_map_at.x / TILE_WIDTH;
-  int level_miny = pixel_map_at.y / TILE_HEIGHT;
+  //
+  // Set the scroll bounds
+  //
+  if (data->pixel_map_at_x < 0) {
+    data->pixel_map_at_x = 0;
+  }
+  if (data->pixel_map_at_y < 0) {
+    data->pixel_map_at_y = 0;
+  }
+
+  auto max_pix_x = (MAP_WIDTH * dw) - game->config.game_pix_width;
+  auto max_pix_y = (MAP_HEIGHT * dh) - game->config.game_pix_height;
+
+  if (data->pixel_map_at_x > max_pix_x) {
+    data->pixel_map_at_x = max_pix_x;
+  }
+  if (data->pixel_map_at_y > max_pix_y) {
+    data->pixel_map_at_y = max_pix_y;
+  }
+
+  //
+  // Set the tile bounds
+  //
+  int level_minx = data->pixel_map_at_x / dw;
+  int level_miny = data->pixel_map_at_y / dh;
   level_minx -= border;
   level_minx -= border;
 
@@ -193,8 +218,8 @@ void Level::set_display_bounds(void)
     level_miny = 0;
   }
 
-  int level_maxx = (pixel_map_at.x + game->config.game_pix_width) / TILE_WIDTH;
-  int level_maxy = (pixel_map_at.y + game->config.game_pix_height) / TILE_HEIGHT;
+  int level_maxx = (data->pixel_map_at_x + game->config.game_pix_width) / dw;
+  int level_maxy = (data->pixel_map_at_y + game->config.game_pix_height) / dh;
 
   level_maxx += border;
   level_maxy += border;
@@ -229,7 +254,7 @@ void Level::display(void)
 
     {
       Tilep bg1 = tile_find("background1");
-      point tl  = point(-pixel_map_at.x, -pixel_map_at.y);
+      point tl  = point(-data->pixel_map_at_x, -data->pixel_map_at_y);
       point br
           = tl + point(bg1->pix_width / game->config.game_pix_zoom, bg1->pix_height / game->config.game_pix_zoom);
       tile_blit(bg1, tl, br);

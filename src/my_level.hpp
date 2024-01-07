@@ -21,11 +21,6 @@ public:
   LevelDatap data {};
 
   //
-  // Map scroll offset
-  //
-  point pixel_map_at;
-
-  //
   // Level display bounds
   //
   uint8_t minx = {};

@@ -41,28 +41,8 @@ uint8_t game_mouse_motion(int x, int y, int relx, int rely, int wheelx, int whee
 
   auto level = game->level;
   if (level) {
-    level->pixel_map_at.x += wheelx;
-    level->pixel_map_at.y -= wheely;
-
-    if (level->pixel_map_at.x < 0) {
-      level->pixel_map_at.x = 0;
-    }
-    if (level->pixel_map_at.y < 0) {
-      level->pixel_map_at.y = 0;
-    }
-
-    const auto dw = TILE_WIDTH / game->config.game_pix_zoom;
-    const auto dh = TILE_HEIGHT / game->config.game_pix_zoom;
-
-    auto maxx = (MAP_WIDTH * dw) - game->config.ui_pix_width;
-    auto maxy = (MAP_HEIGHT * dh) - game->config.ui_pix_height;
-
-    if (level->pixel_map_at.x > maxx) {
-      level->pixel_map_at.x = maxx;
-    }
-    if (level->pixel_map_at.y > maxy) {
-      level->pixel_map_at.y = maxy;
-    }
+    level->data->pixel_map_at_x += wheelx;
+    level->data->pixel_map_at_y -= wheely;
   }
 
   return true;
