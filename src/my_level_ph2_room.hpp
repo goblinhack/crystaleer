@@ -11,10 +11,11 @@
 
 #include "my_fwd.hpp"
 #include "my_game_defs.hpp"
+#include "my_level_ph2_room.hpp"
 
 using LevelPh2Rooms = std::vector< LevelPh2Roomp >;
 
-using RoomType = enum {
+typedef enum {
   ROOM_TYPE_NORMAL,
   ROOM_TYPE_ENTRANCE,
   ROOM_TYPE_EXIT,
@@ -22,7 +23,7 @@ using RoomType = enum {
   ROOM_TYPE_LOCK,
   ROOM_TYPE_SECRET,
   ROOM_TYPE_MAX,
-};
+} RoomType;
 
 class LevelPh2Room
 {

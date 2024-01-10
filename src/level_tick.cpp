@@ -19,7 +19,7 @@ void Level::tick(void)
     for (auto y = miny; y < maxy; y++) {
       for (auto x = minx; x < maxx; x++) {
         Tpp  tp;
-        auto t = hing_get(x, y, slot, &tp);
+        auto t = thing_get(x, y, slot, &tp);
         if (! t) {
           continue;
         }
@@ -29,7 +29,7 @@ void Level::tick(void)
         }
 
         t->tick = tick;
-        t->thing_update_pos();
+        thing_update_pos(t);
       }
     }
   }

@@ -114,7 +114,7 @@ void level_ph2_room_set_add(RoomType specified_type, const char *data)
   const auto row_len      = (((LEVEL_PH2_ROOM_WIDTH + 1) * LEVEL_PH1_WIDTH) + 1);
   auto       expected_len = (row_len) * (((LEVEL_PH2_ROOM_HEIGHT + 1) * LEVEL_PH1_HEIGHT) + 1);
 
-  if (strlen(data) != expected_len) {
+  if ((int) strlen(data) != expected_len) {
     DIE("bad room size, expected %d, got %d", (int) strlen(data), (int) expected_len);
   }
 

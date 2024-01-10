@@ -13,7 +13,7 @@
 #include "my_thing_id.hpp"
 #include "my_thing_template.hpp"
 
-Tpp tp_get(LevelData *data, uint8_t x, uint8_t y, uint8_t slot)
+Tpp tp_get(LevelData *data, int8_t x, int8_t y, uint8_t slot)
 {
   TRACE_NO_INDENT();
 
@@ -29,13 +29,13 @@ Tpp tp_get(LevelData *data, uint8_t x, uint8_t y, uint8_t slot)
   return tp_find(id);
 }
 
-Tpp Level::tp_get(uint8_t x, uint8_t y, uint8_t slot)
+Tpp Level::tp_get(int8_t x, int8_t y, uint8_t slot)
 {
   TRACE_NO_INDENT();
   return ::tp_get(data, x, y, slot);
 }
 
-Thingp thing_get(LevelData *data, uint8_t x, uint8_t y, uint8_t slot, Tpp *out)
+Thingp thing_get(LevelData *data, int8_t x, int8_t y, uint8_t slot, Tpp *out)
 {
   TRACE_NO_INDENT();
 
@@ -69,7 +69,7 @@ Thingp thing_get(LevelData *data, uint8_t x, uint8_t y, uint8_t slot, Tpp *out)
   return nullptr;
 }
 
-Thingp Level::thing_get(uint8_t x, uint8_t y, uint8_t slot, Tpp *out)
+Thingp Level::thing_get(int8_t x, int8_t y, uint8_t slot, Tpp *out)
 {
   TRACE_NO_INDENT();
   return ::thing_get(data, x, y, slot, out);
@@ -154,8 +154,8 @@ Thingp thing_new(LevelData *data, Tpp tp, uint8_t at_x, uint8_t at_y)
       ThingId thing_id;
       thing_id = (entropy << (THING_ID_X_BITS + THING_ID_Y_BITS)) | (x << THING_ID_Y_BITS) | y;
       t->id    = thing_id;
-      t->pix_x = (int) at_x * TILE_WIDTH;
-      t->pix_y = (int) at_y * TILE_HEIGHT;
+      t->pix_x = (int) at_x * PIX_SCALE * TILE_WIDTH;
+      t->pix_y = (int) at_y * PIX_SCALE * TILE_HEIGHT;
 
       if (tp) {
         t->tp_id = tp->id;
@@ -168,7 +168,7 @@ Thingp thing_new(LevelData *data, Tpp tp, uint8_t at_x, uint8_t at_y)
   DIE("out of things");
 }
 
-Thingp Level::thing_new(Tpp tp, uint8_t x, uint8_t y)
+Thingp Level::thing_new(Tpp tp, int8_t x, int8_t y)
 {
   TRACE_NO_INDENT();
   return ::thing_new(data, tp, x, y);
@@ -187,61 +187,3 @@ void thing_free(LevelData *data, Thingp t)
 }
 
 void Level::thing_free(Thingp t) { ::thing_free(data, t); }
-
-void thing_push(LevelData *data, Thingp t)
-{
-  TRACE_NO_INDENT();
-
-  uint8_t x = t->pix_x / TILE_WIDTH;
-  uint8_t y = t->pix_y / TILE_HEIGHT;
-
-  for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-    auto o = &data->obj[ x ][ y ][ slot ];
-    if (o->id == t->id) {
-      return;
-    }
-  }
-
-  for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-    auto o = &data->obj[ x ][ y ][ slot ];
-    if (! o->id) {
-      o->id     = t->id;
-      auto tp   = tp_find(t->tp_id);
-      auto tile = tp_first_tile(tp);
-      if (tile) {
-        o->tile = tile->global_index;
-      }
-      return;
-    }
-  }
-
-  ERR("out of thing slots");
-}
-
-void Level::thing_push(Thingp t)
-{
-  TRACE_NO_INDENT();
-  return ::thing_push(data, t);
-}
-
-void thing_pop(LevelData *data, Thingp t)
-{
-  TRACE_NO_INDENT();
-
-  uint8_t x = t->pix_x / TILE_WIDTH;
-  uint8_t y = t->pix_y / TILE_HEIGHT;
-
-  for (auto slot = 0; slot < MAP_SLOTS; slot++) {
-    auto o = &data->obj[ x ][ y ][ slot ];
-    if (o->id == t->id) {
-      o->id = 0;
-      return;
-    }
-  }
-}
-
-void Level::thing_pop(Thingp t)
-{
-  TRACE_NO_INDENT();
-  return ::thing_pop(data, t);
-}

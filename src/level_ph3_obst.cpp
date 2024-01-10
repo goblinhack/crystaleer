@@ -98,7 +98,7 @@ void level_ph3_obstacle_add(ObstacleType type, const char *data)
   const auto row_len      = LEVEL_PH3_OBSTACLE_WIDTH;
   auto       expected_len = row_len * LEVEL_PH3_OBSTACLE_HEIGHT;
 
-  if (strlen(data) != expected_len) {
+  if ((int) strlen(data) != expected_len) {
     DIE("bad obstacle size, expected %d, got %d", (int) strlen(data), (int) expected_len);
   }
 

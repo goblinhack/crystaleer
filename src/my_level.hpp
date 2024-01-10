@@ -23,25 +23,25 @@ public:
   //
   // Level display bounds
   //
-  uint8_t minx = {};
-  uint8_t miny = {};
-  uint8_t maxx = {};
-  uint8_t maxy = {};
+  int8_t minx = {};
+  int8_t miny = {};
+  int8_t maxx = {};
+  int8_t maxy = {};
 
-  bool is_oob(uint8_t x, uint8_t y);
+  bool is_oob(int8_t x, int8_t y);
 
-  bool set_id(uint8_t x, uint8_t y, uint8_t z, Id);
-  void set_id_no_check(uint8_t x, uint8_t y, uint8_t z, Id);
-  Id   get_id(uint8_t x, uint8_t y, uint8_t z);
-  Id   get_id_no_check(uint8_t x, uint8_t y, uint8_t z);
+  bool set_id(int8_t x, int8_t y, uint8_t z, Id);
+  void set_id_no_check(int8_t x, int8_t y, uint8_t z, Id);
+  Id   get_id(int8_t x, int8_t y, uint8_t z);
+  Id   get_id_no_check(int8_t x, int8_t y, uint8_t z);
 
-  bool  set_tile(uint8_t x, uint8_t y, uint8_t z, Tilep);
-  void  set_tile_no_check(uint8_t x, uint8_t y, uint8_t z, Tilep);
-  Tilep get_tile(uint8_t x, uint8_t y, uint8_t z);
-  Tilep get_tile_no_check(uint8_t x, uint8_t y, uint8_t z);
+  bool  set_tile(int8_t x, int8_t y, uint8_t z, Tilep);
+  void  set_tile_no_check(int8_t x, int8_t y, uint8_t z, Tilep);
+  Tilep get_tile(int8_t x, int8_t y, uint8_t z);
+  Tilep get_tile_no_check(int8_t x, int8_t y, uint8_t z);
 
-  Tpp    tp_get(uint8_t x, uint8_t y, uint8_t slot);
-  Thingp thing_get(uint8_t x, uint8_t y, uint8_t slot, Tpp * = nullptr);
+  Tpp    tp_get(int8_t x, int8_t y, uint8_t slot);
+  Thingp thing_get(int8_t x, int8_t y, uint8_t slot, Tpp * = nullptr);
 
   void display(void);
   void set_display_bounds(void);
@@ -49,6 +49,7 @@ public:
   void display_tile(Tpp, uint16_t, point tl, point br, point offset, bool shadow);
   void display_tile(Tpp, Tilep, point tl, point br, point offset, bool shadow);
   void anim(void);
+  void tick(void);
   void display_z_layer(int z, bool shadow, bool deco);
 
   bool is_wall(const uint8_t x, const uint8_t y);
@@ -65,8 +66,9 @@ public:
 
   Thingp thing_find_optional(ThingId id);
   Thingp thing_find(ThingId id);
-  Thingp thing_new(Tpp, uint8_t x, uint8_t y);
+  Thingp thing_new(Tpp, int8_t x, int8_t y);
   void   thing_free(Thingp);
+  void   thing_update_pos(Thingp);
   void   thing_push(Thingp);
   void   thing_pop(Thingp);
 };

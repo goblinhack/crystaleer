@@ -8,6 +8,7 @@
 void Game::display(void)
 {
   if (level) {
+    level->tick();
     level->anim();
     level->display();
   }

@@ -9,17 +9,16 @@
 #include "my_sys.hpp"
 #include "my_thing_id.hpp"
 
-using Thing = struct Thing_ {
-public:
-  ThingId id {};
-  constexpr Thing_() = default;
+struct Thing {
+  ThingId  id;
   uint16_t tp_id;
-  uint16_t pix_x;
-  uint16_t pix_y;
+  uint16_t tick;
+  int16_t  pix_x; /* Scaled up by PIX_SCALE */
+  int16_t  pix_y; /* Scaled up by PIX_SCALE */
   int8_t   dx;
   int8_t   dy;
 };
 
-using Thingp = Thing *;
+using Thingp = struct Thing *;
 
 #endif

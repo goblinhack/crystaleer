@@ -36,13 +36,13 @@ typedef struct ThingOrTp_ {
   //
   uint16_t tile;
   //
-  // The current tiles[] index for this object
-  //
-  uint16_t anim_index;
-  //
   // Count down until the next animation frame should start
   //
-  int anim_ms_remaining : 12;
+  int16_t anim_ms_remaining;
+  //
+  // The current tiles[] index for this object
+  //
+  uint8_t anim_index;
   //
   // Direction of tile decorations
   //
@@ -79,15 +79,17 @@ typedef struct LevelData_ {
 LevelDatap level_data_constructor(void);
 void       level_data_destructor(LevelDatap);
 
+bool is_oob(LevelData *, int8_t x, int8_t y);
+
 Thingp thing_find_optional(LevelData *, ThingId);
 Thingp thing_find(LevelData *, ThingId);
 Thingp thing_new(LevelData *, Tpp, uint8_t, uint8_t);
-Thingp thing_get(LevelData *, uint8_t x, uint8_t y, uint8_t slot, Tpp * = nullptr);
+Thingp thing_get(LevelData *, int8_t x, int8_t y, uint8_t slot, Tpp * = nullptr);
 
 void thing_free(LevelData *, Thingp);
 void thing_push(LevelData *, Thingp);
 void thing_pop(LevelData *, Thingp);
 
-Tpp tp_get(LevelData *, uint8_t x, uint8_t y, uint8_t slot);
+Tpp tp_get(LevelData *, int8_t x, int8_t y, uint8_t slot);
 
 #endif // _MY_LEVEL_DATA_H_

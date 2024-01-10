@@ -91,8 +91,8 @@ void Level::display_z_layer(int z, bool shadow, bool deco)
         point tl;
         point br;
 
-        Tpp tp;
-        thing_get(x, y, slot, &tp);
+        Tpp  tp;
+        auto t = thing_get(x, y, slot, &tp);
         if (! tp) {
           continue;
         }
@@ -115,10 +115,19 @@ void Level::display_z_layer(int z, bool shadow, bool deco)
         auto pix_height = tile->pix_height / game->config.game_pix_zoom;
         auto pix_width  = tile->pix_width / game->config.game_pix_zoom;
 
-        tl.x = x * dw;
-        tl.y = y * dh;
+        if (t) {
+          tl.x = t->pix_x / PIX_SCALE;
+          tl.y = t->pix_y / PIX_SCALE;
+        } else {
+          tl.x = x * TILE_WIDTH;
+          tl.y = y * TILE_WIDTH;
+        }
+
         tl.x -= data->pixel_map_at_x;
         tl.y -= data->pixel_map_at_y;
+
+        tl.x /= game->config.game_pix_zoom;
+        tl.y /= game->config.game_pix_zoom;
 
         if (tp->is_blit_on_ground) {
           //

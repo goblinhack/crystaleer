@@ -135,4 +135,9 @@
 #define GAME_DEFAULT_UI_ZOOM  1
 #define GAME_DEFAULT_PIX_ZOOM GAME_MOST_ZOOMED_OUT
 
+/*
+ * Accounts for fractions of a pixel
+ */
+#define PIX_SCALE 4
+
 #endif
