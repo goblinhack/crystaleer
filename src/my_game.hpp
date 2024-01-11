@@ -25,10 +25,10 @@ public:
   // Keep flags int size so the header size will change on a new flag.
   // It does not always for new bools.
   //
-  float game_pix_scale_height = {};
-  float game_pix_scale_width  = {};
-  float game_pix_zoom         = GAME_DEFAULT_PIX_ZOOM;
-  float ui_pix_zoom           = GAME_DEFAULT_UI_ZOOM;
+  int   game_pix_scale_height = {};
+  int   game_pix_scale_width  = {};
+  int   game_pix_zoom         = GAME_DEFAULT_PIX_ZOOM;
+  int   ui_pix_zoom           = GAME_DEFAULT_UI_ZOOM;
   float aspect_ratio          = {};
 
   uint32_t ui_gfx_term_height = {};
