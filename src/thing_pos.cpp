@@ -101,10 +101,28 @@ void thing_update_pos(LevelData *data, Thingp t)
     return;
   }
 
+  ThingOrTp saved {};
+
+  for (auto slot = 0; slot < MAP_SLOTS; slot++) {
+    auto o = &data->obj[ cur_tile_x ][ cur_tile_y ][ slot ];
+    if (o->id == t->id) {
+      memcpy(&saved, o, sizeof(*o));
+      break;
+    }
+  }
+
   thing_pop(data, t);
   t->pix_x = new_pix_x;
   t->pix_y = new_pix_y;
   thing_push(data, t);
+
+  for (auto slot = 0; slot < MAP_SLOTS; slot++) {
+    auto o = &data->obj[ new_tile_x ][ new_tile_y ][ slot ];
+    if (o->id == t->id) {
+      memcpy(o, &saved, sizeof(*o));
+      break;
+    }
+  }
 }
 
 void Level::thing_update_pos(Thingp t)

@@ -138,6 +138,6 @@
 /*
  * Accounts for fractions of a pixel
  */
-#define PIX_SCALE 4
+#define PIX_SCALE 8
 
 #endif
