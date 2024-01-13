@@ -170,28 +170,18 @@ void wid_mouse_motion(int x, int y, int relx, int rely, int wheelx, int wheely);
 void wid_mouse_move(Widp w);
 void wid_mouse_up(uint32_t button, int x, int y);
 void wid_mouse_warp(Widp w);
-void wid_move_all(void);
-void wid_move_delta_in(Widp w, int dx, int dy, uint32_t ms);
 void wid_move_delta_pct(Widp, double dx, double dy);
 void wid_move_delta(Widp, int dx, int dy);
 void wid_move_end(Widp);
-void wid_move_to_abs_centered_in(Widp, int dx, int dy, uint32_t delay);
 void wid_move_to_abs_centered(Widp, int dx, int dy);
-void wid_move_to_abs_in(Widp, int dx, int dy, uint32_t delay);
 void wid_move_to_abs(Widp, int dx, int dy);
 void wid_move_to_bottom(Widp);
-void wid_move_to_centered_in(Widp, int dx, int dy, uint32_t delay);
-void wid_move_to_horiz_pct_in(Widp w, double pct, double in);
 void wid_move_to_horiz_pct(Widp w, double pct);
-void wid_move_to_horiz_vert_pct_in(Widp w, double x, double y, double in);
 void wid_move_to_left(Widp);
-void wid_move_to_pct_centered_in(Widp, double dx, double dy, uint32_t delay);
 void wid_move_to_pct_centered(Widp, double dx, double dy);
-void wid_move_to_pct_in(Widp, double dx, double dy, uint32_t delay);
 void wid_move_to_pct(Widp, double dx, double dy);
 void wid_move_to_right(Widp);
 void wid_move_to_top(Widp);
-void wid_move_to_vert_pct_in(Widp w, double pct, double in);
 void wid_move_to_vert_pct(Widp w, double pct);
 void wid_move_to(Widp w, int x, int y);
 void wid_move_to_y_off(Widp w, int off);
@@ -347,12 +337,6 @@ typedef std::map< WidKeyType, Widp >                     wid_key_map_int;
 
 WidKeyType wid_unsorted_get_key(Widp w);
 
-typedef struct wid_move_ {
-  int  moving_endx;
-  int  moving_endy;
-  ts_t ts_moving_end;
-} wid_move_t;
-
 class Wid
 {
 public:
@@ -366,14 +350,12 @@ public:
   //
   tree_wid_key key {};
   WidKeyType   tree2_key {};
-  WidKeyType   tree3_key {};
   WidKeyType   tree4_key {};
   WidKeyType   tree5_key {};
   WidKeyType   tree6_key {};
 
   wid_key_map_location *in_tree_root {};
   wid_key_map_int      *in_tree2_unsorted_root {};
-  wid_key_map_int      *in_tree3_moving_wids {};
   wid_key_map_int      *in_tree4_wids_being_destroyed {};
   wid_key_map_int      *in_tree5_tick_wids {};
   wid_key_map_int      *in_tree6_tick_wids_post_display {};
@@ -388,11 +370,6 @@ public:
   // No particular sort order.
   //
   wid_key_map_int tree2_children_unsorted {};
-
-  //
-  // A tree for moving things
-  //
-  wid_key_map_int tree3_moving_wids {};
 
   //
   // A tree for things being destroyed.
@@ -505,17 +482,6 @@ public:
   ts_t ts_created {};
   ts_t ts_last_mode_change {};
 
-//
-// Queue of wid move requests.
-//
-#define WID_MAX_MOVE_QUEUE 4
-  std::array< wid_move_t, WID_MAX_MOVE_QUEUE > move {};
-  point                                        moving_start {};
-  point                                        moving_end {};
-  ts_t                                         ts_moving_begin {};
-  ts_t                                         ts_moving_end {};
-  uint8_t                                      moving {};
-
   //
   // Text input
   //
@@ -577,15 +543,17 @@ uint8_t wid_is_moving(Widp w);
 
 bool wid_some_recent_event_occurred(void);
 
-extern bool                                                              wid_mouse_two_clicks;
-extern const int                                                         wid_destroy_delay_ms;
-extern int                                                               wid_mouse_visible;
+extern bool      wid_mouse_two_clicks;
+extern const int wid_destroy_delay_ms;
+extern int       wid_mouse_visible;
+
 extern std::array< std::array< Widp, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX > wid_on_screen_at;
-extern ts_t                                                              wid_ignore_events_briefly_ts;
-extern ts_t                                                              wid_last_mouse_motion;
-extern ts_t                                                              wid_last_over_event;
-extern Widp                                                              wid_focus;
-extern Widp                                                              wid_mouse_template;
-extern Widp                                                              wid_over;
+
+extern ts_t wid_ignore_events_briefly_ts;
+extern ts_t wid_last_mouse_motion;
+extern ts_t wid_last_over_event;
+
+extern Widp wid_focus;
+extern Widp wid_over;
 
 #endif

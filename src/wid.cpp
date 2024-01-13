@@ -81,13 +81,6 @@ int  wid_mouse_visible = 1;
 bool wid_mouse_two_clicks;
 ts_t wid_last_mouse_motion;
 
-//
-// Widget moving
-//
-static Widp wid_moving {};
-static int  wid_moving_last_x;
-static int  wid_moving_last_y;
-
 static ts_t wid_time;
 
 //
@@ -110,15 +103,12 @@ static void    wid_tree_detach(Widp w);
 static void    wid_tree_attach(Widp w);
 static void    wid_tree_remove(Widp w);
 static void    wid_tree2_unsorted_remove(Widp w);
-static void    wid_tree3_moving_wids_remove(Widp w);
-static void    wid_tree3_moving_wids_insert(Widp w);
 static void    wid_tree4_wids_being_destroyed_remove(Widp w);
 static void    wid_tree4_wids_being_destroyed_insert(Widp w);
 static void    wid_tree5_tick_wids_remove(Widp w);
 static void    wid_tree5_tick_wids_insert(Widp w);
 static void    wid_tree6_tick_post_display_wids_remove(Widp w);
 static void    wid_tree6_tick_post_display_wids_insert(Widp w);
-static void    wid_move_dequeue(Widp w);
 static void    wid_display(Widp w, uint8_t disable_scissor, uint8_t *updated_scissors, int clip);
 
 //
@@ -135,10 +125,6 @@ std::array< std::string, HISTORY_MAX > history;
 uint32_t                               g_history_at;
 uint32_t                               g_history_walk;
 
-//
-// A tile over the mouse pointer
-//
-Widp                                                              wid_mouse_template {};
 std::array< std::array< Widp, TERM_HEIGHT_MAX >, TERM_WIDTH_MAX > wid_on_screen_at {};
 
 static uint8_t wid_init_done;
@@ -561,11 +547,7 @@ Widp wid_get_scrollbar_horiz(Widp w)
   return (w->scrollbar_horiz);
 }
 
-static void wid_mouse_motion_end(void)
-{
-  TRACE_NO_INDENT();
-  wid_moving = nullptr;
-}
+static void wid_mouse_motion_end(void) { TRACE_NO_INDENT(); }
 
 void wid_set_ignore_events(Widp w, uint8_t val)
 {
@@ -597,14 +579,14 @@ uint8_t wid_ignore_events(Widp w)
     return true;
   }
 
-  if (w->ignore_events || w->moving || w->hidden || w->being_destroyed) {
+  if (w->ignore_events || w->hidden || w->being_destroyed) {
     return true;
   }
 
   if (w->parent) {
     top = wid_get_top_parent(w);
 
-    if (top->moving || top->hidden || top->being_destroyed) {
+    if (top->hidden || top->being_destroyed) {
       return true;
     }
   }
@@ -615,7 +597,6 @@ uint8_t wid_ignore_events(Widp w)
 uint8_t wid_ignore_events_only(Widp w)
 {
   TRACE_NO_INDENT();
-  Widp top {};
 
   if (unlikely(! w)) {
     return true;
@@ -623,14 +604,6 @@ uint8_t wid_ignore_events_only(Widp w)
 
   if (w->ignore_events) {
     return true;
-  }
-
-  if (w->parent) {
-    top = wid_get_top_parent(w);
-
-    if (top->moving) {
-      return true;
-    }
   }
 
   return false;
@@ -645,14 +618,14 @@ uint8_t wid_ignore_scroll_events(Widp w)
     return true;
   }
 
-  if (w->ignore_scroll_events || w->moving || w->hidden || w->being_destroyed) {
+  if (w->ignore_scroll_events || w->hidden || w->being_destroyed) {
     return true;
   }
 
   if (w->parent) {
     top = wid_get_top_parent(w);
 
-    if (top->moving || top->hidden || top->being_destroyed) {
+    if (top->hidden || top->being_destroyed) {
       return true;
     }
   }
@@ -707,14 +680,6 @@ static void wid_mouse_motion_begin(Widp w, int x, int y)
 {
   TRACE_NO_INDENT();
   wid_mouse_motion_end();
-
-  if (wid_ignore_being_destroyed(w)) {
-    return;
-  }
-
-  wid_moving        = w;
-  wid_moving_last_x = x;
-  wid_moving_last_y = y;
 }
 
 static void wid_mfocus_end(void)
@@ -1895,29 +1860,6 @@ static void wid_tree2_unsorted_insert(Widp w)
   w->in_tree2_unsorted_root = root;
 }
 
-static void wid_tree3_moving_wids_insert(Widp w)
-{
-  TRACE_NO_INDENT();
-  if (w->in_tree3_moving_wids) {
-    return;
-  }
-
-  if (wid_exiting) {
-    return;
-  }
-
-  static uint64_t  key;
-  wid_key_map_int *root = &wid_top_level3;
-
-  w->tree3_key = ++key;
-  auto result  = root->insert(std::make_pair(w->tree3_key, w));
-  if (result.second == false) {
-    DIE("Wid insert name [%s] tree3 failed", wid_get_name(w).c_str());
-  }
-
-  w->in_tree3_moving_wids = root;
-}
-
 static void wid_tree4_wids_being_destroyed_insert(Widp w)
 {
   TRACE_NO_INDENT();
@@ -2061,23 +2003,6 @@ WidKeyType wid_unsorted_get_key(Widp w)
   return (w->tree_global_key);
 }
 
-static void wid_tree3_moving_wids_remove(Widp w)
-{
-  TRACE_NO_INDENT();
-  auto root = w->in_tree3_moving_wids;
-  if (! root) {
-    return;
-  }
-
-  auto result = root->find(w->tree3_key);
-  if (result == root->end()) {
-    DIE("Wid tree3 did not find wid");
-  }
-  root->erase(w->tree3_key);
-
-  w->in_tree3_moving_wids = nullptr;
-}
-
 static void wid_tree4_wids_being_destroyed_remove(Widp w)
 {
   TRACE_NO_INDENT();
@@ -2184,7 +2109,6 @@ static Widp wid_new(void)
 static void wid_destroy_immediate_internal(Widp w)
 {
   TRACE_NO_INDENT();
-  wid_tree3_moving_wids_remove(w);
   wid_tree4_wids_being_destroyed_remove(w);
   wid_tree5_tick_wids_remove(w);
   wid_tree6_tick_post_display_wids_remove(w);
@@ -2207,10 +2131,6 @@ static void wid_destroy_immediate_internal(Widp w)
   // if (wid_over == w) {
   //     wid_mouse_over_end();
   // }
-
-  if (wid_moving == w) {
-    wid_mouse_motion_end();
-  }
 
   if (w->scrollbar_vert) {
     w->scrollbar_vert->scrollbar_owner = nullptr;
@@ -2288,10 +2208,6 @@ static void wid_destroy_immediate(Widp w)
     }
   }
 
-  if (w == wid_moving) {
-    wid_moving = nullptr;
-  }
-
   for (auto x = 0; x < TERM_WIDTH; x++) {
     for (auto y = 0; y < TERM_HEIGHT; y++) {
       if (get(wid_on_screen_at, x, y) == w) {
@@ -2344,10 +2260,6 @@ static void wid_destroy_delay(Widp *wp, int delay)
   // if (wid_over == w) {
   //     wid_mouse_over_end();
   // }
-
-  if (wid_moving == w) {
-    wid_mouse_motion_end();
-  }
 
   for (auto &iter : w->tree2_children_unsorted) {
     auto child = iter.second;
@@ -2785,14 +2697,6 @@ static void wid_raise_internal(Widp w)
     return;
   }
 
-  if (wid_moving != w) {
-    wid_mouse_motion_end();
-  }
-
-  if (wid_get_top_parent(wid_moving) != w) {
-    wid_mouse_motion_end();
-  }
-
   wid_tree_detach(w);
   w->key.priority = ++wid_highest_priority;
   wid_tree_attach(w);
@@ -2861,14 +2765,6 @@ static void wid_lower_internal(Widp w)
 
   if (w->do_not_lower) {
     return;
-  }
-
-  if (wid_moving == w) {
-    wid_mouse_motion_end();
-  }
-
-  if (wid_get_top_parent(wid_moving) == w) {
-    wid_mouse_motion_end();
   }
 
   wid_tree_detach(w);
@@ -3367,16 +3263,8 @@ void wid_hide(Widp w)
     wid_mouse_over_end();
   }
 
-  if (wid_moving == w) {
-    wid_mouse_motion_end();
-  }
-
   if (wid_get_top_parent(wid_over) == w) {
     wid_mouse_over_end();
-  }
-
-  if (wid_get_top_parent(wid_moving) == w) {
-    wid_mouse_motion_end();
   }
 
   if (w == wid_focus) {
@@ -4829,72 +4717,6 @@ void wid_move_to_horiz_pct(Widp w, double pct)
   wid_move_delta(w, delta, 0);
 }
 
-void wid_move_to_vert_pct_in(Widp w, double pct, double in)
-{
-  TRACE_NO_INDENT();
-  if (pct < 0.0) {
-    pct = 0.0;
-  }
-
-  if (pct > 1.0) {
-    pct = 1.0;
-  }
-
-  double pheight = wid_get_br_y(w->parent) - wid_get_tl_y(w->parent);
-  double at      = (wid_get_tl_y(w) - wid_get_tl_y(w->parent)) / pheight;
-  double delta   = (pct - at) * pheight;
-
-  wid_move_to_abs_in(w, wid_get_tl_x(w), wid_get_tl_y(w) + delta, in);
-}
-
-void wid_move_to_horiz_pct_in(Widp w, double pct, double in)
-{
-  TRACE_NO_INDENT();
-  if (pct < 0.0) {
-    pct = 0.0;
-  }
-
-  if (pct > 1.0) {
-    pct = 1.0;
-  }
-
-  double pwidth = wid_get_br_x(w->parent) - wid_get_tl_x(w->parent);
-  double at     = (wid_get_tl_x(w) - wid_get_tl_x(w->parent)) / pwidth;
-  double delta  = (pct - at) * pwidth;
-
-  wid_move_to_abs_in(w, wid_get_tl_x(w) + delta, wid_get_tl_y(w), in);
-}
-
-void wid_move_to_horiz_vert_pct_in(Widp w, double x, double y, double in)
-{
-  TRACE_NO_INDENT();
-  if (x < 0.0) {
-    x = 0.0;
-  }
-
-  if (x > 1.0) {
-    x = 1.0;
-  }
-
-  if (y < 0.0) {
-    y = 0.0;
-  }
-
-  if (y > 1.0) {
-    y = 1.0;
-  }
-
-  double pheight = wid_get_br_y(w->parent) - wid_get_tl_y(w->parent);
-  double aty     = (wid_get_tl_y(w) - wid_get_tl_y(w->parent)) / pheight;
-  double dy      = (y - aty) * pheight;
-
-  double pwidth = wid_get_br_x(w->parent) - wid_get_tl_x(w->parent);
-  double atx    = (wid_get_tl_x(w) - wid_get_tl_x(w->parent)) / pwidth;
-  double dx     = (x - atx) * pwidth;
-
-  wid_move_to_abs_in(w, wid_get_tl_x(w) + dx, wid_get_tl_y(w) + dy, in);
-}
-
 void wid_move_to_top(Widp w)
 {
   TRACE_NO_INDENT();
@@ -5127,11 +4949,6 @@ void wid_mouse_motion(int x, int y, int relx, int rely, int wheelx, int wheely)
   }
 
   wid_mouse_motion_recursion = 1;
-
-  if (wid_mouse_template) {
-    wid_move_to_abs_centered_in(wid_mouse_template, x, y, 10);
-    wid_raise(wid_mouse_template);
-  }
 
   uint8_t over = false;
 
@@ -6021,17 +5838,6 @@ void wid_get_pct(Widp w, double *px, double *py)
 }
 
 //
-// Finish off a widgets move.
-//
-void wid_move_end(Widp w)
-{
-  TRACE_NO_INDENT();
-  while (w->moving) {
-    wid_move_dequeue(w);
-  }
-}
-
-//
 // Display one wid and its children
 //
 static int  wid_total_count;
@@ -6379,53 +6185,6 @@ static void wid_display(Widp w, uint8_t disable_scissor, uint8_t *updated_scisso
 }
 
 //
-// Do stuff for all widgets.
-//
-void wid_move_all(void)
-{
-  TRACE_NO_INDENT();
-  if (wid_top_level3.empty()) {
-    return;
-  }
-
-  uint32_t N = wid_top_level3.size();
-  Widp     w {};
-  Widp     wids[ N ];
-  uint32_t n = 0;
-
-  for (auto &iter : wid_top_level3) {
-    auto w    = iter.second;
-    wids[ n ] = w;
-    n++;
-  }
-
-  while (n--) {
-    w = wids[ n ];
-
-    double x;
-    double y;
-
-    if (wid_time >= w->ts_moving_end) {
-      wid_move_dequeue(w);
-
-      //
-      // If nothing else in the move queue, we're dine.
-      //
-      if (! w->moving) {
-        continue;
-      }
-    }
-
-    double time_step = (double) (wid_time - w->ts_moving_begin) / (double) (w->ts_moving_end - w->ts_moving_begin);
-
-    x = (time_step * (double) (w->moving_end.x - w->moving_start.x)) + w->moving_start.x;
-    y = (time_step * (double) (w->moving_end.y - w->moving_start.y)) + w->moving_start.y;
-
-    wid_move_to_abs(w, x, y);
-  }
-}
-
-//
 // Delayed destroy?
 //
 static void wid_gc(Widp w)
@@ -6599,9 +6358,6 @@ void wid_display_all(bool ok_to_handle_requests)
 
   TRACE_NO_INDENT();
   wid_tick_all();
-
-  TRACE_NO_INDENT();
-  wid_move_all();
 
   // CON("---------------------------------");
 
@@ -6811,148 +6567,6 @@ void wid_move_to_abs_centered(Widp w, int x, int y)
   dy -= ceil((wid_get_br_y(w) - wid_get_tl_y(w)) / 2);
 
   wid_move_delta(w, dx, dy);
-}
-
-static void wid_move_enqueue(Widp w, int moving_start_x, int moving_start_y, int moving_end_x, int moving_end_y,
-                             uint32_t ms)
-{
-  TRACE_NO_INDENT();
-  w->moving_start.x  = moving_start_x;
-  w->moving_start.y  = moving_start_y;
-  w->moving_end.x    = moving_end_x;
-  w->moving_end.y    = moving_end_y;
-  w->ts_moving_begin = wid_time;
-  w->ts_moving_end   = wid_time + ms;
-
-  wid_tree3_moving_wids_insert(w);
-
-  w->moving++;
-}
-
-static void wid_move_dequeue(Widp w)
-{
-  TRACE_NO_INDENT();
-  if (! w->moving) {
-    return;
-  }
-
-  wid_move_to_abs(w, w->moving_end.x, w->moving_end.y);
-
-  w->moving--;
-  if (! w->moving) {
-    wid_tree3_moving_wids_remove(w);
-    return;
-  }
-
-  wid_move_t *c = &getref(w->move, 0);
-
-  w->moving_start.x  = w->moving_end.x;
-  w->moving_start.y  = w->moving_end.y;
-  w->moving_end.x    = c->moving_endx;
-  w->moving_end.y    = c->moving_endy;
-  w->ts_moving_begin = wid_time;
-  w->ts_moving_end   = c->ts_moving_end;
-
-  uint8_t i;
-  for (i = 0; i < w->moving; i++) {
-    if (i < WID_MAX_MOVE_QUEUE - 1) {
-      wid_move_t *c = &getref(w->move, i);
-      memcpy(c, c + 1, sizeof(*c));
-    }
-  }
-
-  {
-    wid_move_t *c = &getref(w->move, i);
-    memset(c, 0, sizeof(*c));
-  }
-}
-
-void wid_move_to_pct_in(Widp w, double x, double y, uint32_t ms)
-{
-  TRACE_NO_INDENT();
-  if (! w->parent) {
-    x *= (double) TERM_WIDTH;
-    y *= (double) TERM_HEIGHT;
-  } else {
-    x *= wid_get_width(w->parent);
-    y *= wid_get_height(w->parent);
-  }
-
-  //
-  // Child postion is relative from the parent.
-  //
-  Widp p = w->parent;
-  if (p) {
-    x += wid_get_tl_x(p);
-    y += wid_get_tl_y(p);
-  }
-
-  wid_move_enqueue(w, wid_get_tl_x(w), wid_get_tl_y(w), x, y, ms);
-}
-
-void wid_move_to_abs_in(Widp w, int x, int y, uint32_t ms)
-{
-  TRACE_NO_INDENT();
-  wid_move_enqueue(w, wid_get_tl_x(w), wid_get_tl_y(w), x, y, ms);
-}
-
-void wid_move_delta_in(Widp w, int dx, int dy, uint32_t ms)
-{
-  TRACE_NO_INDENT();
-  int x = wid_get_tl_x(w);
-  int y = wid_get_tl_y(w);
-
-  wid_move_enqueue(w, x, y, x + dx, y + dy, ms);
-}
-
-void wid_move_to_pct_centered_in(Widp w, double x, double y, uint32_t ms)
-{
-  TRACE_NO_INDENT();
-  if (! w->parent) {
-    x *= (double) TERM_WIDTH;
-    y *= (double) TERM_HEIGHT;
-  } else {
-    x *= wid_get_width(w->parent);
-    y *= wid_get_height(w->parent);
-  }
-
-  //
-  // Child postion is relative from the parent.
-  //
-  Widp p = w->parent;
-  if (p) {
-    x += wid_get_tl_x(p);
-    y += wid_get_tl_y(p);
-  }
-
-  x -= (wid_get_br_x(w) - wid_get_tl_x(w)) / 2;
-  y -= (wid_get_br_y(w) - wid_get_tl_y(w)) / 2;
-
-  wid_move_enqueue(w, wid_get_tl_x(w), wid_get_tl_y(w), x, y, ms);
-}
-
-void wid_move_to_abs_centered_in(Widp w, int x, int y, uint32_t ms)
-{
-  TRACE_NO_INDENT();
-  x -= (wid_get_br_x(w) - wid_get_tl_x(w)) / 2;
-  y -= (wid_get_br_y(w) - wid_get_tl_y(w)) / 2;
-
-  wid_move_enqueue(w, wid_get_tl_x(w), wid_get_tl_y(w), x, y, ms);
-}
-
-void wid_move_to_centered_in(Widp w, int x, int y, uint32_t ms)
-{
-  TRACE_NO_INDENT();
-  wid_move_enqueue(w, wid_get_tl_x(w), wid_get_tl_y(w), x, y, ms);
-}
-
-uint8_t wid_is_moving(Widp w)
-{
-  if (w->moving) {
-    return true;
-  }
-
-  return false;
 }
 
 void wid_ignore_events_briefly(void)

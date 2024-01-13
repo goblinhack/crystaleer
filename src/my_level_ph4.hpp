@@ -12,7 +12,7 @@
 class LevelPH4
 {
 public:
-  LevelData data;
+  LevelData data {};
 
   bool ok {};
 

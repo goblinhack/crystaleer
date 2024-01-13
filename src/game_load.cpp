@@ -448,7 +448,7 @@ void Game::load(void)
   LOG("-");
 }
 
-void Game::load(int slot)
+void Game::load(uint8_t slot)
 {
   TRACE_AND_INDENT();
   if (slot < 0) {

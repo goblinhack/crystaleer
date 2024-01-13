@@ -256,14 +256,18 @@ uint8_t sdl_init(void)
     return false;
   }
 
+  int w, h;
   if (video_is_unused_flags & SDL_WINDOW_ALLOW_HIGHDPI) {
-    SDL_GL_GetDrawableSize(sdl.window, &game->config.window_pix_width, &game->config.window_pix_height);
+    SDL_GL_GetDrawableSize(sdl.window, &w, &h);
+    game->config.window_pix_width  = w;
+    game->config.window_pix_height = h;
   } else {
-    SDL_GetWindowSize(sdl.window, &game->config.window_pix_width, &game->config.window_pix_height);
+    SDL_GetWindowSize(sdl.window, &w, &h);
+    game->config.window_pix_width  = w;
+    game->config.window_pix_height = h;
   }
 
   LOG("SDL: Call SDL_GL_CreateContext(%dx%d)", game->config.window_pix_width, game->config.window_pix_height);
-
   sdl.context = SDL_GL_CreateContext(sdl.window);
   if (! sdl.context) {
     SDL_ClearError();
@@ -272,7 +276,6 @@ uint8_t sdl_init(void)
   }
 
   LOG("SDL: Call SDL_GL_CreateContext(%dx%d) done", game->config.window_pix_width, game->config.window_pix_height);
-
   if (SDL_GL_MakeCurrent(sdl.window, sdl.context) < 0) {
     SDL_ClearError();
     ERR("SDL_GL_MakeCurrent failed %s", SDL_GetError());
@@ -314,7 +317,7 @@ uint8_t sdl_init(void)
   LOG("SDL: Depth size  : %d", value);
 
   SDL_GL_GetAttribute(SDL_GL_DOUBLEBUFFER, &value);
-  LOG("SDL: Doub Buffer : %d", value);
+  LOG("SDL: Double buf  : %d", value);
 
   SDL_GL_GetAttribute(SDL_GL_ACCELERATED_VISUAL, &value);
   LOG("SDL: Hw Accel    : %d", value);
@@ -601,7 +604,7 @@ void config_game_pix_zoom_in(void)
   if (game->config.game_pix_zoom > GAME_MOST_ZOOMED_IN) {
     game->config.game_pix_zoom = GAME_MOST_ZOOMED_IN;
   }
-  LOG("Game zoom set to %f.", game->config.game_pix_zoom);
+  LOG("Game zoom set to %d.", game->config.game_pix_zoom);
   sdl_config_update_all();
 }
 
@@ -612,7 +615,7 @@ void config_game_pix_zoom_out(void)
   if (game->config.game_pix_zoom < GAME_MOST_ZOOMED_OUT) {
     game->config.game_pix_zoom = GAME_MOST_ZOOMED_OUT;
   }
-  LOG("Game zoom set to %f.", game->config.game_pix_zoom);
+  LOG("Game zoom set to %d.", game->config.game_pix_zoom);
   sdl_config_update_all();
 }
 
@@ -816,9 +819,9 @@ void config_game_gfx_update(void)
   LOG("SDL: Window:");
   LOG("SDL: - config pixel size    : %dx%d", game->config.config_pix_width, game->config.config_pix_height);
   LOG("SDL: - window pixel size    : %dx%d", game->config.window_pix_width, game->config.window_pix_height);
-  LOG("SDL: Game graphics zoom     : %f", game->config.game_pix_zoom);
+  LOG("SDL: Game graphics zoom     : %d", game->config.game_pix_zoom);
   LOG("SDL: - game pixel size      : %dx%d", game->config.game_pix_width, game->config.game_pix_height);
-  LOG("SDL: UI zoom                : %f", game->config.ui_pix_zoom);
+  LOG("SDL: UI zoom                : %d", game->config.ui_pix_zoom);
   LOG("SDL: - UI pixel size        : %dx%d", game->config.ui_pix_width, game->config.ui_pix_height);
 
   TERM_WIDTH  = game->config.ui_gfx_term_width;

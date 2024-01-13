@@ -23,15 +23,6 @@ public:
   Tile(const class Tile *tile);
 
   std::string name;
-  char        ascii_fg_char {};
-  char        ascii_bg_char {};
-  uint8_t     ascii_bg_alpha {255};
-  uint8_t     ascii_fg_alpha {255};
-  std::string ascii_fg_col_name;
-  std::string ascii_bg_col_name;
-  color       ascii_fg_col_value;
-  color       ascii_bg_col_value;
-  bool        ascii_set {};
 
   //
   // Grabbed by a template
@@ -90,45 +81,21 @@ public:
   uint8_t frame {};
   uint8_t dir {};
 
-  bool internal_has_dir_anim         : 1 {};
-  bool is_alive_on_end_of_anim       : 1 {};
-  bool is_alive_on_end_of_ascii_anim : 1 {};
-  bool is_dead                       : 1 {};
-  bool is_dead_on_end_of_anim        : 1 {};
-  bool is_dead_on_end_of_ascii_anim  : 1 {};
-  bool is_end_of_anim                : 1 {};
-  bool is_end_of_ascii_anim          : 1 {};
-  bool is_hp_100_percent             : 1 {};
-  bool is_hp_25_percent              : 1 {};
-  bool is_hp_50_percent              : 1 {};
-  bool is_hp_75_percent              : 1 {};
-  bool is_invisible                  : 1 {};
-  bool is_join_bot                   : 1 {};
-  bool is_join_horiz                 : 1 {};
-  bool is_join_l                     : 1 {};
-  bool is_join_l180                  : 1 {};
-  bool is_join_l270                  : 1 {};
-  bool is_join_l90                   : 1 {};
-  bool is_join_left                  : 1 {};
-  bool is_join_node                  : 1 {};
-  bool is_join_right                 : 1 {};
-  bool is_join_t                     : 1 {};
-  bool is_join_t180                  : 1 {};
-  bool is_join_t270                  : 1 {};
-  bool is_join_t90                   : 1 {};
-  bool is_join_top                   : 1 {};
-  bool is_join_vert                  : 1 {};
-  bool is_join_x                     : 1 {};
-  bool is_moving                     : 1 {};
-  bool is_open                       : 1 {};
-  bool is_outline                    : 1 {};
-  bool is_resurrecting               : 1 {};
-  bool is_sleeping                   : 1 {};
-  bool is_yyy5                       : 1 {};
-  bool is_yyy6                       : 1 {};
-  bool is_yyy7                       : 1 {};
-  bool is_yyy8                       : 1 {};
-  bool is_yyy9                       : 1 {};
+  bool internal_has_dir_anim   : 1 {};
+  bool is_alive_on_end_of_anim : 1 {};
+  bool is_dead                 : 1 {};
+  bool is_dead_on_end_of_anim  : 1 {};
+  bool is_end_of_anim          : 1 {};
+  bool is_moving               : 1 {};
+  bool is_open                 : 1 {};
+  bool is_outline              : 1 {};
+  bool is_resurrecting         : 1 {};
+  bool is_sleeping             : 1 {};
+  bool is_yyy5                 : 1 {};
+  bool is_yyy6                 : 1 {};
+  bool is_yyy7                 : 1 {};
+  bool is_yyy8                 : 1 {};
+  bool is_yyy9                 : 1 {};
 
 private:
   int _gl_binding {};
@@ -183,9 +150,7 @@ uint32_t tile_move(Tilep);
 uint8_t gfx_outline_index_offset(Tilep);
 uint8_t tile_init(void);
 uint8_t tile_is_alive_on_end_of_anim(Tilep);
-uint8_t tile_is_alive_on_end_of_ascii_anim(Tilep);
 uint8_t tile_is_dead_on_end_of_anim(Tilep);
-uint8_t tile_is_dead_on_end_of_ascii_anim(Tilep);
 uint8_t tile_is_dead(Tilep);
 uint8_t tile_is_dir_bl(Tilep);
 uint8_t tile_is_dir_br(Tilep);
@@ -197,11 +162,6 @@ uint8_t tile_is_dir_tl(Tilep);
 uint8_t tile_is_dir_tr(Tilep);
 uint8_t tile_is_dir_up(Tilep);
 uint8_t tile_is_end_of_anim(Tilep);
-uint8_t tile_is_end_of_ascii_anim(Tilep);
-uint8_t tile_is_hp_100_percent(Tilep);
-uint8_t tile_is_hp_25_percent(Tilep);
-uint8_t tile_is_hp_50_percent(Tilep);
-uint8_t tile_is_hp_75_percent(Tilep);
 uint8_t tile_is_invisible(Tilep);
 uint8_t tile_is_moving(Tilep);
 uint8_t tile_is_open(Tilep);

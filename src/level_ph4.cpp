@@ -34,21 +34,7 @@ void LevelPH4::add_object_ids(const LevelPh3 &ph3)
         case PH2_CHAR_CONNECTOR : break;
         case PH2_CHAR_DOWN : break;
         case PH2_CHAR_EMPTY : break;
-        case PH2_CHAR_ENTRANCE :
-          tp = tp_random_entrance();
-          {
-            auto tp = tp_random_player();
-            auto t  = thing_new(&data, tp, x, y);
-            thing_push(&data, t);
-            t->dx = -2;
-
-            data.pixel_map_at_x = x * TILE_WIDTH;
-            data.pixel_map_at_y = y * TILE_HEIGHT;
-
-            data.pixel_map_at_x -= game->config.game_pix_width / 2;
-            data.pixel_map_at_y -= game->config.game_pix_height / 2;
-          }
-          break;
+        case PH2_CHAR_ENTRANCE : tp = tp_random_entrance(); break;
         case PH2_CHAR_EXIT : tp = tp_random_exit(); break;
         case PH2_CHAR_KEY : tp = tp_random_key(); break;
         case PH2_CHAR_LADDER : tp = tp_random_ladder(); break;

@@ -46,6 +46,8 @@ public:
   void display(void);
   void set_display_bounds(void);
   void assign_tiles(void);
+  void place_player(void);
+  void center_map_on_player(void);
   void display_tile(Tpp, uint16_t, point tl, point br, point offset, bool shadow);
   void display_tile(Tpp, Tilep, point tl, point br, point offset, bool shadow);
   void anim(void);

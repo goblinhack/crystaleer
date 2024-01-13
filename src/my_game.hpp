@@ -25,11 +25,11 @@ public:
   // Keep flags int size so the header size will change on a new flag.
   // It does not always for new bools.
   //
-  int   game_pix_scale_height = {};
-  int   game_pix_scale_width  = {};
-  int   game_pix_zoom         = GAME_DEFAULT_PIX_ZOOM;
-  int   ui_pix_zoom           = GAME_DEFAULT_UI_ZOOM;
-  float aspect_ratio          = {};
+  int16_t game_pix_scale_height = {};
+  int16_t game_pix_scale_width  = {};
+  int16_t game_pix_zoom         = GAME_DEFAULT_PIX_ZOOM;
+  int16_t ui_pix_zoom           = GAME_DEFAULT_UI_ZOOM;
+  float   aspect_ratio          = {};
 
   uint32_t ui_gfx_term_height = {};
   uint32_t ui_gfx_term_width  = {};
@@ -46,14 +46,14 @@ public:
   bool mouse_wheel_lr_negated = {};
   bool mouse_wheel_ud_negated = {};
 
-  int config_pix_height = {};
-  int config_pix_width  = {};
-  int game_pix_height   = {};
-  int game_pix_width    = {};
-  int ui_pix_height     = {};
-  int ui_pix_width      = {};
-  int window_pix_height = {};
-  int window_pix_width  = {};
+  int16_t config_pix_height = {};
+  int16_t config_pix_width  = {};
+  int16_t game_pix_height   = {};
+  int16_t game_pix_width    = {};
+  int16_t ui_pix_height     = {};
+  int16_t ui_pix_width      = {};
+  int16_t window_pix_height = {};
+  int16_t window_pix_width  = {};
 
   uint16_t ascii_gl_height = {};
   uint16_t ascii_gl_width  = {};
@@ -139,7 +139,7 @@ public:
   //
   // If this was a saved game, which slot does it use.
   //
-  int save_slot {};
+  uint8_t save_slot {};
 
   //
   // Title and seed name.
@@ -217,7 +217,7 @@ public:
     STATE_SAVE_MENU,     // Saving a game
     STATE_QUIT_MENU,     // Pondering quitting
   };
-  int state {STATE_NORMAL};
+  uint8_t state {STATE_NORMAL};
 
   //
   // Temporary. Dampens mouse clicks
@@ -240,18 +240,18 @@ public:
   bool save(std::string save_file);
 
   // begin sort marker2 {
-  void change_state(int state, const std::string &);
+  void change_state(uint8_t state, const std::string &);
   void create_level(void);
   void display(void);
   void fini(void);
   void init(void);
-  void load(int slot);
+  void load(uint8_t slot);
   void load_snapshot(void);
   void load(void);
   void new_game(void);
   void quit_select(void);
   void save_config(void);
-  void save(int slot);
+  void save(uint8_t slot);
   void save_snapshot_check();
   void save_snapshot(void);
   void save(void);

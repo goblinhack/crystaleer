@@ -71,6 +71,8 @@ typedef struct LevelData_ {
 
   Thing things[ 1 << THING_ID_X_BITS ][ 1 << THING_ID_Y_BITS ];
 
+  ThingId player;
+
   //////////////////////////////////////////////////////////////
   // No c++ types can be used here, to allow easy level replay
   //////////////////////////////////////////////////////////////

@@ -18,7 +18,7 @@ std::string gama_state_to_string(int state)
   }
 }
 
-void Game::change_state(int new_state, const std::string &why)
+void Game::change_state(uint8_t new_state, const std::string &why)
 {
   TRACE_NO_INDENT();
 

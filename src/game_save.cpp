@@ -264,7 +264,7 @@ void Game::save(void)
   LOG("-");
 }
 
-void Game::save(int slot)
+void Game::save(uint8_t slot)
 {
   TRACE_AND_INDENT();
   if (slot < 0) {
