@@ -8,7 +8,7 @@
 #include "my_thing.hpp"
 #include "my_thing_template.hpp"
 
-void Level::place_player()
+void Level::place_create_and_place()
 {
   TRACE_NO_INDENT();
 
@@ -38,7 +38,7 @@ void Level::place_player()
   }
 }
 
-void Level::center_map_on_player()
+void Level::player_map_center()
 {
   TRACE_NO_INDENT();
 
@@ -55,4 +55,45 @@ void Level::center_map_on_player()
   data->pixel_map_at_y = t->pix_y / PIX_SCALE;
   data->pixel_map_at_x -= game->config.game_pix_width / 2;
   data->pixel_map_at_y -= game->config.game_pix_height / 2;
+}
+
+void Level::player_move(int8_t dx, int8_t dy)
+{
+  TRACE_NO_INDENT();
+
+  if (! data->player) {
+    return;
+  }
+
+  auto t = thing_find(data->player);
+  if (! t) {
+    return;
+  }
+
+  t->dx += dx;
+  t->dy += dy;
+}
+
+void Level::player_move_left()
+{
+  TRACE_NO_INDENT();
+  player_move(-2, 0);
+}
+
+void Level::player_move_right()
+{
+  TRACE_NO_INDENT();
+  player_move(2, 0);
+}
+
+void Level::player_move_up()
+{
+  TRACE_NO_INDENT();
+  player_move(0, -2);
+}
+
+void Level::player_move_down()
+{
+  TRACE_NO_INDENT();
+  player_move(0, 2);
 }

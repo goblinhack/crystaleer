@@ -30,6 +30,7 @@ void Level::tick(void)
 
         t->tick = tick;
         thing_update_pos(t);
+        thing_update_speed(t);
       }
     }
   }

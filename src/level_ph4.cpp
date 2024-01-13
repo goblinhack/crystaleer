@@ -47,7 +47,6 @@ void LevelPH4::add_object_ids(const LevelPh3 &ph3)
             auto tp = tp_random_monst1();
             auto t  = thing_new(&data, tp, x, y);
             thing_push(&data, t);
-            t->dx = -1;
           }
           break;
         case PH2_CHAR_LEFT : break;

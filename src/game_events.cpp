@@ -295,19 +295,19 @@ uint8_t game_input(const SDL_Keysym *key)
   }
 
   if (sdlk_eq(*key, game->config.key_move_left)) {
-    CON("TODO key");
+    level->player_move_left();
     return false; // To avoid click noise
   }
   if (sdlk_eq(*key, game->config.key_move_right)) {
-    CON("TODO key");
+    level->player_move_right();
     return false; // To avoid click noise
   }
   if (sdlk_eq(*key, game->config.key_move_up)) {
-    CON("TODO key");
+    level->player_move_up();
     return false; // To avoid click noise
   }
   if (sdlk_eq(*key, game->config.key_move_down)) {
-    CON("TODO key");
+    level->player_move_down();
     return false; // To avoid click noise
   }
 

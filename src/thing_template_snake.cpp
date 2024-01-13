@@ -18,8 +18,9 @@ bool tp_load_snake(void)
   }
 
   tp->z_depth_set(MAP_DEPTH_OBJ2);
-  tp->is_monst1         = true;
-  tp->is_blit_on_ground = true;
+  tp->is_monst1             = true;
+  tp->is_blit_on_ground     = true;
+  tp->is_animated_can_hflip = true;
 
   auto delay = 200;
 

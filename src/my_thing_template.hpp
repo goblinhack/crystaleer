@@ -34,6 +34,7 @@ public:
   bool is_blit_centered {};
   bool is_blit_square_outlined {};
   bool is_blit_outlined {};
+  bool is_animated_can_hflip {};
   bool is_block {};
   bool is_entrance {};
   bool is_exit {};
@@ -47,7 +48,10 @@ public:
   bool is_spike {};
   bool is_tiled {};
   bool is_wall {};
+  bool is_friction_applied {};
   // end sort marker1 }
+
+  int8_t max_speed {THING_MAX_SPEED};
 
   // begin sort marker2 {
   int chance_d1000_appearing {};
