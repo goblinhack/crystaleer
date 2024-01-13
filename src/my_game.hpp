@@ -245,15 +245,15 @@ public:
   void display(void);
   void fini(void);
   void init(void);
-  void load(uint8_t slot);
   void load_snapshot(void);
+  void load(uint8_t slot);
   void load(void);
   void new_game(void);
   void quit_select(void);
   void save_config(void);
-  void save(uint8_t slot);
   void save_snapshot_check();
   void save_snapshot(void);
+  void save(uint8_t slot);
   void save(void);
   void set_currently_saving_snapshot(void);
   void set_seed(void);

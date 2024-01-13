@@ -59,6 +59,7 @@ void Config::reset(void)
   key_move_right.sym = SDLK_d;
   key_move_up.sym    = SDLK_w;
   key_quit.sym       = SDLK_q;
+  key_quit.mod       = KMOD_SHIFT;
   key_save.sym       = SDLK_F12;
   key_screenshot.sym = SDLK_F10;
   key_console.sym    = SDLK_TAB;

@@ -19,17 +19,14 @@ void thing_update_speed(LevelData *data, Thingp t)
 
   auto tp = tp_find(t->tp_id);
 
+  //
+  // TODO if not in the air
+  //
   if (tp->is_friction_applied) {
     if (t->dx > 0) {
       t->dx--;
     } else if (t->dx < 0) {
       t->dx++;
-    }
-
-    if (t->dy > 0) {
-      t->dy--;
-    } else if (t->dy < 0) {
-      t->dy++;
     }
   }
 

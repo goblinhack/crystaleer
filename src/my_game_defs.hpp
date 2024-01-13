@@ -140,6 +140,6 @@
  */
 #define PIX_SCALE 8
 
-#define THING_MAX_SPEED 10
+#define THING_MAX_SPEED 15
 
 #endif

@@ -10,15 +10,15 @@
 
 // begin sort marker1 {
 static Tpidmap tp_block;
+static Tpidmap tp_crystal;
 static Tpidmap tp_entrance;
 static Tpidmap tp_exit;
 static Tpidmap tp_key;
 static Tpidmap tp_ladder;
-static Tpidmap tp_rock;
-static Tpidmap tp_rock_gold;
-static Tpidmap tp_crystal;
 static Tpidmap tp_monst1;
 static Tpidmap tp_player;
+static Tpidmap tp_rock;
+static Tpidmap tp_rock_gold;
 static Tpidmap tp_spike;
 static Tpidmap tp_wall;
 // end sort marker1 }
