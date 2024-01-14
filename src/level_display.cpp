@@ -152,28 +152,28 @@ void Level::display_z_layer(int z, bool shadow, bool deco)
         if (deco) {
           auto offset = tex_get_width(tile_get_tex(tile)) / TILE_WIDTH;
 
-          if (obj->deco_up) {
+          if (obj->dir_up) {
             BLIT_UP_TILE
           }
-          if (obj->deco_down) {
+          if (obj->dir_down) {
             BLIT_DOWN_TILE
           }
-          if (obj->deco_left) {
+          if (obj->dir_left) {
             BLIT_LEFT_TILE
           }
-          if (obj->deco_right) {
+          if (obj->dir_right) {
             BLIT_RIGHT_TILE
           }
-          if (obj->deco_tl) {
+          if (obj->dir_tl) {
             BLIT_TL_TILE
           }
-          if (obj->deco_bl) {
+          if (obj->dir_bl) {
             BLIT_BL_TILE
           }
-          if (obj->deco_tr) {
+          if (obj->dir_tr) {
             BLIT_TR_TILE
           }
-          if (obj->deco_br) {
+          if (obj->dir_br) {
             BLIT_BR_TILE
           }
         } else {

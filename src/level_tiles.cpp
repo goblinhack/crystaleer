@@ -55,35 +55,35 @@ void Level::assign_tiles(void)
           }
 
           if (! is_wall(x, y - 1)) {
-            data->obj[ x ][ y ][ slot ].deco_up = 1;
+            data->obj[ x ][ y ][ slot ].dir_up = 1;
           }
 
           if (! is_wall(x, y + 1)) {
-            data->obj[ x ][ y ][ slot ].deco_down = 1;
+            data->obj[ x ][ y ][ slot ].dir_down = 1;
           }
 
           if (! is_wall(x - 1, y)) {
-            data->obj[ x ][ y ][ slot ].deco_left = 1;
+            data->obj[ x ][ y ][ slot ].dir_left = 1;
           }
 
           if (! is_wall(x + 1, y)) {
-            data->obj[ x ][ y ][ slot ].deco_right = 1;
+            data->obj[ x ][ y ][ slot ].dir_right = 1;
           }
 
           if (! is_wall(x - 1, y - 1) && ! is_wall(x - 1, y) && ! is_wall(x, y - 1)) {
-            data->obj[ x ][ y ][ slot ].deco_tl = 1;
+            data->obj[ x ][ y ][ slot ].dir_tl = 1;
           }
 
           if (! is_wall(x + 1, y - 1) && ! is_wall(x + 1, y) && ! is_wall(x, y - 1)) {
-            data->obj[ x ][ y ][ slot ].deco_tr = 1;
+            data->obj[ x ][ y ][ slot ].dir_tr = 1;
           }
 
           if (! is_wall(x - 1, y + 1) && ! is_wall(x - 1, y) && ! is_wall(x, y + 1)) {
-            data->obj[ x ][ y ][ slot ].deco_bl = 1;
+            data->obj[ x ][ y ][ slot ].dir_bl = 1;
           }
 
           if (! is_wall(x + 1, y + 1) && ! is_wall(x + 1, y) && ! is_wall(x, y + 1)) {
-            data->obj[ x ][ y ][ slot ].deco_br = 1;
+            data->obj[ x ][ y ][ slot ].dir_br = 1;
           }
 
         } else if (tp->is_rock) {
@@ -94,42 +94,42 @@ void Level::assign_tiles(void)
 
           if (y > 0) {
             if (! is_rock(x, y - 1)) {
-              data->obj[ x ][ y ][ slot ].deco_up = 1;
+              data->obj[ x ][ y ][ slot ].dir_up = 1;
             }
           }
 
           if (y < MAP_HEIGHT - 1) {
             if (! is_rock(x, y + 1)) {
-              data->obj[ x ][ y ][ slot ].deco_down = 1;
+              data->obj[ x ][ y ][ slot ].dir_down = 1;
             }
           }
 
           if (x > 0) {
             if (! is_rock(x - 1, y)) {
-              data->obj[ x ][ y ][ slot ].deco_left = 1;
+              data->obj[ x ][ y ][ slot ].dir_left = 1;
             }
           }
 
           if (x < MAP_WIDTH - 1) {
             if (! is_rock(x + 1, y)) {
-              data->obj[ x ][ y ][ slot ].deco_right = 1;
+              data->obj[ x ][ y ][ slot ].dir_right = 1;
             }
           }
 
           if ((x == 0) && (y == 0)) {
-            data->obj[ x ][ y ][ slot ].deco_br = 1;
+            data->obj[ x ][ y ][ slot ].dir_br = 1;
           }
 
           if ((x == MAP_WIDTH - 1) && (y == 0)) {
-            data->obj[ x ][ y ][ slot ].deco_bl = 1;
+            data->obj[ x ][ y ][ slot ].dir_bl = 1;
           }
 
           if ((x == 0) && (y == MAP_HEIGHT - 1)) {
-            data->obj[ x ][ y ][ slot ].deco_tr = 1;
+            data->obj[ x ][ y ][ slot ].dir_tr = 1;
           }
 
           if ((x == MAP_WIDTH - 1) && (y == MAP_HEIGHT - 1)) {
-            data->obj[ x ][ y ][ slot ].deco_tl = 1;
+            data->obj[ x ][ y ][ slot ].dir_tl = 1;
           }
 
         } else {

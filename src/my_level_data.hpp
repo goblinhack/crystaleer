@@ -44,16 +44,17 @@ typedef struct ThingOrTp_ {
   //
   uint8_t anim_index;
   //
-  // Direction of tile decorations
+  // Direction of tile decorations. Multiple directions can be set at the
+  // same time for rocks as this is used for rock decorations.
   //
-  uint8_t deco_up    : 1;
-  uint8_t deco_down  : 1;
-  uint8_t deco_left  : 1;
-  uint8_t deco_right : 1;
-  uint8_t deco_tl    : 1;
-  uint8_t deco_tr    : 1;
-  uint8_t deco_bl    : 1;
-  uint8_t deco_br    : 1;
+  uint8_t dir_up    : 1;
+  uint8_t dir_down  : 1;
+  uint8_t dir_left  : 1;
+  uint8_t dir_right : 1;
+  uint8_t dir_tl    : 1;
+  uint8_t dir_tr    : 1;
+  uint8_t dir_bl    : 1;
+  uint8_t dir_br    : 1;
 } ThingOrTp;
 
 typedef struct LevelData_ {

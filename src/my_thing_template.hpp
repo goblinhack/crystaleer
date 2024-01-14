@@ -117,18 +117,6 @@ void tp_fini(void);
 void tp_fixup(void);
 void tp_get_id(const std::string &tp_name, int *id);
 
-enum {
-  THING_DIR_NONE,
-  THING_DIR_DOWN,
-  THING_DIR_UP,
-  THING_DIR_LEFT,
-  THING_DIR_RIGHT,
-  THING_DIR_TL,
-  THING_DIR_BL,
-  THING_DIR_TR,
-  THING_DIR_BR,
-};
-
 extern Tpidmap   tp_id_map;
 extern Tpnamemap tp_name_map;
 

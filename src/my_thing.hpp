@@ -17,6 +17,10 @@ struct Thing {
   int16_t  pix_y; /* Scaled up by PIX_SCALE */
   int8_t   dx;
   int8_t   dy;
+  uint8_t  dir_up    : 1;
+  uint8_t  dir_down  : 1;
+  uint8_t  dir_left  : 1;
+  uint8_t  dir_right : 1;
 };
 
 using Thingp = struct Thing *;
